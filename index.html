@@ -3,9 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <title>Graphics Overfit</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 반응형을 위해 꼭 필요 -->
+  <meta name="description" content="그래픽스 오버핏 - 개성 있는 오버핏 그래픽 패션 브랜드. 브랜드 문화, 룩북, 트렌드 제품까지.">
+  <meta name="keywords" content="그래픽스 오버핏, 오버핏, 그래픽티, 패션 브랜드, lookbook, musinsa">
+  <meta name="author" content="Graphics Overfit">
+  
   <link rel="icon" href="./favicon.ico" type="image/x-icon">
   <link rel="apple-touch-icon" href="./favicon.png">
   <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+  
   <style>
     /* 전체 페이지 배경을 검정색으로 설정 */
     body {
@@ -143,6 +150,36 @@
       margin: 5px 0;
       font-size: 12px;
     }
+
+    @media (max-width: 768px) {
+  .side-nav {
+    display: none; /* 모바일에서는 사이드 네비 숨기기 */
+  }
+
+  .floating-logo {
+    width: 100px;
+    top: 10px;
+  }
+
+  .sns-container {
+    top: 20px;
+    right: 10px;
+    flex-direction: column;
+  }
+
+  .sns-container a img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .sub-image {
+    width: 100%;
+  }
+
+  .main-section, .sub-section {
+    height: auto;
+  }
+}
   </style>
 </head>
 
@@ -163,7 +200,7 @@
         <ul>
           <li><a href="#">Brand Culture</a></li>
           <li><a href="#">Concept art</a></li>
-          <li><a href="#">Design Studio (comming soon)</a></li>
+          <li><a href="#">Design Studio (coming soon)</a></li>
           <li><a href="#">Look Book</a></li>
           <li><a href="#">New & Trending</a></li>
           <li><a href="https://smartstore.naver.com/gomgomgirl">Shop</a></li>
@@ -174,6 +211,7 @@
   <div class="floating-logo">
     <a href="./index.html">
       <img src="./image/mainlogo.png" alt="로고" class="logo-image">
+    </a>
   </div>
 
   <!-- 로고 아래 구분선 추가 -->
@@ -187,7 +225,6 @@
 <!-- 서브 이미지 + 텍스트 겹치기 -->
 <section class="sub-section" style="position: relative; text-align: center;">
 
-  <!-- 겹치는 문구 -->
   <div style="
     position: absolute;
     top: 50%;
