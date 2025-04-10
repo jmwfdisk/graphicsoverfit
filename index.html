@@ -314,11 +314,10 @@
     </div>
 
     <div style="font-size: 20px; font-weight: normal; margin-top: 5px;">
-      (comming soon)
+      (coming soon)
     </div>
   </div>
 
-  <section class="sub-section"> 
     <img src="./image/sub-image.gif" alt="서브 이미지" class="sub-image"> 
   </section>
 
@@ -332,6 +331,26 @@
       const sideNav = document.querySelector('.side-nav');
       sideNav.classList.toggle('active');
     }
+    
+      // 메뉴 항목 클릭 시 닫기 (모바일 전용)
+    document.addEventListener('DOMContentLoaded', () => {
+      const menuLinks = document.querySelectorAll('.side-nav a');
+      menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          const sideNav = document.querySelector('.side-nav');
+          sideNav.classList.remove('active');
+        });
+      });
+    });
+    
+    document.addEventListener('click', (e) => {
+     const sideNav = document.querySelector('.side-nav');
+     const hamburger = document.querySelector('.hamburger');
+  
+     if (!sideNav.contains(e.target) && !hamburger.contains(e.target)) {
+       sideNav.classList.remove('active');
+     }
+    });
   </script>
   
 </body>
