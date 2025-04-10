@@ -20,15 +20,17 @@
     }
 
     .logo-image {
-      width: 90px;
-      height: auto;
+      width: 130px;
+      height: 62px;
+      object-fit: contain; /* 비율 유지하며 채우기 */
+      background: transparent;
     }
 
     .divider-line {
-      width: 90%;
+      width: 98%;
       height: 3px;
       background-color: rgba(255, 255, 255, 0.2);
-      margin: 20px auto;
+      margin: 0px auto;
     }
 
     .hamburger {
@@ -157,21 +159,10 @@
         display: block;
       }
 
-      .side-nav {
-        width: 100%;
-        height: auto;
-        padding-top: 60px;
-        background-color: rgba(0, 0, 0, 0.9);
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
-      }
-
-      .side-nav.active {
-        transform: translateX(0);
-      }
-
       .lookbook-gallery {
+        position: relative;
         padding: 20px;
+        margin-top: 90px;
         margin-left: 0;
       }
 
@@ -184,23 +175,37 @@
       .gallery-item {
         border-radius: 0;
       }
+    }  
 
       .modal {
-        display: none !important;
+        display: none;
+        flex-direction: column;
+      }
+
+      .modal .prev,
+      .modal .next {
+        font-size: 32px;
+        top: 450px;
+        bottom: auto;
+      }
+
+      .modal-content {
+        width: 100%;
+        height: auto;
       }
 
       .side-nav {
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    width: 220px;
-    background-color: rgba(0, 0, 0, 0.95);
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    padding-top: 80px;
-    z-index: 3000;
-  }
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        width: 220px;
+        background-color: rgba(0, 0, 0, 0.95);
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding-top: 80px;
+        z-index: 3000;
+      }
 
   .side-nav.active {
     transform: translateX(0);
@@ -222,6 +227,30 @@
     display: block;
     width: 100%;
     font-size: 16px;
+  }
+
+  @media (max-width: 768px) {
+  .floating-logo {
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2000;
+    width: 90px;
+    height: auto;
+  }
+
+  .logo-image {
+    width: 90px;
+    height: auto;
+  }
+  .divider-line {
+  position: relative;
+  top: 85px; /* 로고 기준 아래로 10px */
+  width: 98%;
+  height: 3px;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin: 0 auto;
   }
 }
   </style>
@@ -348,14 +377,14 @@
   
     // 타일 클릭 이벤트
     galleryItems.forEach(item => {
-      const galleryKey = item.getAttribute("data-gallery");
-      item.addEventListener("click", () => {
-        if (window.innerWidth > 768) {
-          openGallery(galleryKey, 0);
-        }
-      });
-    });
-  
+  const galleryKey = item.getAttribute("data-gallery");
+
+  if (!galleryKey || !galleryMap[galleryKey]) return; // 없는 데이터 방어
+
+  item.addEventListener("click", () => {
+    openGallery(galleryKey, 0);
+  });
+});
     closeBtn.onclick = () => {
       modal.style.display = "none";
     };
