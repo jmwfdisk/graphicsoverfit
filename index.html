@@ -63,7 +63,7 @@
     .spacer { 
       height: 100vh;
     }
-
+    
     /* 왼쪽 세로형 네비게이션바 - 투명하게, 메인 이미지 위에 배치 */
     .side-nav {
       position: fixed;
@@ -197,6 +197,55 @@
     height: 30px;
   }
 }
+/* 햄버거 버튼 스타일 */
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  font-size: 28px;
+  color: white;
+  z-index: 2000;
+  cursor: pointer;
+}
+
+/* 모바일에서만 햄버거 버튼 표시 */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
+  .side-nav {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    width: 220px;
+    background-color: rgba(0, 0, 0, 0.95);
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 80px;
+    z-index: 1500;
+  }
+
+  .side-nav.active {
+    transform: translateX(0); /* 메뉴가 보이게 */
+  }
+
+  .side-nav ul {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 20px;
+  }
+
+  .side-nav a {
+    padding: 14px 0;
+    display: block;
+    width: 100%;
+    font-size: 16px;
+  }
+}
+    
   </style>
 </head>
 
@@ -211,7 +260,12 @@
       <img src="./image/musinsa.png" alt="Musinsa">
     </a>
   </div>
-
+  
+<!-- 햄버거 버튼 (모바일 전용) -->
+  <div class="hamburger" onclick="toggleMenu()">
+    ☰
+  </div>
+  
     <!-- 네비게이션바 영역 -->
     <nav class="side-nav">
         <ul>
@@ -272,6 +326,13 @@
     <p>Copyright © 2025 곰곰소녀마켓, 그래픽스 오버핏. 모든 권리 보유. | 문의 : support@graphicsoverfit.com</p>
     <p>대표이사 : 정민우 | 주소 : 대전광역시 대덕구 오정로 41번길 12 | 사업자등록번호 : 562-04-02746</p>
   </footer>
-
+  
+  <script>
+    function toggleMenu() {
+      const sideNav = document.querySelector('.side-nav');
+      sideNav.classList.toggle('active');
+    }
+  </script>
+  
 </body>
 </html>
