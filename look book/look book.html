@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Graphics Overfit Lookbook</title>
+  <style>
+    body {
+      background-color: #000;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      color: #fff;
+    }
+
+    .floating-logo {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .logo-image {
+      width: 90px;
+      height: auto;
+    }
+
+    .divider-line {
+      width: 90%;
+      height: 3px;
+      background-color: rgba(255, 255, 255, 0.2);
+      margin: 20px auto;
+    }
+
+    .hamburger {
+      display: none;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 28px;
+      color: white;
+      z-index: 2000;
+      cursor: pointer;
+    }
+
+    .side-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 180px;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+      padding-top: 100px;
+    }
+
+    .side-nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .side-nav li {
+      text-align: left;
+    }
+
+    .side-nav a {
+      display: block;
+      color: #fff;
+      padding: 12px 16px;
+      text-decoration: none;
+    }
+
+    .side-nav a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .lookbook-gallery {
+      padding: 60px;
+      margin-left: 140px; /* 사이드 메뉴 때문에 여백 */
+    }
+
+    .lookbook-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .gallery-item {
+      width: 100%;
+      height: auto;
+      cursor: pointer;
+      object-fit: cover;
+      border-radius: 6px;
+      transition: transform 0.2s;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.02);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 3000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      max-width: 90%;
+      max-height: 90%;
+    }
+
+    .modal .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 40px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .modal .prev,
+    .modal .next {
+      position: absolute;
+      top: 50%;
+      font-size: 48px;
+      color: #fff;
+      padding: 16px;
+      cursor: pointer;
+      user-select: none;
+      transform: translateY(-50%);
+      z-index: 3100;
+      opacity: 0.7;
+    }
+
+    .modal .prev:hover,
+    .modal .next:hover {
+      opacity: 1;
+    }
+
+    .modal .prev {
+      left: 30px;
+    }
+
+    .modal .next {
+      right: 30px;
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+
+      .side-nav {
+        width: 100%;
+        height: auto;
+        padding-top: 60px;
+        background-color: rgba(0, 0, 0, 0.9);
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+
+      .side-nav.active {
+        transform: translateX(0);
+      }
+
+      .lookbook-gallery {
+        padding: 20px;
+        margin-left: 0;
+      }
+
+      .lookbook-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .gallery-item {
+        border-radius: 0;
+      }
+
+      .modal {
+        display: none !important;
+      }
+
+      .side-nav {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    width: 220px;
+    background-color: rgba(0, 0, 0, 0.95);
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 80px;
+    z-index: 3000;
+  }
+
+  .side-nav.active {
+    transform: translateX(0);
+  }
+
+  .side-nav ul {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 20px;
+  }
+
+  .side-nav li {
+    text-align: left;
+    width: 100%;
+  }
+
+  .side-nav a {
+    padding: 14px 0;
+    display: block;
+    width: 100%;
+    font-size: 16px;
+  }
+}
+  </style>
+</head>
+
+<body>
+  <!-- 메인 로고 -->
+  <div class="floating-logo">
+    <a href="../index.html">
+      <img src="./image/mainlogo.png" alt="로고" class="logo-image" />
+    </a>
+  </div>
+
+  <!-- 구분선 -->
+  <div class="divider-line"></div>
+
+  <!-- 모바일 햄버거 메뉴 -->
+  <div class="hamburger" onclick="toggleMenu()">☰</div>
+
+  <!-- 사이드 네비게이션 -->
+  <nav class="side-nav">
+    <ul>
+      <li><a href="#">Brand Culture</a></li>
+      <li><a href="#">Concept art</a></li>
+      <li><a href="#">Design Studio (coming soon)</a></li>
+      <li><a href="/look book/look book.html">Look Book</a></li>
+      <li><a href="#">New & Trending</a></li>
+      <li><a href="#">Shop</a></li>
+    </ul>
+  </nav>
+
+  <!-- Lookbook 갤러리 -->
+  <section class="lookbook-gallery">
+    <div class="lookbook-grid">
+        <img src="./image/d.__.j2/d.__.j2_1.jpg" alt="룩북1 대표" class="gallery-item" data-gallery="look1" />
+        <img src="./image/유일:/1.jpg" alt="룩북2 대표" class="gallery-item" data-gallery="look2" />
+        <img src="./image/a.rteen/a.rteen_2.jpg" alt="룩북3 대표" class="gallery-item" data-gallery="look3" />
+        <img src="./image/고양이고영희/1.jpg" alt="룩북4 대표" class="gallery-item" data-gallery="look4" />
+        <img src="./image/미래미1004/1.jpg" alt="룩북5 대표" class="gallery-item" data-gallery="look5" />
+        <img src="./image/ddo_chichi/1.jpg" alt="룩북6 대표" class="gallery-item" data-gallery="look6" />
+      <!-- 더 추가 가능 -->
+    </div>
+  </section>
+
+<!-- 이미지 확대 모달 (PC only) -->
+  <div class="modal" id="imageModal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="modalImage" />
+    <a class="prev">&#10094;</a>
+    <a class="next">&#10095;</a>
+  </div>
+
+  <script>
+    function toggleMenu() {
+    const sideNav = document.querySelector(".side-nav");
+    sideNav.classList.toggle("active");
+    }
+
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImage");
+    const closeBtn = document.querySelector(".modal .close");
+    const prevBtn = document.querySelector(".modal .prev");
+    const nextBtn = document.querySelector(".modal .next");
+    const galleryItems = document.querySelectorAll(".gallery-item");
+  
+    // 각 타일에 연결된 이미지 세트
+    const galleryMap = {
+      look1: [
+        "./image/d.__.j2/d.__.j2_1.jpg",
+        "./image/d.__.j2/d.__.j2_2.jpg",
+        "./image/d.__.j2/d.__.j2_3.jpg",
+        "./image/d.__.j2/d.__.j2_4.jpg",
+        "./image/d.__.j2/d.__.j2_5.jpg",
+        "./image/d.__.j2/d.__.j2_6.jpg",
+        "./image/d.__.j2/d.__.j2_7.jpg",
+      ],
+      look2: [
+        "./image/유일:/1.jpg",
+        "./image/유일:/2.jpg",
+      ],
+      look3: [
+        "./image/a.rteen/a.rteen_2.jpg",
+        "./image/a.rteen/a.rteen_4.jpg",
+      ],
+      look4: [
+        "./image/고양이고영희/1.jpg",
+        "./image/고양이고영희/2.jpg",
+        "./image/고양이고영희/3.jpg",
+        "./image/고양이고영희/4.jpg",
+      ],
+      look5: [
+        "./image/미래미1004/1.jpg",
+        "./image/미래미1004/2.jpg",
+        "./image/미래미1004/3.jpg",
+      ],
+      look6: [
+        "./image/ddo_chichi/1.jpg",
+        "./image/ddo_chichi/2.jpg",
+        "./image/ddo_chichi/3.jpg",
+        "./image/ddo_chichi/4.jpg",
+        "./image/ddo_chichi/5.jpg",
+      ],
+    };
+  
+    let currentGallery = [];
+    let currentIndex = 0;
+  
+    function openGallery(galleryKey, startIndex = 0) {
+      currentGallery = galleryMap[galleryKey];
+      currentIndex = startIndex;
+      modalImg.src = currentGallery[currentIndex];
+      modal.style.display = "flex";
+    }
+  
+    function showNext() {
+      currentIndex = (currentIndex + 1) % currentGallery.length;
+      modalImg.src = currentGallery[currentIndex];
+    }
+  
+    function showPrev() {
+      currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+      modalImg.src = currentGallery[currentIndex];
+    }
+  
+    // 타일 클릭 이벤트
+    galleryItems.forEach(item => {
+      const galleryKey = item.getAttribute("data-gallery");
+      item.addEventListener("click", () => {
+        if (window.innerWidth > 768) {
+          openGallery(galleryKey, 0);
+        }
+      });
+    });
+  
+    closeBtn.onclick = () => {
+      modal.style.display = "none";
+    };
+  
+    nextBtn.onclick = showNext;
+    prevBtn.onclick = showPrev;
+  
+    window.onclick = (e) => {
+      if (e.target === modal) {
+        modal.style.display = "none";
+      }
+    };
+          // 메뉴 항목 클릭 시 닫기 (모바일 전용)
+    document.addEventListener('DOMContentLoaded', () => {
+      const menuLinks = document.querySelectorAll('.side-nav a');
+      menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          const sideNav = document.querySelector('.side-nav');
+          sideNav.classList.remove('active');
+        });
+      });
+    });
+    
+    document.addEventListener('click', (e) => {
+      const sideNav = document.querySelector('.side-nav');
+      const hamburger = document.querySelector('.hamburger');
+  
+     if (!sideNav.contains(e.target) && !hamburger.contains(e.target)) {
+       sideNav.classList.remove('active');
+     }
+    });
+  </script>
+</body>
+</html>
