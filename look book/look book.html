@@ -114,8 +114,11 @@
     }
 
     .modal-content {
-      max-width: 90%;
-      max-height: 90%;
+      max-width: 100%;
+      max-height: 90vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
     }
 
     .modal .close {
@@ -174,8 +177,7 @@
 
       .gallery-item {
         border-radius: 0;
-      }
-    }  
+      }  
 
       .modal {
         display: none;
@@ -185,7 +187,7 @@
       .modal .prev,
       .modal .next {
         font-size: 32px;
-        top: 380px;
+        top: 450px;
         bottom: auto;
       }
 
@@ -206,6 +208,7 @@
         padding-top: 80px;
         z-index: 3000;
       }
+    }
 
   .side-nav.active {
     transform: translateX(0);
