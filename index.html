@@ -156,6 +156,10 @@
       font-size: 12px;
     }
 
+    .hamburger {
+    display: none;
+  }
+
 @media (max-width: 768px) {
   .side-nav {
     width: 100%; /* 가로 전체 차지 */
@@ -164,7 +168,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1100;
+    z-index: 3000;
     padding-top: 60px; /* 위 여백 */
   }
 
@@ -189,36 +193,32 @@
     top: 10px;
     width: 80px;
   }
-
-  .sns-container {
+  
+  .floating-logo {
     position: absolute;
-    top: 100px;
-    right: 10px;
-    flex-direction: row;
-    gap: 8px;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2000;
+    width: 90px;
+    height: auto;
+    pointer-events: none;
   }
 
-  .sns-container a img {
-    width: 30px;
-    height: 30px;
+  .logo-image {
+    width: 90px;
+    height: auto;
   }
-}
-/* 햄버거 버튼 스타일 */
-.hamburger {
-  display: none;
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  font-size: 28px;
-  color: white;
-  z-index: 2000;
-  cursor: pointer;
-}
 
-/* 모바일에서만 햄버거 버튼 표시 */
-@media (max-width: 768px) {
   .hamburger {
     display: block;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    font-size: 28px;
+    color: white;
+    z-index: 2000;
+    cursor: pointer;
   }
 
   .side-nav {
@@ -255,22 +255,18 @@
     width: 100%;
     font-size: 16px;
   }
-}
-    
-@media (max-width: 768px) {
-  .floating-logo {
+
+  .sns-container {
     position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2000;
-    width: 90px;
-    height: auto;
+    top: 100px;
+    right: 10px;
+    flex-direction: row;
+    gap: 8px;
   }
 
-  .logo-image {
-    width: 90px;
-    height: auto;
+  .sns-container a img {
+    width: 30px;
+    height: 30px;
   }
 }
     
@@ -381,5 +377,7 @@
     });
   </script>
   
+</body>
+</html>
 </body>
 </html>
