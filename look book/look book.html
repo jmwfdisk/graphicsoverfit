@@ -4,61 +4,37 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Graphics Overfit Lookbook</title>
+
   <style>
+    /* 전체 페이지 배경을 검정색으로 설정 */
     body {
       background-color: #000;
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
       color: #fff;
-    }
-
-    .floating-logo {
       display: flex;
-      justify-content: center;
-      margin-top: 20px;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
-    .logo-image {
-      width: 130px;
-      height: 62px;
-      object-fit: contain; /* 비율 유지하며 채우기 */
-      background: transparent;
-    }
-
-    .divider-line {
-      width: 98%;
-      height: 3px;
-      background-color: rgba(255, 255, 255, 0.2);
-      margin: 0px auto;
-    }
-
-    .hamburger {
-      display: none;
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      font-size: 28px;
-      color: white;
-      z-index: 2000;
-      cursor: pointer;
-    }
-
+    /* 왼쪽 세로형 네비게이션바 - 투명하게, 메인 이미지 위에 배치 */
     .side-nav {
       position: fixed;
       top: 0;
       left: 0;
       width: 180px;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.3);
-      z-index: 1000;
-      padding-top: 100px;
+      background-color: rgba(0, 0, 0, 0.3); /* 반투명 검정 */
+      z-index: 1000; /* 메인 이미지보다 위에 오게 */
+      padding-top: 100px; /* 위쪽 여백 (로고 또는 상단 공간 확보) */
+      transition: background-color 0.3s;
     }
 
     .side-nav ul {
-      list-style: none;
-      padding: 0;
+      list-style-type: none;
       margin: 0;
+      padding: 0;
     }
 
     .side-nav li {
@@ -70,15 +46,35 @@
       color: #fff;
       padding: 12px 16px;
       text-decoration: none;
+      font-size: 16px;
     }
 
     .side-nav a:hover {
       background-color: rgba(255, 255, 255, 0.2);
     }
 
+    /* 로고를 메인 이미지 위에 띄우기 위한 스타일 */
+    .floating-logo {
+      position: absolute;
+      top: -20px;          /* 상단 여백 */
+      left: 50%;          /* 가로 가운데 */
+      transform: translateX(-50%); /* 가로 정중앙 */
+      z-index: 1100;
+    }
+
+    /* 로고 이미지 스타일 */
+    .logo-image {
+      width: 130px;
+      height: 130px;
+      object-fit: contain; /* 비율 유지하며 채우기 */
+      background: transparent;
+    }
+
     .lookbook-gallery {
+      position: relative;         /* top 속성 작동하려면 필요 */
+      margin-top: 50px;          /* 여기서 원하는 만큼 조정하세요 */
+      margin-left: 180px;         /* 사이드 네비에 맞춰 조정 */
       padding: 60px;
-      margin-left: 140px; /* 사이드 메뉴 때문에 여백 */
     }
 
     .lookbook-grid {
@@ -101,114 +97,195 @@
     }
 
     .modal {
-      display: none;
-      position: fixed;
-      z-index: 3000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.9);
-      justify-content: center;
-      align-items: center;
-    }
+  display: none;
+  position: fixed;
+  z-index: 3000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  justify-content: center;
+  align-items: center;
+}
 
-    .modal-content {
-      max-width: 100%;
-      max-height: 90vh;
-      width: auto;
-      height: auto;
-      object-fit: contain;
-    }
+.modal-body {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 40px;
+  max-width: 90%;
+  max-height: 90%;
+}
 
-    .modal .close {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      font-size: 40px;
+.modal-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-content {
+  max-width: 600px;
+  max-height: 70vh;
+  object-fit: contain;
+}
+
+.modal-thumbnails {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.modal-thumbnails img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  opacity: 0.5;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: opacity 0.2s;
+}
+
+.modal-thumbnails img.active {
+  opacity: 1;
+  border: 2px solid white;
+}
+
+.modal-dots {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.modal-dots span {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 4px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.modal-dots span.active {
+  background-color: white;
+}
+
+.modal-info {
+  max-width: 250px;
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: center; 
+}
+
+.product-button {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  color: #000;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.product-button:hover {
+  background-color: #333;
+  color: #fff;
+}
+    /* 푸터 스타일 */
+    footer {
+      background-color: #000;
       color: #fff;
-      cursor: pointer;
+      text-align: center;
+      padding: 20px;
+      margin-top: auto;
     }
 
-    .modal .prev,
-    .modal .next {
-      position: absolute;
-      top: 50%;
-      font-size: 48px;
-      color: #fff;
-      padding: 16px;
-      cursor: pointer;
-      user-select: none;
-      transform: translateY(-50%);
-      z-index: 3100;
-      opacity: 0.7;
+    footer p {
+      margin: 5px 0;
+      font-size: 12px;
     }
 
-    .modal .prev:hover,
-    .modal .next:hover {
-      opacity: 1;
-    }
+    .hamburger {
+    display: none;
+  }
 
-    .modal .prev {
-      left: 30px;
-    }
+@media (max-width: 768px) {
+  .side-nav {
+    width: 100%; /* 가로 전체 차지 */
+    height: auto; /* 자동 높이 */
+    background-color: rgba(0, 0, 0, 0.9); /* 더 선명하게 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3000;
+    padding-top: 60px; /* 위 여백 */
+  }
 
-    .modal .next {
-      right: 30px;
-    }
+  .side-nav ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-    @media (max-width: 768px) {
-      .hamburger {
-        display: block;
-      }
+  .side-nav li {
+    text-align: center;
+    width: 100%;
+  }
 
-      .lookbook-gallery {
-        position: relative;
-        padding: 20px;
-        margin-top: 90px;
-        margin-left: 0;
-      }
+  .side-nav a {
+    padding: 16px;
+    font-size: 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
 
-      .lookbook-grid {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-      }
+  .floating-logo {
+    top: 10px;
+    width: 80px;
+  }
+  
+  .floating-logo {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2000;
+    width: 90px;
+    height: auto;
+    pointer-events: none;
+  }
 
-      .gallery-item {
-        border-radius: 0;
-      }  
+  .logo-image {
+    width: 90px;
+    height: auto;
+  }
 
-      .modal {
-        display: none;
-        flex-direction: column;
-      }
+  .hamburger {
+    display: block;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    font-size: 28px;
+    color: white;
+    z-index: 2000;
+    cursor: pointer;
+  }
 
-      .modal .prev,
-      .modal .next {
-        font-size: 32px;
-        top: 450px;
-        bottom: auto;
-      }
-
-      .modal-content {
-        width: 100%;
-        height: auto;
-      }
-
-      .side-nav {
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
-        width: 220px;
-        background-color: rgba(0, 0, 0, 0.95);
-        height: 100%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        padding-top: 80px;
-        z-index: 3000;
-      }
-    }
+  .side-nav {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    width: 220px;
+    background-color: rgba(0, 0, 0, 0.95);
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 80px;
+    z-index: 3000;
+  }
 
   .side-nav.active {
     transform: translateX(0);
@@ -219,12 +296,12 @@
     align-items: flex-start;
     padding-left: 20px;
   }
-
+  
   .side-nav li {
     text-align: left;
     width: 100%;
   }
-
+  
   .side-nav a {
     padding: 14px 0;
     display: block;
@@ -232,94 +309,144 @@
     font-size: 16px;
   }
 
-  @media (max-width: 768px) {
-  .floating-logo {
-    position: absolute;
-    top: 0px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2000;
-    width: 90px;
-    height: auto;
+  .lookbook-gallery {
+    position: relative;
+    padding: 20px;
+    margin-top: 90px;
+    margin-left: 0;
   }
 
-  .logo-image {
-    width: 90px;
-    height: auto;
+  .lookbook-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
-  .divider-line {
-  position: relative;
-  top: 85px; /* 로고 기준 아래로 10px */
-  width: 98%;
-  height: 3px;
-  background-color: rgba(255, 255, 255, 0.2);
-  margin: 0 auto;
-  }
+
+  .gallery-item {
+    border-radius: 0;
+  } 
+
+  .modal {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-body {
+  flex-direction: column;
+  gap: 20px;
+  max-height: 100vh;
+  overflow-y: auto;
+  padding-bottom: 20px;
+}
+
+.modal-content {
+  width: 100%;
+  max-height: 50vh;
+  object-fit: contain;
+}
+
+.modal-thumbnails {
+  justify-content: center;
+  overflow-x: auto;
+}
+
+.modal-info {
+  text-align: center;
+  padding: 0 10px;
+  max-width: 300px;
+  margin: 0 auto; /* 가운데 정렬 */
+}
+
+.product-button {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 16px;  
+}
 }
   </style>
 </head>
 
 <body>
-  <!-- 메인 로고 -->
+    <!-- 햄버거 버튼 (모바일 전용) -->
+    <div class="hamburger" onclick="toggleMenu()">
+      ☰
+    </div>
+
+    <!-- 로고 아래 구분선 추가 -->
+    <div style="position: relative; top: 85px; width: 98%; height: 3px; background-color: rgba(255, 255, 255, 0.2); margin: 0 auto;"></div>
+
+    <!-- 네비게이션바 영역 -->
+    <nav class="side-nav">
+        <ul>
+          <li><a href="#">Brand Culture</a></li>
+          <li><a href="#">Concept art</a></li>
+          <li><a href="#">Design Studio (coming soon)</a></li>
+          <li><a href="./look book/look book.html">Look Book</a></li>
+          <li><a href="#">New & Trending</a></li>
+          <li><a href="https://smartstore.naver.com/gomgomgirl">Shop</a></li>
+        </ul>
+      </nav>
+
+    <!-- Lookbook 갤러리 -->
+    <section class="lookbook-gallery">
+      <div class="lookbook-grid">
+          <img src="./image/d.__.j2/d.__.j2_1.jpg" alt="룩북1 대표" class="gallery-item" data-gallery="look1" />
+          <img src="./image/유일:/1.jpg" alt="룩북2 대표" class="gallery-item" data-gallery="look2" />
+          <img src="./image/a.rteen/a.rteen_2.jpg" alt="룩북3 대표" class="gallery-item" data-gallery="look3" />
+          <img src="./image/고양이고영희/1.jpg" alt="룩북4 대표" class="gallery-item" data-gallery="look4" />
+          <img src="./image/미래미1004/1.jpg" alt="룩북5 대표" class="gallery-item" data-gallery="look5" />
+          <img src="./image/ddo_chichi/1.jpg" alt="룩북6 대표" class="gallery-item" data-gallery="look6" />
+        <!-- 더 추가 가능 -->
+      </div>
+    </section>
+
+    <!-- 이미지 확대 모달 (PC only) -->
+    <div class="modal" id="imageModal">
+   
+      <div class="modal-body">
+        <div class="modal-left">
+          <img class="modal-content" id="modalImage" />
+          <div class="modal-thumbnails" id="thumbnailContainer"></div>
+          <div class="modal-dots" id="dotContainer"></div>
+        </div>
+    
+        <div class="modal-info" id="modalInfoBox">
+          <h3 id="productTitle">제품명</h3>
+          <p id="productDesc">제품 설명</p>
+          <a href="#" target="_blank" id="productLink" class="product-button">제품 보러가기</a>
+        </div>
+      </div>
+    </div>
+
+  <!-- 메인 로고 (투명 배경, 이미지 위 고정) -->
   <div class="floating-logo">
     <a href="../index.html">
-      <img src="./image/mainlogo.png" alt="로고" class="logo-image" />
+      <img src="./image/mainlogo.png" alt="로고" class="logo-image">
     </a>
   </div>
 
-  <!-- 구분선 -->
-  <div class="divider-line"></div>
+  <!-- 로고 아래 구분선 추가 -->
+  <div style="position: relative; top: 50px; width: 98%; height: 1px; background-color: rgba(255, 255, 255, 0.2); margin: 0 auto;"></div>
 
-  <!-- 모바일 햄버거 메뉴 -->
-  <div class="hamburger" onclick="toggleMenu()">☰</div>
-
-  <!-- 사이드 네비게이션 -->
-  <nav class="side-nav">
-    <ul>
-      <li><a href="#">Brand Culture</a></li>
-      <li><a href="#">Concept art</a></li>
-      <li><a href="#">Design Studio (coming soon)</a></li>
-      <li><a href="/look book/look book.html">Look Book</a></li>
-      <li><a href="#">New & Trending</a></li>
-      <li><a href="https://smartstore.naver.com/gomgomgirl">Shop</a></li>
-    </ul>
-  </nav>
-
-  <!-- Lookbook 갤러리 -->
-  <section class="lookbook-gallery">
-    <div class="lookbook-grid">
-        <img src="./image/d.__.j2/d.__.j2_1.jpg" alt="룩북1 대표" class="gallery-item" data-gallery="look1" />
-        <img src="./image/유일:/1.jpg" alt="룩북2 대표" class="gallery-item" data-gallery="look2" />
-        <img src="./image/a.rteen/a.rteen_2.jpg" alt="룩북3 대표" class="gallery-item" data-gallery="look3" />
-        <img src="./image/고양이고영희/1.jpg" alt="룩북4 대표" class="gallery-item" data-gallery="look4" />
-        <img src="./image/미래미1004/1.jpg" alt="룩북5 대표" class="gallery-item" data-gallery="look5" />
-        <img src="./image/ddo_chichi/1.jpg" alt="룩북6 대표" class="gallery-item" data-gallery="look6" />
-      <!-- 더 추가 가능 -->
-    </div>
-  </section>
-
-<!-- 이미지 확대 모달 (PC only) -->
-  <div class="modal" id="imageModal">
-    <span class="close">&times;</span>
-    <img class="modal-content" id="modalImage" />
-    <a class="prev">&#10094;</a>
-    <a class="next">&#10095;</a>
-  </div>
-
+  <footer>
+    <p>Copyright © 2025 곰곰소녀마켓, 그래픽스 오버핏. 모든 권리 보유. | 문의 : support@graphicsoverfit.com</p>
+    <p>대표이사 : 정민우 | 주소 : 대전광역시 대덕구 오정로 41번길 12 | 사업자등록번호 : 562-04-02746</p>
+  </footer>
+  
   <script>
     function toggleMenu() {
-    const sideNav = document.querySelector(".side-nav");
-    sideNav.classList.toggle("active");
+      const sideNav = document.querySelector('.side-nav');
+      sideNav.classList.toggle('active');
     }
-
+  
     const modal = document.getElementById("imageModal");
     const modalImg = document.getElementById("modalImage");
-    const closeBtn = document.querySelector(".modal .close");
-    const prevBtn = document.querySelector(".modal .prev");
-    const nextBtn = document.querySelector(".modal .next");
     const galleryItems = document.querySelectorAll(".gallery-item");
+    const modalLeft = document.querySelector(".modal-left");
   
-    // 각 타일에 연결된 이미지 세트
     const galleryMap = {
       look1: [
         "./image/d.__.j2/d.__.j2_1.jpg",
@@ -358,67 +485,166 @@
       ],
     };
   
+    const productInfo = {
+      look1: {
+        title: "------",
+        desc: "-----",
+        link: "https://smartstore.naver.com/gomgomgirl/products/1"
+      },
+      look2: {
+        title: "-----",
+        desc: "-----.",
+        link: "https://smartstore.naver.com/gomgomgirl/products/2"
+      },
+      look3: {
+        title: "-----",
+        desc: "-----.",
+        link: "https://smartstore.naver.com/gomgomgirl/products/3"
+      },
+      look4: {
+        title: "----",
+        desc: "----",
+        link: "https://smartstore.naver.com/gomgomgirl/products/4"
+      },
+      look5: {
+        title: "----",
+        desc: "-----.",
+        link: "https://smartstore.naver.com/gomgomgirl/products/5"
+      },
+      look6: {
+        title: "-----",
+        desc: "-------.",
+        link: "https://smartstore.naver.com/gomgomgirl/products/6"
+      }
+    };
+  
     let currentGallery = [];
     let currentIndex = 0;
   
     function openGallery(galleryKey, startIndex = 0) {
       currentGallery = galleryMap[galleryKey];
       currentIndex = startIndex;
-      modalImg.src = currentGallery[currentIndex];
       modal.style.display = "flex";
+  
+      updateModalView();
+  
+      // 제품 정보 표시
+      const info = productInfo[galleryKey];
+      if (info) {
+        document.getElementById("productTitle").textContent = info.title;
+        document.getElementById("productDesc").textContent = info.desc;
+        document.getElementById("productLink").href = info.link;
+      }
+  
+      // 썸네일 렌더링
+      const thumbContainer = document.getElementById("thumbnailContainer");
+      thumbContainer.innerHTML = "";
+      currentGallery.forEach((src, i) => {
+        const thumb = document.createElement("img");
+        thumb.src = src;
+        if (i === currentIndex) thumb.classList.add("active");
+        thumb.onclick = () => {
+          currentIndex = i;
+          updateModalView();
+        };
+        thumbContainer.appendChild(thumb);
+      });
+  
+      // 도트 렌더링
+      const dotContainer = document.getElementById("dotContainer");
+      dotContainer.innerHTML = "";
+      currentGallery.forEach((_, i) => {
+        const dot = document.createElement("span");
+        if (i === currentIndex) dot.classList.add("active");
+        dotContainer.appendChild(dot);
+      });
     }
   
-    function showNext() {
-      currentIndex = (currentIndex + 1) % currentGallery.length;
+    function updateModalView() {
       modalImg.src = currentGallery[currentIndex];
+  
+      document.querySelectorAll("#thumbnailContainer img").forEach((img, i) => {
+        img.classList.toggle("active", i === currentIndex);
+      });
+  
+      document.querySelectorAll("#dotContainer span").forEach((dot, i) => {
+        dot.classList.toggle("active", i === currentIndex);
+      });
     }
   
-    function showPrev() {
-      currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
-      modalImg.src = currentGallery[currentIndex];
+    // 슬라이드 드래그/터치 감지
+    let startX = 0;
+  
+    modalLeft.addEventListener("mousedown", (e) => {
+      startX = e.clientX;
+    });
+  
+    modalLeft.addEventListener("mouseup", (e) => {
+      let endX = e.clientX;
+      handleSwipe(endX - startX);
+    });
+  
+    modalLeft.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].clientX;
+    });
+  
+    modalLeft.addEventListener("touchend", (e) => {
+      let endX = e.changedTouches[0].clientX;
+      handleSwipe(endX - startX);
+    });
+  
+    function handleSwipe(deltaX) {
+      if (Math.abs(deltaX) > 50) {
+        if (deltaX < 0) {
+          currentIndex = (currentIndex + 1) % currentGallery.length;
+        } else {
+          currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+        }
+        updateModalView();
+      }
     }
   
-    // 타일 클릭 이벤트
+    // 타일 클릭 시 갤러리 열기
     galleryItems.forEach(item => {
-  const galleryKey = item.getAttribute("data-gallery");
-
-  if (!galleryKey || !galleryMap[galleryKey]) return; // 없는 데이터 방어
-
-  item.addEventListener("click", () => {
-    openGallery(galleryKey, 0);
-  });
-});
-    closeBtn.onclick = () => {
-      modal.style.display = "none";
-    };
+      const galleryKey = item.getAttribute("data-gallery");
+      if (!galleryKey || !galleryMap[galleryKey]) return;
+      item.addEventListener("click", () => {
+        openGallery(galleryKey, 0);
+      });
+    });
   
-    nextBtn.onclick = showNext;
-    prevBtn.onclick = showPrev;
-  
-    window.onclick = (e) => {
+    // 모달 외부 클릭 시 닫기
+    window.addEventListener("click", (e) => {
       if (e.target === modal) {
         modal.style.display = "none";
       }
-    };
-          // 메뉴 항목 클릭 시 닫기 (모바일 전용)
-    document.addEventListener('DOMContentLoaded', () => {
+    });
+  
+    // ESC 키 누르면 닫기 (옵션)
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        modal.style.display = "none";
+      }
+    });
+  
+    // 모바일 메뉴 닫기
+    document.addEventListener("DOMContentLoaded", () => {
       const menuLinks = document.querySelectorAll('.side-nav a');
       menuLinks.forEach(link => {
         link.addEventListener('click', () => {
-          const sideNav = document.querySelector('.side-nav');
-          sideNav.classList.remove('active');
+          document.querySelector('.side-nav').classList.remove('active');
         });
       });
     });
-    
+  
     document.addEventListener('click', (e) => {
       const sideNav = document.querySelector('.side-nav');
       const hamburger = document.querySelector('.hamburger');
-  
-     if (!sideNav.contains(e.target) && !hamburger.contains(e.target)) {
-       sideNav.classList.remove('active');
-     }
+      if (!sideNav.contains(e.target) && !hamburger.contains(e.target)) {
+        sideNav.classList.remove('active');
+      }
     });
   </script>
+
 </body>
 </html>
