@@ -212,6 +212,10 @@
     .hamburger {
     display: none;
   }
+    /* 모바일 모달 닫기 버튼 */
+    .modal-close {
+  display: none;
+  }
 
 @media (max-width: 768px) {
   .side-nav {
@@ -359,7 +363,20 @@
   max-width: 300px;
   margin: 0 auto; /* 가운데 정렬 */
 }
-
+  
+  .modal-close {
+    display: block;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-size: 28px;
+    color: #fff;
+    background: none;
+    border: none;
+    z-index: 4000;
+    cursor: pointer;
+  }
+  
 .product-button {
   width: 100%;
   box-sizing: border-box;
@@ -405,6 +422,7 @@
 
     <!-- 이미지 확대 모달 (PC only) -->
     <div class="modal" id="imageModal">
+      <button class="modal-close" onclick="closeModal()">✕</button>
    
       <div class="modal-body">
         <div class="modal-left">
@@ -517,7 +535,8 @@
       currentGallery = galleryMap[galleryKey];
       currentIndex = startIndex;
       modal.style.display = "flex";
-  
+      document.body.style.overflow = 'hidden'; // 📌 추가: 스크롤 막기
+      
       updateModalView();
   
       // 제품 정보 표시
@@ -595,7 +614,12 @@
         updateModalView();
       }
     }
-  
+    
+    function closeModal() {
+         modal.style.display = "none";
+         document.body.style.overflow = 'auto'; // 📌 스크롤 다시 허용
+    }
+    
     // 타일 클릭 시 갤러리 열기
     galleryItems.forEach(item => {
       const galleryKey = item.getAttribute("data-gallery");
@@ -608,14 +632,14 @@
     // 모달 외부 클릭 시 닫기
     window.addEventListener("click", (e) => {
       if (e.target === modal) {
-        modal.style.display = "none";
+        closeModal(); // 📌 함수로 교체
       }
     });
   
     // ESC 키 누르면 닫기 (옵션)
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") {
-        modal.style.display = "none";
+        closeModal(); // 📌 함수로 교체
       }
     });
   
