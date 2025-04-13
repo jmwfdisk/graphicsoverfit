@@ -544,7 +544,7 @@
       const info = productInfo[galleryKey];
       if (info) {
         document.getElementById("productTitle").textContent = info.title;
-        document.getElementById("productDesc").textContent = info.desc;
+        document.getElementById("productDesc").innerHTML = info.desc; = info.desc;
         document.getElementById("productLink").href = info.link;
       }
   
