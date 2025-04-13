@@ -97,104 +97,104 @@
     }
 
     .modal {
-  display: none;
-  position: fixed;
-  z-index: 3000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.9);
-  justify-content: center;
-  align-items: center;
-}
+      display: none;
+      position: fixed;
+      z-index: 3000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      justify-content: center;
+      align-items: center;
+    }
 
-.modal-body {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 40px;
-  max-width: 90%;
-  max-height: 90%;
-}
+    .modal-body {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 40px;
+      max-width: 90%;
+      max-height: 90%;
+    }
 
-.modal-left {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+    .modal-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-.modal-content {
-  max-width: 600px;
-  max-height: 70vh;
-  object-fit: contain;
-}
+    .modal-content {
+      max-width: 600px;
+      max-height: 70vh;
+      object-fit: contain;
+    }
 
-.modal-thumbnails {
-  margin-top: 10px;
-  display: flex;
-  gap: 10px;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-}
+    .modal-thumbnails {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+    }
 
-.modal-thumbnails img {
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
-  opacity: 0.5;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: opacity 0.2s;
-}
+    .modal-thumbnails img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      opacity: 0.5;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: opacity 0.2s;
+    }
 
-.modal-thumbnails img.active {
-  opacity: 1;
-  border: 2px solid white;
-}
+    .modal-thumbnails img.active {
+      opacity: 1;
+      border: 2px solid white;
+    }
 
-.modal-dots {
-  margin-top: 10px;
-  text-align: center;
-}
+    .modal-dots {
+      margin-top: 10px;
+      text-align: center;
+    }
 
-.modal-dots span {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  margin: 0 4px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.3);
-}
+    .modal-dots span {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      margin: 0 4px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.3);
+    }
 
-.modal-dots span.active {
-  background-color: white;
-}
+    .modal-dots span.active {
+      background-color: white;
+    }
 
-.modal-info {
-  max-width: 250px;
-  color: #fff;
-  font-size: 14px;
-  line-height: 1.6;
-  text-align: center; 
-}
+    .modal-info {
+      max-width: 250px;
+      color: #fff;
+      font-size: 14px;
+      line-height: 1.6;
+      text-align: center; 
+    }
 
-.product-button {
-  display: inline-block;
-  margin-top: 16px;
-  padding: 10px 20px;
-  background-color: #ffffff;
-  color: #000;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: bold;
-  transition: background-color 0.3s, color 0.3s;
-}
+    .product-button {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 10px 20px;
+      background-color: #ffffff;
+      color: #000;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background-color 0.3s, color 0.3s;
+    }
 
-.product-button:hover {
-  background-color: #333;
-  color: #fff;
-}
+    .product-button:hover {
+      background-color: #333;
+      color: #fff;
+    }
     /* 푸터 스타일 */
     footer {
       background-color: #000;
@@ -210,12 +210,12 @@
     }
 
     .hamburger {
-    display: none;
-  }
+      display: none;
+    }
     /* 모바일 모달 닫기 버튼 */
     .modal-close {
-  display: none;
-  }
+      display: none;
+    }
 
 @media (max-width: 768px) {
   .side-nav {
@@ -364,18 +364,18 @@
   margin: 0 auto; /* 가운데 정렬 */
 }
   
-  .modal-close {
-    display: block;
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    font-size: 28px;
-    color: #fff;
-    background: none;
-    border: none;
-    z-index: 4000;
-    cursor: pointer;
-  }
+.modal-close {
+  display: block;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  font-size: 28px;
+  color: #fff;
+  background: none;
+  border: none;
+  z-index: 4000;
+  cursor: pointer;
+}
   
 .product-button {
   width: 100%;
@@ -433,15 +433,15 @@
     
         <div class="modal-info" id="modalInfoBox">
           <h3 id="productTitle">제품명</h3>
-          <p id="productDesc">제품 설명</p>
-          <a href="#" target="_blank" id="productLink" class="product-button">제품 보러가기</a>
+          <p id="productDesc">제품설명</p>
+          <a href="#" target="_blank" id="productLink" class="product-button">제품보기</a>
         </div>
       </div>
     </div>
 
   <!-- 메인 로고 (투명 배경, 이미지 위 고정) -->
   <div class="floating-logo">
-    <a href="http://graphicsoverfit.co.kr">
+    <a href="../index.html">
       <img src="./image/mainlogo.png" alt="로고" class="logo-image">
     </a>
   </div>
