@@ -379,9 +379,21 @@
   }
   
   .product-button {
-    width: 100%;
-    box-sizing: border-box;
-    font-size: 16px;  
+    display: inline-block;
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+    width: auto; /* ✅ 버튼 너비를 내용에 맞춤 */
+    max-width: 100%; /* 혹시 너무 길어질 경우 대비 */
+  }
+
+  .modal-info {
+    text-align: center;
   }
 }
   </style>
