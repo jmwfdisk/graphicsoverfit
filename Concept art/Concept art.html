@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Graphics Overfit Concept art</title>
+  <style>
+    body {
+      background-color: #000;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding-bottom: 60px;
+    }
+
+    .side-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 180px;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+      padding-top: 100px;
+      transition: background-color 0.3s;
+    }
+
+    .side-nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .side-nav li {
+      text-align: left;
+    }
+
+    .side-nav a {
+      display: block;
+      color: #fff;
+      padding: 12px 16px;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    .side-nav a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .floating-logo {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1100;
+    }
+
+    .logo-image {
+      width: 130px;
+      height: 130px;
+      object-fit: contain;
+      background: transparent;
+    }
+
+    .hamburger {
+      display: none;
+    }
+
+    .art-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 60px;
+      margin-top: 60px;
+      margin-left: 180px;
+    }
+
+    .main-image {
+      width: 500px;
+      height: auto;
+      border-radius: 6px;
+      border: 1px solid #444;
+      object-fit: cover;
+    }
+
+    .thumbnail-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      background-color: #000;
+      position: relative;
+    }
+
+    .thumbnail-grid {
+      display: grid;
+      grid-template-columns: repeat(10, 50px);
+      grid-auto-rows: 50px;
+      height: auto;
+      overflow-y: auto;
+      overflow-x: visible;
+      padding-right: 10px;
+      gap: 8px;
+      padding-bottom: 8px;
+    }
+
+    .thumbnail-grid img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border: 2px solid transparent;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .thumbnail-grid img:hover {
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: scale(1.05);
+    }
+
+    .pagination-container {
+      position: relative;
+      bottom: 0;
+      background-color: #000;
+      padding: 8px 0 4px;
+      z-index: 10;
+      text-align: right;
+      width: 100%;
+    }
+
+    .pagination-text {
+      color: #ccc;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .pagination-text button {
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      padding: 0;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background-color: transparent;
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.2s, border-color 0.2s;
+    }
+
+    .pagination-text button:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-color: #fff;
+    }
+
+    .logo-divider {
+      position: relative; 
+      top: 85px;
+      width: 98%;
+      height: 3px;
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    @media (max-width: 768px) {
+      .logo-divider {
+        position: relative; 
+        top: 80px;
+      }
+
+      .lookbook-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .thumbnail-panel {
+        display: block;
+        width: 100%;
+        padding: 0 10px;
+      }
+
+      .art-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        margin-left: 0;
+      }
+
+      .thumbnail-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .thumbnail-grid img {
+        width: 100%;
+        height: auto;
+        margin-top: 10px;
+      }
+
+      .main-image {
+        display: none;
+        margin-bottom: 60px;
+      }
+
+      .thumbnail-panel {
+        align-items: center;
+      }
+
+      .floating-logo {
+        top: 20px;
+        width: 90px;
+        height: auto;
+      }
+
+      .logo-image {
+        width: 90px;
+        height: auto;
+      }
+
+      .hamburger {
+        display: block;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        font-size: 28px;
+        color: white;
+        z-index: 2000;
+        cursor: pointer;
+      }
+
+      .side-nav {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        width: 220px;
+        background-color: rgba(0, 0, 0, 0.95);
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding-top: 80px;
+        z-index: 3000;
+      }
+
+      .side-nav.active {
+        transform: translateX(0);
+      }
+
+      .side-nav ul {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-left: 20px;
+      }
+
+      .thumbnail-grid img:hover {
+        border-color: transparent;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="hamburger" onclick="toggleMenu()">☰</div>
+
+  <div class="logo-divider"></div>
+
+  <nav class="side-nav">
+    <ul>
+      <li><a href="#">Brand Culture</a></li>
+      <li><a href="#">Concept art</a></li>
+      <li><a href="#">Design Studio (coming soon)</a></li>
+      <li><a href="../look book/look book.html">Look Book</a></li>
+      <li><a href="#">New & Trending</a></li>
+      <li><a href="https://smartstore.naver.com/gomgomgirl">Shop</a></li>
+    </ul>
+  </nav>
+
+  <div class="floating-logo">
+    <a href="../index.html">
+      <img src="./image/mainlogo.png" alt="로고" class="logo-image">
+    </a>
+  </div>
+
+  <section class="art-container">
+    <!-- 메인 이미지 -->
+    <img id="mainLookImage" class="main-image" src="./image/art/1.png" alt="Main Look Image" />
+
+    <!-- 썸네일 + 페이지 인디케이터 -->
+    <div class="thumbnail-panel">
+      <div class="thumbnail-grid">
+        <!-- Thumbnails will be generated dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function toggleMenu() {
+      const sideNav = document.querySelector('.side-nav');
+      sideNav.classList.toggle('active');
+    }
+
+    function changeLook(path, index) {
+      document.getElementById('mainLookImage').src = path;
+      // document.getElementById('currentIndex').textContent = index; // Removed to avoid referencing a missing element
+    }
+
+    const allImages = [
+      "./image/art/1.png", "./image/art/2.png", "./image/art/3.png",
+      "./image/art/4.png", "./image/art/5.png", "./image/art/6.png",
+      "./image/art/7.png", "./image/art/8.png", "./image/art/9.png",
+      "./image/art/10.png", "./image/art/11.png", "./image/art/12.png",
+      "./image/art/13.png", "./image/art/14.png", "./image/art/15.png",
+      "./image/art/16.png", "./image/art/17.png", "./image/art/no-image.png",
+      "./image/art/no-image.png", "./image/art/no-image.png", "./image/art/no-image.png",
+      "./image/art/no-image.png", "./image/art/no-image.png", "./image/art/no-image.png",
+      "./image/art/no-image.png", "./image/art/no-image.png", "./image/art/no-image.png",
+      "./image/art/no-image.png", "./image/art/no-image.png", "./image/art/no-image.png",
+      "./image/art/no-image.png", "./image/art/no-image.png", "./image/art/no-image.png",
+      "./image/art/no-image.png", "./image/art/no-image.png", "./image/art/no-image.png",
+      "./image/art/no-image.png", "./image/art/no-image.png", "./image/art/no-image.png",
+      "./image/art/no-image.png", "./image/art/no-image.png", "./image/art/no-image.png",
+      "./image/art/no-image.png", "./image/art/no-image.png", "./image/art/no-image.png",
+      "./image/art/no-image.png", "./image/art/no-image.png", "./image/art/no-image.png",
+      "./image/art/no-image.png", "./image/art/no-image.png", "./image/art/no-image.png",
+      "./image/art/no-image.png", "./image/art/no-image.png", "./image/art/no-image.png",
+      "./image/art/no-image.png", "./image/art/no-image.png", "./image/art/no-image.png",
+      "./image/art/no-image.png", "./image/art/no-image.png", "./image/art/no-image.png",
+      "./image/art/no-image.png", "./image/art/no-image.png", "./image/art/no-image.png",
+      "./image/art/no-image.png", "./image/art/no-image.png", "./image/art/no-image.png",
+      "./image/art/no-image.png", "./image/art/no-image.png", "./image/art/no-image.png",
+      "./image/art/no-image.png", "./image/art/no-image.png", "./image/art/no-image.png",
+      "./image/art/no-image.png", "./image/art/no-image.png", "./image/art/no-image.png",
+      "./image/art/no-image.png", "./image/art/no-image.png", "./image/art/no-image.png",
+      "./image/art/no-image.png", "./image/art/no-image.png", "./image/art/no-image.png",
+      "./image/art/no-image.png", "./image/art/no-image.png", "./image/art/no-image.png",
+      "./image/art/no-image.png", "./image/art/no-image.png", "./image/art/no-image.png",
+      "./image/art/no-image.png", "./image/art/no-image.png", "./image/art/no-image.png",
+      "./image/art/no-image.png", "./image/art/no-image.png", "./image/art/no-image.png",
+      "./image/art/no-image.png", "./image/art/no-image.png", "./image/art/no-image.png",    
+      "./image/art/no-image.png", "./image/art/no-image.png", "./image/art/no-image.png",
+      "./image/art/no-image.png"                   
+      // Add more as needed
+    ];
+    const thumbnailsPerPage = 100;
+    let currentPage = 0;
+
+    function renderThumbnails() {
+      const grid = document.querySelector('.thumbnail-grid');
+      grid.innerHTML = '';
+      const start = currentPage * thumbnailsPerPage;
+      const end = Math.min(start + thumbnailsPerPage, allImages.length);
+      for (let i = start; i < end; i++) {
+        const img = document.createElement('img');
+        img.src = allImages[i];
+        img.onclick = () => changeLook(allImages[i], i + 1); // Ensured onclick event for all screen widths
+        grid.appendChild(img);
+      }
+      document.getElementById('currentIndex').textContent = start + 1;
+      document.getElementById('totalCount').textContent = allImages.length;
+    }
+
+    function nextPage() {
+      if ((currentPage + 1) * thumbnailsPerPage < allImages.length) {
+        currentPage++;
+        renderThumbnails();
+      }
+    }
+
+    function prevPage() {
+      if (currentPage > 0) {
+        currentPage--;
+        renderThumbnails();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', renderThumbnails);
+
+    document.addEventListener('click', function (e) {
+      const sideNav = document.querySelector('.side-nav');
+      const hamburger = document.querySelector('.hamburger');
+      if (!sideNav.contains(e.target) && !hamburger.contains(e.target)) {
+        sideNav.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+</html>
