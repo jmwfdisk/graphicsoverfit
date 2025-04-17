@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Graphics Overfit Lookbook</title>
+  <title>Graphics Overfit Concept art</title>
 
   <style>
     /* 전체 페이지 배경을 검정색으로 설정 */
@@ -17,7 +17,7 @@
       flex-direction: column;
       min-height: 100vh;
     }
-
+    
     /* 왼쪽 세로형 네비게이션바 - 투명하게, 메인 이미지 위에 배치 */
     .side-nav {
       position: fixed;
@@ -70,133 +70,6 @@
       background: transparent;
     }
 
-    .lookbook-gallery {
-      position: relative;         /* top 속성 작동하려면 필요 */
-      margin-top: 50px;          /* 여기서 원하는 만큼 조정하세요 */
-      margin-left: 180px;         /* 사이드 네비에 맞춰 조정 */
-      padding: 60px;
-    }
-
-    .lookbook-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-    }
-
-    .gallery-item {
-      width: 100%;
-      height: auto;
-      cursor: pointer;
-      object-fit: cover;
-      border-radius: 6px;
-      transition: transform 0.2s;
-    }
-
-    .gallery-item:hover {
-      transform: scale(1.02);
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 3000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.9);
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal-body {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      gap: 40px;
-      max-width: 90%;
-      max-height: 90%;
-    }
-
-    .modal-left {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .modal-content {
-      max-width: 600px;
-      max-height: 70vh;
-      object-fit: contain;
-    }
-
-    .modal-thumbnails {
-      margin-top: 10px;
-      display: flex;
-      gap: 10px;
-      flex-wrap: nowrap;
-      overflow-x: auto;
-    }
-
-    .modal-thumbnails img {
-      width: 60px;
-      height: 60px;
-      object-fit: cover;
-      opacity: 0.5;
-      cursor: pointer;
-      border-radius: 4px;
-      transition: opacity 0.2s;
-    }
-
-    .modal-thumbnails img.active {
-      opacity: 1;
-      border: 2px solid white;
-    }
-
-    .modal-dots {
-      margin-top: 10px;
-      text-align: center;
-    }
-
-    .modal-dots span {
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      margin: 0 4px;
-      border-radius: 50%;
-      background-color: rgba(255, 255, 255, 0.3);
-    }
-
-    .modal-dots span.active {
-      background-color: white;
-    }
-
-    .modal-info {
-      flex: 1;
-      min-width: 300px;
-      max-width: 400px;
-      font-size: 14px;
-      line-height: 1.6;
-      color: #fff;
-      text-align: center;
-    }
-
-    .product-button {
-      display: inline-block;
-      margin-top: 16px;
-      padding: 10px 20px;
-      background-color: #ffffff;
-      color: #000;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    .product-button:hover {
-      background-color: #333;
-      color: #fff;
-    }
     /* 푸터 스타일 */
     footer {
       background-color: #000;
@@ -214,190 +87,165 @@
     .hamburger {
       display: none;
     }
-    /* 모바일 모달 닫기 버튼 */
-    .modal-close {
+
+    .thumbnail-strip img:hover {
+      transform: scale(1.05);
+    }
+
+    .mobile-thumbnails {
       display: none;
     }
 
+    :root {
+    --mobile-thumb-offset: 120px;  /* 상단에서 이만큼 아래로 내림 */
+    }
+
+    .modal {
+      display: none; /* 기본 숨김 */
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 5000; 
+    }
+
+    .modal-backdrop {
+      position: absolute;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px; right: 24px;
+      font-size: 32px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .modal-image {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      max-width: 60%;
+      max-height: 60%;
+      object-fit: contain;
+    }
+
 @media (max-width: 768px) {
-  .side-nav {
-    width: 100%; /* 가로 전체 차지 */
-    height: auto; /* 자동 높이 */
-    background-color: rgba(0, 0, 0, 0.9); /* 더 선명하게 */
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 3000;
-    padding-top: 60px; /* 위 여백 */
-  }
+    .side-nav {
+      width: 100%; /* 가로 전체 차지 */
+      height: auto; /* 자동 높이 */
+      background-color: rgba(0, 0, 0, 0.9); /* 더 선명하게 */
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 3000;
+      padding-top: 60px; /* 위 여백 */
+    }
 
-  .side-nav ul {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+    .side-nav ul {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-  .side-nav li {
-    text-align: center;
-    width: 100%;
-  }
+    .side-nav li {
+      text-align: center;
+      width: 100%;
+    }
 
-  .side-nav a {
-    padding: 16px;
-    font-size: 18px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-  }
+    .side-nav a {
+      padding: 16px;
+      font-size: 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
 
-  .floating-logo {
-    top: 10px;
-    width: 80px;
-  }
+    .floating-logo {
+      top: 10px;
+      width: 80px;
+    }
   
-  .floating-logo {
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2000;
-    width: 90px;
-    height: auto;
-    pointer-events: auto;
-  }
+    .floating-logo {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2000;
+      width: 90px;
+      height: auto;
+      pointer-events: auto;
+    }
 
-  .logo-image {
-    width: 90px;
-    height: auto;
-  }
+    .logo-image {
+      width: 90px;
+      height: auto;
+    }
 
-  .hamburger {
-    display: block;
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    font-size: 28px;
-    color: white;
-    z-index: 2000;
-    cursor: pointer;
-  }
+    .hamburger {
+      display: block;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 28px;
+      color: white;
+      z-index: 2000;
+      cursor: pointer;
+    }
 
-  .side-nav {
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    width: 220px;
-    background-color: rgba(0, 0, 0, 0.95);
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    padding-top: 80px;
-    z-index: 3000;
-  }
+    .side-nav {
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      width: 220px;
+      background-color: rgba(0, 0, 0, 0.95);
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding-top: 80px;
+      z-index: 3000;
+    }
 
-  .side-nav.active {
-    transform: translateX(0);
-  }
+    .side-nav.active {
+      transform: translateX(0);
+    }
 
-  .side-nav ul {
-    flex-direction: column;
-    align-items: flex-start;
-    padding-left: 20px;
-  }
+    .side-nav ul {
+      flex-direction: column;
+      align-items: flex-start;
+      padding-left: 20px;
+    }
   
-  .side-nav li {
-    text-align: left;
-    width: 100%;
-  }
+    .side-nav li {
+      text-align: left;
+      width: 100%;
+    }
   
-  .side-nav a {
-    padding: 14px 0;
-    display: block;
-    width: 100%;
-    font-size: 16px;
-  }
+    .side-nav a {
+      padding: 14px 0;
+      display: block;
+      width: 100%;
+      font-size: 16px;
+    }
 
-  .lookbook-gallery {
-    position: relative;
-    padding: 20px;
-    margin-top: 90px;
-    margin-left: 0;
+    .thumbnail-container {
+      display: none !important;
+    }
+  /* 모바일용만 보이게, 세로 스크롤 허용 */
+    .mobile-thumbnails {
+      display: flex;
+      flex-direction: column;      /* 세로로 쌓기 */
+      gap: 12px;                   /* 아이템 간격 */
+      margin-top: var(--mobile-thumb-offset); 
+      max-height: calc(100vh - 120px); /* 상단 네비/로고 등 제외한 스크롤 영역 */
+      overflow-y: auto;            /* 세로 스크롤 */
+      padding: 16px;               /* 원하는 패딩 */
+    }
+    .mobile-thumbnails img {
+      width: 100%;                 /* 가로 꽉 채우기 */
+      height: auto;
+      object-fit: cover;           /* 비율 유지하며 잘림 허용 */
+    }
   }
-
-  .lookbook-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .gallery-item {
-    border-radius: 0;
-  } 
-
-  .modal {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  }
-
-  .modal-body {
-    flex-direction: column;
-    gap: 20px;
-    max-height: 100vh;
-    overflow-y: auto;
-    padding-bottom: 20px;
-  }
-
-  .modal-content {
-    width: 100%;
-    max-height: 50vh;
-    object-fit: contain;
-  }
-
-  .modal-thumbnails {
-    display: none;
-    justify-content: center;
-    overflow-x: auto;
-  }
-
-  .modal-info {
-    text-align: center;
-    padding: 0 10px;
-    max-width: 300px;
-    margin: 0 auto; /* 가운데 정렬 */
-  }
-  
-  .modal-close {
-    display: block;
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    font-size: 28px;
-    color: #fff;
-    background: none;
-    border: none;
-    z-index: 4000;
-    cursor: pointer;
-  }
-  
-  .product-button {
-    display: inline-block;
-    font-size: 16px;
-    padding: 10px 20px;
-    border-radius: 8px;
-    background-color: #fff;
-    color: #000;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.3s, color 0.3s;
-    width: auto; /* ✅ 버튼 너비를 내용에 맞춤 */
-    max-width: 100%; /* 혹시 너무 길어질 경우 대비 */
-  }
-
-  .modal-info {
-    text-align: center;
-  }
-}
   </style>
 </head>
 
@@ -414,261 +262,80 @@
     <nav class="side-nav">
         <ul>
           <li><a href="#">Brand Culture</a></li>
-          <li><a href="../Concept art/Concept art.html">Concept art</a></li>
+          <li><a href="#">Concept art</a></li>
           <li><a href="#">Design Studio (coming soon)</a></li>
-          <li><a href="#">Look Book</a></li>
+          <li><a href="../look book/look book.html">Look Book</a></li>
           <li><a href="#">New & Trending</a></li>
           <li><a href="https://smartstore.naver.com/gomgomgirl">Shop</a></li>
         </ul>
       </nav>
 
-    <!-- Lookbook 갤러리 -->
-    <section class="lookbook-gallery">
-      <div class="lookbook-grid">
-          <img src="./image/d.__.j2/d.__.j2_1.jpg" alt="룩북1 대표" class="gallery-item" data-gallery="look1" />
-          <img src="./image/유일:/1.jpg" alt="룩북2 대표" class="gallery-item" data-gallery="look2" />
-          <img src="./image/a.rteen/a.rteen_2.jpg" alt="룩북3 대표" class="gallery-item" data-gallery="look3" />
-          <img src="./image/고양이고영희/1.jpg" alt="룩북4 대표" class="gallery-item" data-gallery="look4" />
-          <img src="./image/미래미1004/1.jpg" alt="룩북5 대표" class="gallery-item" data-gallery="look5" />
-          <img src="./image/ddo_chichi/1.jpg" alt="룩북6 대표" class="gallery-item" data-gallery="look6" />
-          <img src="./image/Rabbit_Yoon/2.png" alt="룩북7 대표" class="gallery-item" data-gallery="look7" />        
-        <!-- 더 추가 가능 -->
+    <div class="floating-logo">
+        <a href="../index.html">
+          <img src="./image/mainlogo.png" alt="로고" class="logo-image">
+        </a>
       </div>
-    </section>
 
-    <!-- 이미지 확대 모달 (PC only) -->
-    <div class="modal" id="imageModal">
-      <button class="modal-close" onclick="closeModal()">✕</button>
-   
-      <div class="modal-body">
-        <div class="modal-left">
-          <img class="modal-content" id="modalImage" />
-          <div class="modal-thumbnails" id="thumbnailContainer"></div>
-          <div class="modal-dots" id="dotContainer"></div>
-        </div>
-    
-        <div class="modal-info" id="modalInfoBox">
-          <h3 id="productTitle">제품명</h3>
-          <p id="productDesc">제품설명</p>
-          <a href="#" target="_blank" id="productLink" class="product-button">제품보기</a>
-        </div>
+<!-- 썸네일 컨테이너: 수동 위치 조정 가능 -->
+    <div class="thumbnail-container" style="position: absolute; top: 100px; left: 50%; transform: translateX(-50%); z-index: 2000; height: auto; overflow: visible;">
+      <div class="thumbnail-strip" style="display: flex; justify-content: center; gap: 5px; background: rgba(0,0,0,0.5); padding: 12px 16px; border-radius: 8px;">
+        <img src="./image/art/1-1.png" alt="item 1" style="width: 50px; height: 500px;"
+                  data-large-src="./image/art/1.png" alt="Thumb 1">
+        <img src="./image/art/2-1.png" alt="item 2" style="width: 50px; height: auto;"
+                  data-large-src="./image/art/2.png" alt="Thumb 2">
+        <img src="./image/art/3-1.png" alt="item 3" style="width: 50px; height: auto;"
+                  data-large-src="./image/art/3.png" alt="Thumb 3">
+        <img src="./image/art/no-image1.png" alt="item 4" style="width: 50px; height: auto;"
+                  data-large-src="./image/art/no-image.png" alt="Thumb 4">
+        <img src="./image/art/no-image1.png" alt="item 5" style="width: 50px; height: auto;"
+                  data-large-src="./image/art/no-image.png" alt="Thumb 5">
+        <img src="./image/art/no-image1.png" alt="item 6" style="width: 50px; height: auto;"
+                  data-large-src="./image/art/no-image.png" alt="Thumb 6">
+        <img src="./image/art/no-image1.png" alt="item 7" style="width: 50px; height: auto;" 
+                  data-large-src="./image/art/no-image.png" alt="Thumb 7">
+        <img src="./image/art/no-image1.png" alt="item 8" style="width: 50px; height: auto;"
+                  data-large-src="./image/art/no-image.png" alt="Thumb 8">
+        <img src="./image/art/no-image1.png" alt="item 9" style="width: 50px; height: auto;"
+                  data-large-src="./image/art/no-image.png" alt="Thumb 9">
+        <img src="./image/art/no-image1.png" alt="item 10" style="width: 50px; height: auto;"
+                  data-large-src="./image/art/no-image.png" alt="Thumb 10">
+        <img src="./image/art/no-image1.png" alt="item 11" style="width: 50px; height: auto;"
+                  data-large-src="./image/art/no-image.png" alt="Thumb 11">
+        <img src="./image/art/no-image1.png" alt="item 12" style="width: 50px; height: auto;"
+                  data-large-src="./image/art/no-image.png" alt="Thumb 12">
       </div>
     </div>
 
-  <!-- 메인 로고 (투명 배경, 이미지 위 고정) -->
-  <div class="floating-logo">
-    <a href="../index.html">
-      <img src="./image/mainlogo.png" alt="로고" class="logo-image">
-    </a>
-  </div>
-  
+    <div class="mobile-thumbnails">
+      <img src="./image/art/1.png" alt="mobile1">
+      <img src="./image/art/2.png" alt="mobile2">
+      <img src="./image/art/3.png" alt="mobile3">
+      <img src="./image/art/no-image.png" alt="mobile4">
+      <img src="./image/art/no-image.png" alt="mobile5">
+      <img src="./image/art/no-image.png" alt="mobile6">
+      <img src="./image/art/no-image.png" alt="mobile7">
+      <img src="./image/art/no-image.png" alt="mobile8">
+      <img src="./image/art/no-image.png" alt="mobile9">
+      <img src="./image/art/no-image.png" alt="mobile10">
+      <img src="./image/art/no-image.png" alt="mobile11">
+      <img src="./image/art/no-image.png" alt="mobile12">
+      <!-- … -->
+    </div>
+
+<!-- 1) 모달 마크업 (body 끝 직전에) -->
+    <div id="image-modal" class="modal">
+     <div class="modal-backdrop"></div>
+     <span class="modal-close">&times;</span>
+     <img class="modal-image" src="" alt="Large view">
+    </div>
+
   <script>
     function toggleMenu() {
-      const sideNav = document.querySelector('.side-nav');
-      sideNav.classList.toggle('active');
+    const sideNav = document.querySelector('.side-nav');
+    sideNav.classList.toggle('active');
     }
-  
-    const modal = document.getElementById("imageModal");
-    const modalImg = document.getElementById("modalImage");
-    const galleryItems = document.querySelectorAll(".gallery-item");
-    const modalLeft = document.querySelector(".modal-left");
-  
-    const galleryMap = {
-      look1: [
-        "./image/d.__.j2/d.__.j2_1.jpg",
-        "./image/d.__.j2/d.__.j2_2.jpg",
-        "./image/d.__.j2/d.__.j2_3.jpg",
-        "./image/d.__.j2/d.__.j2_4.jpg",
-        "./image/d.__.j2/d.__.j2_5.jpg",
-        "./image/d.__.j2/d.__.j2_6.jpg",
-        "./image/d.__.j2/d.__.j2_7.jpg"
-      ],
-      look2: [
-        "./image/유일:/1.jpg",
-        "./image/유일:/2.jpg"
-      ],
-      look3: [
-        "./image/a.rteen/a.rteen_2.jpg",
-        "./image/a.rteen/a.rteen_4.jpg"
-      ],
-      look4: [
-        "./image/고양이고영희/1.jpg",
-        "./image/고양이고영희/2.jpg",
-        "./image/고양이고영희/3.jpg",
-        "./image/고양이고영희/4.jpg"
-      ],
-      look5: [
-        "./image/미래미1004/1.jpg",
-        "./image/미래미1004/2.jpg",
-        "./image/미래미1004/3.jpg"
-      ],
-      look6: [
-        "./image/ddo_chichi/1.jpg",
-        "./image/ddo_chichi/2.jpg",
-        "./image/ddo_chichi/3.jpg",
-        "./image/ddo_chichi/4.jpg",
-        "./image/ddo_chichi/5.jpg"
-      ],
-      look7: [
-        "./image/Rabbit_Yoon/1.jpg",
-        "./image/Rabbit_Yoon/2.png"
-      ],
-    };
-  
-    const productInfo = {
-      look1: {
-        title: "﻿Golden Youth",
-        desc: "﻿새로운 세대의 감성을 담은 스트릿웨어로<br>자유롭고 개성이 넘치는 컬렉션!<br>트렌디한 오버핏 실루엣과 그래픽 디자인으로<br>누구나 편하게 착용할 수 있는 스타일,<br>어디서든 돋보이는 유니크한 룩을 연출할 수 있습니다.<br>* 모델 : 164cm / 사이즈 M",
-        link: "https://smartstore.naver.com/gomgomgirl/products/11214306466"
-      },
-      look2: {
-        title: "Pure Youth",
-        desc: "-----.",
-        link: "https://smartstore.naver.com/gomgomgirl/products/11216972358"
-      },
-      look3: {
-        title: "Golden Youth",
-        desc: "-----.",
-        link: "https://smartstore.naver.com/gomgomgirl/products/11214306466"
-      },
-      look4: {
-        title: "SPIRIT",
-        desc: "----",
-        link: "https://smartstore.naver.com/gomgomgirl/products/11562415879"
-      },
-      look5: {
-        title: "SPIRIT",
-        desc: "-----.",
-        link: "https://smartstore.naver.com/gomgomgirl/products/11562415879"
-      },
-      look6: {
-        title: "SPIRIT",
-        desc: "-------.",
-        link: "https://smartstore.naver.com/gomgomgirl/products/11562415879"
-      },
-      look7: {
-        title: "SPIRIT",
-        desc: "-------.",
-        link: "https://smartstore.naver.com/gomgomgirl/products/11562415879"
-      },
-    };
-  
-    let currentGallery = [];
-    let currentIndex = 0;
-  
-    function openGallery(galleryKey, startIndex = 0) {
-      currentGallery = galleryMap[galleryKey];
-      currentIndex = startIndex;
-      modal.style.display = "flex";
-      document.body.style.overflow = 'hidden'; // 📌 추가: 스크롤 막기
-      
-      updateModalView();
-  
-      // 제품 정보 표시
-      const info = productInfo[galleryKey];
-      if (info) {
-        document.getElementById("productTitle").textContent = info.title;
-        document.getElementById("productDesc").innerHTML = info.desc;
-        document.getElementById("productLink").href = info.link;
-      }
-  
-      // 썸네일 렌더링
-      const thumbContainer = document.getElementById("thumbnailContainer");
-      thumbContainer.innerHTML = "";
-      currentGallery.forEach((src, i) => {
-        const thumb = document.createElement("img");
-        thumb.src = src;
-        if (i === currentIndex) thumb.classList.add("active");
-        thumb.onclick = () => {
-          currentIndex = i;
-          updateModalView();
-        };
-        thumbContainer.appendChild(thumb);
-      });
-  
-      // 도트 렌더링
-      const dotContainer = document.getElementById("dotContainer");
-      dotContainer.innerHTML = "";
-      currentGallery.forEach((_, i) => {
-        const dot = document.createElement("span");
-        if (i === currentIndex) dot.classList.add("active");
-        dotContainer.appendChild(dot);
-      });
-    }
-  
-    function updateModalView() {
-      modalImg.src = currentGallery[currentIndex];
-  
-      document.querySelectorAll("#thumbnailContainer img").forEach((img, i) => {
-        img.classList.toggle("active", i === currentIndex);
-      });
-  
-      document.querySelectorAll("#dotContainer span").forEach((dot, i) => {
-        dot.classList.toggle("active", i === currentIndex);
-      });
-    }
-  
-    // 슬라이드 드래그/터치 감지
-    let startX = 0;
-  
-    modalLeft.addEventListener("mousedown", (e) => {
-      startX = e.clientX;
-    });
-  
-    modalLeft.addEventListener("mouseup", (e) => {
-      let endX = e.clientX;
-      handleSwipe(endX - startX);
-    });
-  
-    modalLeft.addEventListener("touchstart", (e) => {
-      startX = e.touches[0].clientX;
-    });
-  
-    modalLeft.addEventListener("touchend", (e) => {
-      let endX = e.changedTouches[0].clientX;
-      handleSwipe(endX - startX);
-    });
-  
-    function handleSwipe(deltaX) {
-      if (Math.abs(deltaX) > 50) {
-        if (deltaX < 0) {
-          currentIndex = (currentIndex + 1) % currentGallery.length;
-        } else {
-          currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
-        }
-        updateModalView();
-      }
-    }
-    
-    function closeModal() {
-         modal.style.display = "none";
-         document.body.style.overflow = 'auto'; // 📌 스크롤 다시 허용
-    }
-    
-    // 타일 클릭 시 갤러리 열기
-    galleryItems.forEach(item => {
-      const galleryKey = item.getAttribute("data-gallery");
-      if (!galleryKey || !galleryMap[galleryKey]) return;
-      item.addEventListener("click", () => {
-        openGallery(galleryKey, 0);
-      });
-    });
-  
-    // 모달 외부 클릭 시 닫기
-    window.addEventListener("click", (e) => {
-      if (e.target === modal) {
-        closeModal(); // 📌 함수로 교체
-      }
-    });
-  
-    // ESC 키 누르면 닫기 (옵션)
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        closeModal(); // 📌 함수로 교체
-      }
-    });
-  
-    // 모바일 메뉴 닫기
+
+        // 모바일 메뉴 닫기
     document.addEventListener("DOMContentLoaded", () => {
       const menuLinks = document.querySelectorAll('.side-nav a');
       menuLinks.forEach(link => {
@@ -685,7 +352,39 @@
         sideNav.classList.remove('active');
       }
     });
-  </script>
 
+    /* 3) JS: 모바일에서 썸네일 클릭 연동을 자동 제거 (옵션) */
+    function initThumbnails() {
+      if (window.innerWidth <= 768) {
+    // 모바일: 기존 썸네일 strip의 클릭 핸들러 전부 제거
+    document
+      .querySelectorAll('.thumbnail-strip img')
+      .forEach(img => img.replaceWith(img.cloneNode(true)));
+    }
+  }
+    window.addEventListener('load', initThumbnails);
+    window.addEventListener('resize', () => {
+      // 리사이즈 시에도 적용
+      initThumbnails();
+    });
+
+    document.querySelectorAll('.thumbnail-strip img').forEach(img => {
+      img.addEventListener('click', () => {
+      const modal = document.getElementById('image-modal');
+      const modalImg = modal.querySelector('.modal-image');
+      modalImg.src = img.dataset.largeSrc; // 큰 이미지 로드
+      modal.style.display = 'block';       // 모달 표시
+    });
+  });
+
+// 모달 닫기
+    document.querySelector('.modal-close').addEventListener('click', () => {
+      document.getElementById('image-modal').style.display = 'none';
+    });
+// 백드랍 클릭해도 닫기
+    document.querySelector('.modal-backdrop').addEventListener('click', () => {
+      document.getElementById('image-modal').style.display = 'none';
+    });
+  </script>
 </body>
 </html>
