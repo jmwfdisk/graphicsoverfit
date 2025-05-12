@@ -43,7 +43,7 @@
 
     /* 메인 이미지 스타일 */
     .main-section { 
-      height: 100vh; 
+      height: 600px; 
       width: 100%; 
       overflow: hidden; 
     }
@@ -268,8 +268,27 @@
     width: 30px;
     height: 30px;
   }
+
+  .split-image-section {
+    flex-direction: column !important; /* 2: 세로 정렬 */
+    height: auto !important;           /* 3: 고정 높이 제거 */
+  }
+
+  .split-image-section > div {
+    width: 100%;
+    height: auto;
+  }
+
+  .split-image-section img {
+    width: 100%;
+    height: auto;
+    object-fit: contain; /* 비율 유지 */
+  }
+
+  .split-image-section div div {
+    font-size: 18px; /* 텍스트 크기도 약간 줄임 */
+  }
 }
-    
   </style>
 </head>
 
@@ -313,37 +332,36 @@
   <div style="position: relative; top: 85px; width: 98%; height: 3px; background-color: rgba(255, 255, 255, 0.2); margin: 0 auto;"></div>
 
   <!-- 메인 이미지와 서브 이미지 영역 -->
-  <section class="main-section"> 
+  <section class="main-section" style="margin-bottom: 10px;""> 
     <img src="./image/main-image.gif" alt="메인 이미지" class="main-image"> 
   </section> 
 
 <!-- 서브 이미지 + 텍스트 겹치기 -->
-  <section class="sub-section" style="position: relative; text-align: center;">
+<section class="split-image-section" style="display: flex; width: 100%; height: 400px; position: relative; gap: 10px;">
 
-  <div style="
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #fff;
-    font-size: 28px;
-    font-weight: bold;
-    opacity: 0.85;
-    letter-spacing: 2px;
-    z-index: 10;
-    white-space: nowrap;
-  ">
-    <div style="font-size: 28px; font-weight: bold; letter-spacing: 2px;">
-      2025 New & Trending.
-    </div>
-
-    <div style="font-size: 20px; font-weight: normal; margin-top: 5px;">
-      (coming soon)
+  <!-- 왼쪽 이미지 영역 -->
+  <div style="flex: 1; position: relative;">
+    <img src="./image/sub-image2.png" alt="왼쪽 이미지" style="width: 100%; height: 100%; object-fit: contain;">
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                color: rgb(255, 255, 255); font-size: 24px; font-weight: bold; text-align: center;
+                text-shadow: 1px 1px 3px rgba(0,0,0,0.7); z-index: 2;">
+      <br>
+      
     </div>
   </div>
 
-    <img src="./image/sub-image.png" alt="서브 이미지" class="sub-image"> 
-  </section>
+  <!-- 오른쪽 이미지 영역 -->
+  <div style="flex: 1; position: relative;">
+    <img src="./image/sub-image.png" alt="오른쪽 이미지" style="width: 100%; height: 100%; object-fit: cover;">
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                color: white; font-size: 24px; font-weight: bold; text-align: center;
+                text-shadow: 1px 1px 3px rgba(0,0,0,0.7); z-index: 2;">
+      2025 New & Trending<br>
+      Coming soon
+    </div>
+  </div>
+
+</section>
 
   <footer>
     <p>Copyright © 2025 곰곰소녀마켓, 그래픽스 오버핏. 모든 권리 보유. | 문의 : support@graphicsoverfit.com</p>
