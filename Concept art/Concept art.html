@@ -92,6 +92,10 @@
       transform: scale(1.05);
     }
 
+    .thumbnail-strip img {
+      cursor: pointer; /* 이 줄을 추가하세요 */
+    }
+
     .mobile-thumbnails {
       display: none;
     }
@@ -116,10 +120,12 @@
 
     .modal-close {
       position: absolute;
-      top: 16px; right: 24px;
+      top: 20px;
+      right: 20px;
+      transform: translate(50%, -50%);
       font-size: 32px;
       color: #fff;
-      cursor: pointer;
+      cursor: pointer; 
     }
 
     .modal-image {
@@ -129,6 +135,21 @@
       max-width: 60%;
       max-height: 60%;
       object-fit: contain;
+    }
+
+    .modal-image-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .modal-image-container .modal-close {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      font-size: 32px;
+      color: #fff;
+      cursor: pointer;
+      z-index: 10;
     }
 
 @media (max-width: 768px) {
@@ -285,9 +306,9 @@
                   data-large-src="./image/art/2.png" alt="Thumb 2">
         <img src="./image/art/3-1.png" alt="item 3" style="width: 50px; height: auto;"
                   data-large-src="./image/art/3.png" alt="Thumb 3">
-        <img src="./image/art/no-image1.png" alt="item 4" style="width: 50px; height: auto;"
+        <img src="./image/art/4-1.png" alt="item 4" style="width: 50px; height: auto;"
                   data-large-src="./image/art/no-image.png" alt="Thumb 4">
-        <img src="./image/art/no-image1.png" alt="item 5" style="width: 50px; height: auto;"
+        <img src="./image/art/5-1.png" alt="item 5" style="width: 50px; height: auto;"
                   data-large-src="./image/art/no-image.png" alt="Thumb 5">
         <img src="./image/art/no-image1.png" alt="item 6" style="width: 50px; height: auto;"
                   data-large-src="./image/art/no-image.png" alt="Thumb 6">
@@ -310,16 +331,25 @@
       <img src="./image/art/1.png" alt="mobile1">
       <img src="./image/art/2.png" alt="mobile2">
       <img src="./image/art/3.png" alt="mobile3">
-      <img src="./image/art/no-image.png" alt="mobile4">
+      <img src="./image/art/4.png" alt="mobile4">
+      <img src="./image/art/5.png" alt="mobile5">
+      <img src="./image/art/no-image.png" alt="mobile6">
+      <img src="./image/art/no-image.png" alt="mobile7">
+      <img src="./image/art/no-image.png" alt="mobile8">
+      <img src="./image/art/no-image.png" alt="mobile9">
+      <img src="./image/art/no-image.png" alt="mobile10">
+      <img src="./image/art/no-image.png" alt="mobile11">
+      <img src="./image/art/no-image.png" alt="mobile12">
       <!-- … -->
     </div>
 
-<!-- 1) 모달 마크업 (body 끝 직전에) -->
     <div id="image-modal" class="modal">
-     <div class="modal-backdrop"></div>
-     <span class="modal-close">&times;</span>
-     <img class="modal-image" src="" alt="Large view">
+      <div class="modal-backdrop"></div>
+      <div class="modal-image-container">
+        <span class="modal-close">&times;</span>
+        <img class="modal-image" src="" alt="Large view">
     </div>
+  </div>
 
   <script>
     function toggleMenu() {
