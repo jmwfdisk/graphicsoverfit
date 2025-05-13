@@ -105,27 +105,18 @@
     }
 
     .modal {
-      display: none; /* 기본 숨김 */
+      display: none;
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      z-index: 5000; 
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 5000;
     }
 
     .modal-backdrop {
       position: absolute;
       width: 100%; height: 100%;
       background: rgba(0,0,0,0.8);
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      transform: translate(50%, -50%);
-      font-size: 32px;
-      color: #fff;
-      cursor: pointer; 
     }
 
     .modal-image {
@@ -150,6 +141,17 @@
       color: #fff;
       cursor: pointer;
       z-index: 10;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: calc(50% - 35%);  /* 이미지 기준 위치 (50% 중앙 - 반 높이) */
+      left: calc(50% + 18%); /* 이미지 우측으로 */
+      transform: translate(-50%, -50%);
+      font-size: 32px;
+      color: #fff;
+      cursor: pointer;
+      z-index: 5100;
     }
 
 @media (max-width: 768px) {
@@ -261,6 +263,7 @@
       overflow-y: auto;            /* 세로 스크롤 */
       padding: 16px;               /* 원하는 패딩 */
     }
+
     .mobile-thumbnails img {
       width: 100%;                 /* 가로 꽉 채우기 */
       height: auto;
@@ -307,9 +310,9 @@
         <img src="./image/art/3-1.png" alt="item 3" style="width: 50px; height: auto;"
                   data-large-src="./image/art/3.png" alt="Thumb 3">
         <img src="./image/art/4-1.png" alt="item 4" style="width: 50px; height: auto;"
-                  data-large-src="./image/art/no-image.png" alt="Thumb 4">
+                  data-large-src="./image/art/4.png" alt="Thumb 4">
         <img src="./image/art/5-1.png" alt="item 5" style="width: 50px; height: auto;"
-                  data-large-src="./image/art/no-image.png" alt="Thumb 5">
+                  data-large-src="./image/art/5.png" alt="Thumb 5">
         <img src="./image/art/no-image1.png" alt="item 6" style="width: 50px; height: auto;"
                   data-large-src="./image/art/no-image.png" alt="Thumb 6">
         <img src="./image/art/no-image1.png" alt="item 7" style="width: 50px; height: auto;" 
@@ -344,10 +347,8 @@
     </div>
 
     <div id="image-modal" class="modal">
-      <div class="modal-backdrop"></div>
-      <div class="modal-image-container">
-        <span class="modal-close">&times;</span>
-        <img class="modal-image" src="" alt="Large view">
+      <span class="modal-close">&times;</span>
+      <img class="modal-image" src="" alt="Large view">
     </div>
   </div>
 
@@ -391,13 +392,17 @@
     });
 
     document.querySelectorAll('.thumbnail-strip img').forEach(img => {
-      img.addEventListener('click', () => {
-      const modal = document.getElementById('image-modal');
-      const modalImg = modal.querySelector('.modal-image');
-      modalImg.src = img.dataset.largeSrc; // 큰 이미지 로드
-      modal.style.display = 'block';       // 모달 표시
+    img.addEventListener('click', (e) => {
+    const largeSrc = e.target.getAttribute('data-large-src');
+    if (!largeSrc) return;
+
+    const modal = document.getElementById('image-modal');
+    const modalImg = modal.querySelector('.modal-image');
+    modalImg.src = largeSrc;
+    modal.style.display = 'block';
+    modalImg.style.display = 'block';
     });
-  });
+});
 
 // 모달 닫기
     document.querySelector('.modal-close').addEventListener('click', () => {
