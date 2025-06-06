@@ -104,14 +104,24 @@
     --mobile-thumb-offset: 120px;  /* 상단에서 이만큼 아래로 내림 */
     }
 
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background-color: rgba(0, 0, 0, 0.8);
-      z-index: 5000;
-    }
+.modal {
+  display: none; 
+  position: fixed;
+  z-index: 5000;
+  padding-top: 60px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; 
+  background-color: rgba(0,0,0,0.8);
+}
+
+.modal-content {
+  margin: auto;
+  display: block;
+  max-width: 90%;
+}
 
     .modal-backdrop {
       position: absolute;
@@ -152,6 +162,35 @@
       color: #fff;
       cursor: pointer;
       z-index: 5100;
+    }
+
+    .side-nav li {
+      position: relative;
+    }
+
+    .side-nav li ul {
+      opacity: 0;
+      transform: translateY(-10px); /* 위에서 살짝 내려오게 */
+      filter: blur(4px); /* 흐림 효과 */
+      max-height: 0;
+      overflow: hidden;
+      transition:
+        opacity 0.3s ease,
+        transform 0.3s ease,
+        filter 0.3s ease,
+        max-height 0.5s ease;
+    }
+
+    .side-nav li:hover ul {
+      opacity: 1;
+      transform: translateY(0); /* 원래 위치로 */
+      filter: blur(0);
+      max-height: 300px;
+    }
+
+    .side-nav li ul li a {
+      padding-left: 24px;
+      font-size: 14px;
     }
 
 @media (max-width: 768px) {
@@ -284,15 +323,20 @@
 
     <!-- 네비게이션바 영역 -->
     <nav class="side-nav">
-        <ul>
-          <li><a href="../Brand Culture/Brand Culture.html">Brand Culture</a></li>
-          <li><a href="#">Concept art</a></li>
-          <li><a href="#">Design Studio (coming soon)</a></li>
-          <li><a href="../look book/look book.html">Look Book</a></li>
-          <li><a href="#">New & Trending</a></li>
-          <li><a href="https://smartstore.naver.com/gomgomgirl">Shop</a></li>
-        </ul>
-      </nav>
+      <ul>
+        <li><a href="../Brand Culture/Brand Culture.html">Brand Culture</a></li>
+        <li><a href="./Concept art.html">Concept art</a></li>
+        <li><a href="#">Design Studio (coming soon)</a></li>
+        <li><a href="../look book/look book.html">Look Book</a></li>
+        <li><a href="#">New & Trending</a>
+          <ul style="list-style: none; padding-left: 10px; font-size: 14px;">
+            <li><a href="../NewTrending/new-arrivals.html">New Arrivals</a></li>
+            <li><a href="../NewTrending/limited-edition.html">Limited Edition</a></li>
+          </ul>
+        </li>
+        <li><a href="https://smartstore.naver.com/gomgomgirl">Shop</a></li>
+      </ul>
+    </nav>
 
     <div class="floating-logo">
         <a href="../index.html">
@@ -351,6 +395,11 @@
       <img class="modal-image" src="" alt="Large view">
     </div>
   </div>
+
+  <div id="modal" class="modal">
+  <span class="modal-close">&times;</span>
+  <img class="modal-content" id="modal-image">
+</div>
 
   <script>
     function toggleMenu() {
