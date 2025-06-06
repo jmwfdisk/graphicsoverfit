@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Graphics Overfit Concept art</title>
+
+  <style>
+    /* 전체 페이지 배경을 검정색으로 설정 */
+    body {
+      background-color: #000;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    
+    /* 왼쪽 세로형 네비게이션바 - 투명하게, 메인 이미지 위에 배치 */
+    .side-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 180px;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.3); /* 반투명 검정 */
+      z-index: 1000; /* 메인 이미지보다 위에 오게 */
+      padding-top: 100px; /* 위쪽 여백 (로고 또는 상단 공간 확보) */
+      transition: background-color 0.3s;
+    }
+
+    .side-nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .side-nav li {
+      text-align: left;
+    }
+
+    .side-nav a {
+      display: block;
+      color: #fff;
+      padding: 12px 16px;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    .side-nav a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* 로고를 메인 이미지 위에 띄우기 위한 스타일 */
+    .floating-logo {
+      position: absolute;
+      top: -20px;          /* 상단 여백 */
+      left: 50%;          /* 가로 가운데 */
+      transform: translateX(-50%); /* 가로 정중앙 */
+      z-index: 1100;
+    }
+
+    /* 로고 이미지 스타일 */
+    .logo-image {
+      width: 130px;
+      height: 130px;
+      object-fit: contain; /* 비율 유지하며 채우기 */
+      background: transparent;
+    }
+
+    /* 푸터 스타일 */
+    footer {
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      margin-top: auto;
+    }
+
+    footer p {
+      margin: 5px 0;
+      font-size: 12px;
+    }
+
+    .hamburger {
+      display: none;
+    }
+
+    .side-nav li {
+      position: relative;
+    }
+
+    .side-nav li ul {
+      opacity: 0;
+      transform: translateY(-10px); /* 위에서 살짝 내려오게 */
+      filter: blur(4px); /* 흐림 효과 */
+      max-height: 0;
+      overflow: hidden;
+      transition:
+        opacity 0.3s ease,
+        transform 0.3s ease,
+        filter 0.3s ease,
+        max-height 0.5s ease;
+    }
+
+    .side-nav li:hover ul {
+      opacity: 1;
+      transform: translateY(0); /* 원래 위치로 */
+      filter: blur(0);
+      max-height: 300px;
+    }
+
+    .side-nav li ul li a {
+      padding-left: 24px;
+      font-size: 14px;
+    }
+
+@media (max-width: 768px) {
+    .side-nav {
+      width: 100%; /* 가로 전체 차지 */
+      height: auto; /* 자동 높이 */
+      background-color: rgba(0, 0, 0, 0.9); /* 더 선명하게 */
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 3000;
+      padding-top: 60px; /* 위 여백 */
+    }
+
+    .side-nav ul {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .side-nav li {
+      text-align: center;
+      width: 100%;
+    }
+
+    .side-nav a {
+      padding: 16px;
+      font-size: 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .floating-logo {
+      top: 10px;
+      width: 80px;
+    }
+  
+    .floating-logo {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2000;
+      width: 90px;
+      height: auto;
+      pointer-events: auto;
+    }
+
+    .logo-image {
+      width: 90px;
+      height: auto;
+    }
+
+    .hamburger {
+      display: block;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 28px;
+      color: white;
+      z-index: 2000;
+      cursor: pointer;
+    }
+
+    .side-nav {
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      width: 220px;
+      background-color: rgba(0, 0, 0, 0.95);
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding-top: 80px;
+      z-index: 3000;
+    }
+
+    .side-nav.active {
+      transform: translateX(0);
+    }
+
+    .side-nav ul {
+      flex-direction: column;
+      align-items: flex-start;
+      padding-left: 20px;
+    }
+  
+    .side-nav li {
+      text-align: left;
+      width: 100%;
+    }
+  
+    .side-nav a {
+      padding: 14px 0;
+      display: block;
+      width: 100%;
+      font-size: 16px;
+    }
+  }
+  </style>
+</head>
+
+<body>
+    <!-- 햄버거 버튼 (모바일 전용) -->
+    <div class="hamburger" onclick="toggleMenu()">
+      ☰
+    </div>
+
+    <!-- 로고 아래 구분선 추가 -->
+    <div style="position: relative; top: 85px; width: 98%; height: 3px; background-color: rgba(255, 255, 255, 0.2); margin: 0 auto;"></div>
+
+    <!-- 네비게이션바 영역 -->
+    <nav class="side-nav">
+      <ul>
+        <li><a href="../Brand Culture/Brand Culture.html">Brand Culture</a></li>
+        <li><a href="../Concept art/Concept art.html">Concept art</a></li>
+        <li><a href="#">Design Studio (coming soon)</a></li>
+        <li><a href="../look book/look book.html">Look Book</a></li>
+        <li><a href="#">New & Trending</a>
+          <ul style="list-style: none; padding-left: 10px; font-size: 14px;">
+            <li><a href="./new-arrivals.html">New Arrivals</a></li>
+            <li><a href="./limited-edition.html">Limited Edition</a></li>
+          </ul>
+        </li>
+        <li><a href="https://smartstore.naver.com/gomgomgirl">Shop</a></li>
+      </ul>
+    </nav>
+
+    <div class="floating-logo">
+        <a href="../index.html">
+          <img src="./image/mainlogo.png" alt="로고" class="logo-image">
+        </a>
+      </div>
+
+  <script>
+    function toggleMenu() {
+    const sideNav = document.querySelector('.side-nav');
+    sideNav.classList.toggle('active');
+    }
+
+        // 모바일 메뉴 닫기
+    document.addEventListener("DOMContentLoaded", () => {
+      const menuLinks = document.querySelectorAll('.side-nav a');
+      menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          document.querySelector('.side-nav').classList.remove('active');
+        });
+      });
+    });
+  
+    document.addEventListener('click', (e) => {
+      const sideNav = document.querySelector('.side-nav');
+      const hamburger = document.querySelector('.hamburger');
+      if (!sideNav.contains(e.target) && !hamburger.contains(e.target)) {
+        sideNav.classList.remove('active');
+      }
+    });
+  </script>
+
+</body>
+</html>
