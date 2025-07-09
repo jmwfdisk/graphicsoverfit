@@ -154,14 +154,16 @@
     }
 
     .modal-close {
+      display: block;
       position: absolute;
-      top: calc(50% - 35%);  /* 이미지 기준 위치 (50% 중앙 - 반 높이) */
-      left: calc(50% + 18%); /* 이미지 우측으로 */
-      transform: translate(-50%, -50%);
-      font-size: 32px;
+      top: 20px;
+      right: 20px;
+      font-size: 28px;
       color: #fff;
+      background: none;
+      border: none;
+      z-index: 4000;
       cursor: pointer;
-      z-index: 5100;
     }
 
     .side-nav li {
@@ -392,15 +394,14 @@
     </div>
 
     <div id="image-modal" class="modal">
-      <span class="modal-close">&times;</span>
+      <button class="modal-close" onclick="document.getElementById('image-modal').style.display='none'">✕</button>
       <img class="modal-image" src="" alt="Large view">
     </div>
-  </div>
 
-  <div id="modal" class="modal">
-  <span class="modal-close">&times;</span>
-  <img class="modal-content" id="modal-image">
-</div>
+    <div id="modal" class="modal">
+      <span class="modal-close">&times;</span>
+      <img class="modal-content" id="modal-image">
+    </div>
 
   <script>
     function toggleMenu() {
@@ -458,10 +459,13 @@
     document.querySelector('.modal-close').addEventListener('click', () => {
       document.getElementById('image-modal').style.display = 'none';
     });
-// 백드랍 클릭해도 닫기
-    document.querySelector('.modal-backdrop').addEventListener('click', () => {
-      document.getElementById('image-modal').style.display = 'none';
-    });
+
+    window.addEventListener('click', (event) => {
+      const modal = document.getElementById('image-modal');
+      if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+});
   </script>
 </body>
 </html>
