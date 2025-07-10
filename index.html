@@ -230,6 +230,29 @@
       opacity: 1;
     }
 
+    .slider-dots {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 3;
+    }
+
+    .slider-dots .dot {
+      width: 12px;
+      height: 12px;
+      background-color: rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .slider-dots .dot.active {
+      background-color: white;
+    }
+
 @media (max-width: 768px) {
   .side-nav {
     width: 100%; /* 가로 전체 차지 */
@@ -418,6 +441,8 @@
 
       <img src="./image/main-image.gif" class="main-image" alt="Main Image 3">
       <div class="slide-text"></div>
+     
+      <div class="slider-dots"></div>  
     </div>
   </section> 
 
@@ -480,19 +505,34 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentSlide = 0;
   const slides = document.querySelectorAll('.main-image-slider img');
   const texts = document.querySelectorAll('.slide-text');
+  const dotContainer = document.querySelector('.slider-dots');
 
-  if (slides.length > 0 && texts.length > 0) {
+  if (!dotContainer || slides.length === 0 || texts.length === 0) return;
+
+  slides.forEach((_, index) => {
+    const dot = document.createElement('div');
+    dot.classList.add('dot');
+    if (index === 0) dot.classList.add('active');
+    dotContainer.appendChild(dot);
+  });
+
+  const dots = document.querySelectorAll('.slider-dots .dot');
+
+  slides[currentSlide].classList.add('active');
+  texts[currentSlide].classList.add('active');
+  dots[currentSlide].classList.add('active');
+
+  setInterval(() => {
+    slides[currentSlide].classList.remove('active');
+    texts[currentSlide].classList.remove('active');
+    dots[currentSlide].classList.remove('active');
+
+    currentSlide = (currentSlide + 1) % slides.length;
+
     slides[currentSlide].classList.add('active');
     texts[currentSlide].classList.add('active');
-
-    setInterval(() => {
-      slides[currentSlide].classList.remove('active');
-      texts[currentSlide].classList.remove('active');
-      currentSlide = (currentSlide + 1) % slides.length;
-      slides[currentSlide].classList.add('active');
-      texts[currentSlide].classList.add('active');
-    }, 5000);
-  }
+    dots[currentSlide].classList.add('active');
+  }, 5000);
 });
   </script>
   
