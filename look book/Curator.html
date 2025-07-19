@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Graphics Overfit Lookbook</title>
+
+  <style>
+    /* 전체 페이지 배경을 검정색으로 설정 */
+    body {
+      background-color: #000;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* 왼쪽 세로형 네비게이션바 - 투명하게, 메인 이미지 위에 배치 */
+    .side-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 180px;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.3); /* 반투명 검정 */
+      z-index: 1000; /* 메인 이미지보다 위에 오게 */
+      padding-top: 100px; /* 위쪽 여백 (로고 또는 상단 공간 확보) */
+      transition: background-color 0.3s;
+    }
+
+    .side-nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .side-nav li {
+      text-align: left;
+    }
+
+    .side-nav a {
+      display: block;
+      color: #fff;
+      padding: 12px 16px;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    .side-nav a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* 로고를 메인 이미지 위에 띄우기 위한 스타일 */
+    .floating-logo {
+      position: absolute;
+      top: -20px;          /* 상단 여백 */
+      left: 50%;          /* 가로 가운데 */
+      transform: translateX(-50%); /* 가로 정중앙 */
+      z-index: 1100;
+    }
+
+    /* 로고 이미지 스타일 */
+    .logo-image {
+      width: 130px;
+      height: 130px;
+      object-fit: contain; /* 비율 유지하며 채우기 */
+      background: transparent;
+    }
+
+    .lookbook-gallery {
+      position: relative;         /* top 속성 작동하려면 필요 */
+      margin-top: 50px;          /* 여기서 원하는 만큼 조정하세요 */
+      margin-left: 180px;         /* 사이드 네비에 맞춰 조정 */
+      padding: 60px;
+    }
+
+    .lookbook-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .gallery-item {
+      width: 100%;
+      height: auto;
+      cursor: pointer;
+      object-fit: cover;
+      border-radius: 6px;
+      transition: transform 0.2s;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.02);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 3000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-body {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 40px;
+      max-width: 90%;
+      max-height: 90%;
+    }
+
+    .modal-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .modal-content {
+      max-width: 600px;
+      max-height: 70vh;
+      object-fit: contain;
+    }
+
+    .modal-thumbnails {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+    }
+
+    .modal-thumbnails img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      opacity: 0.5;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: opacity 0.2s;
+    }
+
+    .modal-thumbnails img.active {
+      opacity: 1;
+      border: 2px solid white;
+    }
+
+    .modal-dots {
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .modal-dots span {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      margin: 0 4px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .modal-dots span.active {
+      background-color: white;
+    }
+
+    .modal-info {
+      flex: 1;
+      min-width: 300px;
+      max-width: 400px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #fff;
+      text-align: center;
+    }
+
+    .product-button {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 10px 20px;
+      background-color: #ffffff;
+      color: #000;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .product-button:hover {
+      background-color: #333;
+      color: #fff;
+    }
+
+    /* 좌우 화살표 버튼 스타일 */
+    .arrow-button {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      border-radius: 50%;
+      border: none;
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      cursor: pointer;
+      position: absolute;
+      top: 45%;
+      transform: translateY(-50%);
+      z-index: 3200;
+      padding: 0;
+      line-height: normal; 
+    }
+
+    .arrow-button:hover {
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .arrow-button.left {
+      left: 10px;
+    }
+
+    .arrow-button.right {
+      right: 10px;
+    }
+    /* 푸터 스타일 */
+    footer {
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      margin-top: auto;
+    }
+
+    footer p {
+      margin: 5px 0;
+      font-size: 12px;
+    }
+
+    .hamburger {
+      display: none;
+    }
+    /* 모달 닫기 버튼 (PC/모바일 모두 동일 스타일) */
+    .modal-close {
+      display: block;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 28px;
+      color: #fff;
+      background: none;
+      border: none;
+      z-index: 4000;
+      cursor: pointer;
+    }
+
+    .side-nav li {
+      position: relative;
+    }
+
+    .side-nav li ul {
+      opacity: 0;
+      transform: translateY(-10px); /* 위에서 살짝 내려오게 */
+      filter: blur(4px); /* 흐림 효과 */
+      max-height: 0;
+      overflow: hidden;
+      transition:
+        opacity 0.3s ease,
+        transform 0.3s ease,
+        filter 0.3s ease,
+        max-height 0.5s ease;
+    }
+
+    .side-nav li:hover ul {
+      opacity: 1;
+      transform: translateY(0); /* 원래 위치로 */
+      filter: blur(0);
+      max-height: 300px;
+    }
+
+    .side-nav li ul li a {
+      padding-left: 24px;
+      font-size: 14px;
+    }
+
+@media (max-width: 768px) {
+  .side-nav {
+    width: 100%; /* 가로 전체 차지 */
+    height: auto; /* 자동 높이 */
+    background-color: rgba(0, 0, 0, 0.9); /* 더 선명하게 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3000;
+    padding-top: 60px; /* 위 여백 */
+  }
+
+  .side-nav ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .side-nav li {
+    text-align: center;
+    width: 100%;
+  }
+
+  .side-nav a {
+    padding: 16px;
+    font-size: 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .floating-logo {
+    top: 10px;
+    width: 80px;
+  }
+  
+  .floating-logo {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2000;
+    width: 90px;
+    height: auto;
+    pointer-events: auto;
+  }
+
+  .logo-image {
+    width: 90px;
+    height: auto;
+  }
+
+  .hamburger {
+    display: block;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    font-size: 28px;
+    color: white;
+    z-index: 2000;
+    cursor: pointer;
+  }
+
+  .side-nav {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    width: 220px;
+    background-color: rgba(0, 0, 0, 0.95);
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 80px;
+    z-index: 3000;
+  }
+
+  .side-nav.active {
+    transform: translateX(0);
+  }
+
+  .side-nav ul {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 20px;
+  }
+  
+  .side-nav li {
+    text-align: left;
+    width: 100%;
+  }
+  
+  .side-nav a {
+    padding: 14px 0;
+    display: block;
+    width: 100%;
+    font-size: 16px;
+  }
+
+  .lookbook-gallery {
+    position: relative;
+    padding: 20px;
+    margin-top: 90px;
+    margin-left: 0;
+  }
+
+  .lookbook-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .gallery-item {
+    border-radius: 0;
+  } 
+
+  .modal {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .modal-body {
+    flex-direction: column;
+    gap: 20px;
+    max-height: 100vh;
+    overflow-y: auto;
+    padding-bottom: 20px;
+  }
+
+  .modal-content {
+    width: 100%;
+    max-height: 50vh;
+    object-fit: contain;
+  }
+
+  .modal-thumbnails {
+    display: none;
+    justify-content: center;
+    overflow-x: auto;
+  }
+
+  .modal-info {
+    text-align: center;
+    padding: 0 10px;
+    max-width: 300px;
+    margin: 0 auto; /* 가운데 정렬 */
+  }
+  
+  /* .modal-close는 PC/모바일 공통 스타일로 상단에 정의됨 */
+  
+  .product-button {
+    display: inline-block;
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+    width: auto; /* ✅ 버튼 너비를 내용에 맞춤 */
+    max-width: 100%; /* 혹시 너무 길어질 경우 대비 */
+  }
+
+  .modal-info {
+    text-align: center;
+  }
+}
+  </style>
+</head>
+
+<body>
+    <!-- 햄버거 버튼 (모바일 전용) -->
+    <div class="hamburger" onclick="toggleMenu()">
+      ☰
+    </div>
+
+    <!-- 로고 아래 구분선 추가 -->
+    <div style="position: relative; top: 85px; width: 98%; height: 3px; background-color: rgba(255, 255, 255, 0.2); margin: 0 auto;"></div>
+
+    <!-- 네비게이션바 영역 -->
+    <nav class="side-nav">
+        <ul>
+          <li><a href="../Brand Culture/Brand Culture.html">Brand Culture</a></li>
+          <li><a href="../Concept art/Concept art.html">Concept art</a></li>
+          <li><a href="#">Design Studio (coming soon)</a></li>
+          <li><a href="#">Look Book</a>
+            <ul style="list-style: none; padding-left: 10px; font-size: 14px;">
+              <li><a href="#">Model Collection</a></li>
+              <li><a href="../look book/Curator.html">Curator Collection</a></li>
+            </ul>
+          </li>
+          <li><a href="#">New & Trending</a>
+            <ul style="list-style: none; padding-left: 10px; font-size: 14px;">
+              <li><a href="../NewTrending/new-arrivals.html">New Arrivals</a></li>
+              <li><a href="../NewTrending/limited-edition.html">Limited Edition</a></li>
+              <li><a href="../NewTrending/Upcoming Collection.html">Upcoming Collection</a></li>
+            </ul>
+          </li>
+          <li><a href="https://smartstore.naver.com/gomgomgirl">Shop</a></li>
+        </ul>
+    </nav>
+
+    <!-- Lookbook 갤러리 -->
+    <section class="lookbook-gallery">
+      <div class="lookbook-grid">
+          <img src="./image/d.__.j2/d.__.j2_1.jpg" alt="룩북1 대표" class="gallery-item" data-gallery="look1" />
+          <img src="./image/유일:/1.jpg" alt="룩북2 대표" class="gallery-item" data-gallery="look2" />
+          <img src="./image/a.rteen/a.rteen_2.jpg" alt="룩북3 대표" class="gallery-item" data-gallery="look3" />
+          <img src="./image/고양이고영희/1.jpg" alt="룩북4 대표" class="gallery-item" data-gallery="look4" />
+          <img src="./image/미래미1004/1.jpg" alt="룩북5 대표" class="gallery-item" data-gallery="look5" />
+          <img src="./image/ddo_chichi/1.jpg" alt="룩북6 대표" class="gallery-item" data-gallery="look6" />
+          <img src="./image/Rabbit_Yoon/2.png" alt="룩북7 대표" class="gallery-item" data-gallery="look7" /> 
+          <img src="./image/dae/1.jpg" alt="룩북7 대표" class="gallery-item" data-gallery="look8" />      
+        <!-- 더 추가 가능 -->
+      </div>
+    </section>
+
+    <!-- 이미지 확대 모달 (PC only) -->
+    <div class="modal" id="imageModal">
+      <div class="modal-body">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-left">
+          <button id="prevBtn" class="arrow-button left">&#10094;</button>
+          <button id="nextBtn" class="arrow-button right">&#10095;</button>
+          <img class="modal-content" id="modalImage" />
+          <div class="modal-thumbnails" id="thumbnailContainer"></div>
+          <div class="modal-dots" id="dotContainer"></div>
+        </div>
+    
+        <div class="modal-info" id="modalInfoBox">
+          <h3 id="productTitle">제품명</h3>
+          <p id="productDesc">제품설명</p>
+          <a href="#" target="_blank" id="productLink" class="product-button">제품보기</a>
+        </div>
+      </div>
+    </div>
+
+  <!-- 메인 로고 (투명 배경, 이미지 위 고정) -->
+  <div class="floating-logo">
+    <a href="../index.html">
+      <img src="./image/mainlogo.png" alt="로고" class="logo-image">
+    </a>
+  </div>
+  
+  <script>
+    function toggleMenu() {
+      const sideNav = document.querySelector('.side-nav');
+      sideNav.classList.toggle('active');
+    }
+  
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImage");
+    const galleryItems = document.querySelectorAll(".gallery-item");
+    const modalLeft = document.querySelector(".modal-left");
+  
+    const galleryMap = {
+      look1: [
+        "./image/d.__.j2/d.__.j2_1.jpg",
+        "./image/d.__.j2/d.__.j2_2.jpg",
+        "./image/d.__.j2/d.__.j2_3.jpg",
+        "./image/d.__.j2/d.__.j2_4.jpg",
+        "./image/d.__.j2/d.__.j2_5.jpg",
+        "./image/d.__.j2/d.__.j2_6.jpg",
+        "./image/d.__.j2/d.__.j2_7.jpg"
+      ],
+      look2: [
+        "./image/유일:/1.jpg",
+        "./image/유일:/2.jpg"
+      ],
+      look3: [
+        "./image/a.rteen/a.rteen_2.jpg",
+        "./image/a.rteen/a.rteen_4.jpg"
+      ],
+      look4: [
+        "./image/고양이고영희/1.jpg",
+        "./image/고양이고영희/2.jpg",
+        "./image/고양이고영희/3.jpg",
+        "./image/고양이고영희/4.jpg"
+      ],
+      look5: [
+        "./image/미래미1004/1.jpg",
+        "./image/미래미1004/2.jpg",
+        "./image/미래미1004/3.jpg"
+      ],
+      look6: [
+        "./image/ddo_chichi/1.jpg",
+        "./image/ddo_chichi/2.jpg",
+        "./image/ddo_chichi/3.jpg",
+        "./image/ddo_chichi/4.jpg",
+        "./image/ddo_chichi/5.jpg"
+      ],
+      look7: [
+        "./image/Rabbit_Yoon/1.jpg",
+        "./image/Rabbit_Yoon/2.png"
+      ],
+      look8: [
+        "./image/dae/1.jpg",
+        "./image/dae/2.jpg",
+        "./image/dae/3.jpg",
+        "./image/dae/4.jpg"
+      ],
+    };
+  
+    const productInfo = {
+      look1: {
+        title: "[ARTWORK] Golden Youth Art TEE",
+        desc: "새로운 세대의 감성을 담은 스트릿웨어로<br>자유롭고 개성이 넘치는 컬렉션!<br>트렌디한 오버핏 실루엣과 그래픽 디자인으로<br>누구나 편하게 착용할 수 있는 스타일,<br>어디서든 돋보이는 유니크한 룩을 연출할 수 있습니다.<br>* 모델 : 164cm / 사이즈 M",
+        link: "https://smartstore.naver.com/gomgomgirl/products/11214306466"
+      },
+      look2: {
+        title: "[ARTWORK] Pure Youth Art TEE",
+        desc: "깨끗하고 자연스러운 감성을 담은 스트릿웨어로<br>심플하면서도 세련된 디자인, 여유로운 실루엣, 편안한 착용감으로,<br>어디서든 돋보이는 유니크한 룩을 연출할 수 있습니다.<br>* 모델 : 163cm / 사이즈 L",
+        link: "https://smartstore.naver.com/gomgomgirl/products/11216972358"
+      },
+      look3: {
+        title: "[ARTWORK] Golden Youth Art TEE",
+        desc: "새로운 세대의 감성을 담은 스트릿웨어로<br>자유롭고 개성이 넘치는 컬렉션!<br>트렌디한 오버핏 실루엣과 그래픽 디자인으로<br>누구나 편하게 착용할 수 있는 스타일,<br>어디서든 돋보이는 유니크한 룩을 연출할 수 있습니다.<br>* 모델 : 164cm / 사이즈 M",
+        link: "https://smartstore.naver.com/gomgomgirl/products/11214306466"
+      },
+      look4: {
+        title: "[ARTWORK] SPIRIT Art TEE",
+        desc: "스피릿 티셔츠는 밀도 높은 16수 코튼 원단으로 제작되어<br>착용감은 부드럽고, 자연스러운 드롭숄더와 여유로운 핏이<br>스트리트 감성을 극대화합니다.<br><br>뒷면에는 그래픽 아트 들어가 있어 은은한 존재감을 보여주며,<br>앞면은 클래식한 레터링 라벨로 감각적인 디테일을 더했습니다.",
+        link: "https://smartstore.naver.com/gomgomgirl/products/11562415879"
+      },
+      look5: {
+        title: "[ARTWORK] SPIRIT Art TEE",
+        desc: "스피릿 티셔츠는 밀도 높은 16수 코튼 원단으로 제작되어<br>착용감은 부드럽고, 자연스러운 드롭숄더와 여유로운 핏이<br>스트리트 감성을 극대화합니다.<br><br>뒷면에는 그래픽 아트 들어가 있어 은은한 존재감을 보여주며,<br>앞면은 클래식한 레터링 라벨로 감각적인 디테일을 더했습니다.",
+        link: "https://smartstore.naver.com/gomgomgirl/products/11562415879"
+      },
+      look6: {
+        title: "[ARTWORK] SPIRIT Art TEE",
+        desc: "스피릿 티셔츠는 밀도 높은 16수 코튼 원단으로 제작되어<br>착용감은 부드럽고, 자연스러운 드롭숄더와 여유로운 핏이<br>스트리트 감성을 극대화합니다.<br><br>뒷면에는 그래픽 아트 들어가 있어 은은한 존재감을 보여주며,<br>앞면은 클래식한 레터링 라벨로 감각적인 디테일을 더했습니다.",
+        link: "https://smartstore.naver.com/gomgomgirl/products/11562415879"
+      },
+      look7: {
+        title: "[ARTWORK] SPIRIT Art TEE",
+        desc: "스피릿 티셔츠는 밀도 높은 16수 코튼 원단으로 제작되어<br>착용감은 부드럽고, 자연스러운 드롭숄더와 여유로운 핏이<br>스트리트 감성을 극대화합니다.<br><br>뒷면에는 그래픽 아트 들어가 있어 은은한 존재감을 보여주며,<br>앞면은 클래식한 레터링 라벨로 감각적인 디테일을 더했습니다.",
+        link: "https://smartstore.naver.com/gomgomgirl/products/11562415879"
+      },
+      look8: {
+        title: "[BASIC] ESSENTIAL LOGO TEE",
+        desc: "그래픽스 오버핏의 Essential 로고 그래픽 티셔츠와<br>워싱 와이드 데님 팬츠의 조합!<br>루즈한 실루엣과 볼드한 그래픽으로 스트릿 패션을 강조,<br>심플하지만 스트릿 웨어의 정체성이 살아 있는 감각적인 스타일.<br>* 모델 : 160cm, 46kg / 사이즈 : S",
+        link: "https://smartstore.naver.com/gomgomgirl/products/12117577688"
+      },
+    };
+  
+    let currentGallery = [];
+    let currentIndex = 0;
+  
+    function openGallery(galleryKey, startIndex = 0) {
+      currentGallery = galleryMap[galleryKey];
+      currentIndex = startIndex;
+      modal.style.display = "flex";
+      document.body.style.overflow = 'hidden'; // 📌 추가: 스크롤 막기
+      
+      updateModalView();
+  
+      // 제품 정보 표시
+      const info = productInfo[galleryKey];
+      if (info) {
+        document.getElementById("productTitle").textContent = info.title;
+        document.getElementById("productDesc").innerHTML = info.desc;
+        document.getElementById("productLink").href = info.link;
+      }
+  
+      // 썸네일 렌더링
+      const thumbContainer = document.getElementById("thumbnailContainer");
+      thumbContainer.innerHTML = "";
+      currentGallery.forEach((src, i) => {
+        const thumb = document.createElement("img");
+        thumb.src = src;
+        if (i === currentIndex) thumb.classList.add("active");
+        thumb.onclick = () => {
+          currentIndex = i;
+          updateModalView();
+        };
+        thumbContainer.appendChild(thumb);
+      });
+  
+      // 도트 렌더링
+      const dotContainer = document.getElementById("dotContainer");
+      dotContainer.innerHTML = "";
+      currentGallery.forEach((_, i) => {
+        const dot = document.createElement("span");
+        if (i === currentIndex) dot.classList.add("active");
+        dotContainer.appendChild(dot);
+      });
+    }
+  
+    function updateModalView() {
+      modalImg.src = currentGallery[currentIndex];
+  
+      document.querySelectorAll("#thumbnailContainer img").forEach((img, i) => {
+        img.classList.toggle("active", i === currentIndex);
+      });
+  
+      document.querySelectorAll("#dotContainer span").forEach((dot, i) => {
+        dot.classList.toggle("active", i === currentIndex);
+      });
+    }
+  
+    // 슬라이드 드래그/터치 감지
+    let startX = 0;
+  
+    modalLeft.addEventListener("mousedown", (e) => {
+      startX = e.clientX;
+    });
+  
+    modalLeft.addEventListener("mouseup", (e) => {
+      let endX = e.clientX;
+      handleSwipe(endX - startX);
+    });
+  
+    modalLeft.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].clientX;
+    });
+  
+    modalLeft.addEventListener("touchend", (e) => {
+      let endX = e.changedTouches[0].clientX;
+      handleSwipe(endX - startX);
+    });
+  
+    function handleSwipe(deltaX) {
+      if (Math.abs(deltaX) > 50) {
+        if (deltaX < 0) {
+          currentIndex = (currentIndex + 1) % currentGallery.length;
+        } else {
+          currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+        }
+        updateModalView();
+      }
+    }
+    
+    function closeModal() {
+         modal.style.display = "none";
+         document.body.style.overflow = 'auto'; // 📌 스크롤 다시 허용
+    }
+    
+    // 타일 클릭 시 갤러리 열기
+    galleryItems.forEach(item => {
+      const galleryKey = item.getAttribute("data-gallery");
+      if (!galleryKey || !galleryMap[galleryKey]) return;
+      item.addEventListener("click", () => {
+        openGallery(galleryKey, 0);
+      });
+    });
+  
+    // 모달 외부 클릭 시 닫기
+    window.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        closeModal(); // 📌 함수로 교체
+      }
+    });
+  
+    // ESC 키 누르면 닫기 (옵션)
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        closeModal(); // 📌 함수로 교체
+      }
+    });
+  
+    // 모바일 메뉴 닫기
+    document.addEventListener("DOMContentLoaded", () => {
+      const menuLinks = document.querySelectorAll('.side-nav a');
+      menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          document.querySelector('.side-nav').classList.remove('active');
+        });
+      });
+    });
+  
+    document.addEventListener('click', (e) => {
+      const sideNav = document.querySelector('.side-nav');
+      const hamburger = document.querySelector('.hamburger');
+      if (!sideNav.contains(e.target) && !hamburger.contains(e.target)) {
+        sideNav.classList.remove('active');
+      }
+    });
+
+    // 좌우 화살표 버튼 이벤트
+    document.getElementById("prevBtn").addEventListener("click", () => {
+      currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+      updateModalView();
+    });
+
+    document.getElementById("nextBtn").addEventListener("click", () => {
+      currentIndex = (currentIndex + 1) % currentGallery.length;
+      updateModalView();
+    });
+  </script>
+</body>
+</html>
