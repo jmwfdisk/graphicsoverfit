@@ -291,6 +291,22 @@
       font-size: 14px;
     }
 
+    .dot-arrow {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 1px solid white;
+      border-radius: 4px;
+      padding: 6px 16px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .dot-arrow:hover {
+      background-color: rgba(255, 255, 255, 0.5);
+      color: black;
+    }
+
 @media (max-width: 768px) {
   .side-nav {
     width: 100%; /* 가로 전체 차지 */
@@ -518,7 +534,11 @@
           <button id="nextBtn" class="arrow-button right">&#10095;</button>
           <img class="modal-content" id="modalImage" />
           <div class="modal-thumbnails" id="thumbnailContainer"></div>
-          <div class="modal-dots" id="dotContainer"></div>
+          <div class="modal-dots-wrapper" style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 20px;">
+            <button class="dot-arrow" onclick="prevImage()">이전</button>
+            <div class="modal-dots" id="dotContainer" style="display: flex; align-items: center; gap: 6px; margin-top: 2px;"></div>
+            <button class="dot-arrow" onclick="nextImage()">다음</button>
+          </div>
         </div>
     
         <div class="modal-info" id="modalInfoBox">
@@ -781,6 +801,16 @@
       currentIndex = (currentIndex + 1) % currentGallery.length;
       updateModalView();
     });
+
+    function prevImage() {
+      currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+      updateModalView();
+    }
+
+    function nextImage() {
+      currentIndex = (currentIndex + 1) % currentGallery.length;
+      updateModalView();
+    }
   </script>
 </body>
 </html>
