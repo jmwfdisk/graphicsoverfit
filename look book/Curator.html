@@ -85,11 +85,12 @@
 
     .gallery-item {
       width: 100%;
-      height: auto;
-      cursor: pointer;
-      object-fit: cover;
+      display: block;
+      aspect-ratio: 4 / 5;   /* 원하는 비율: 1/1(정사각), 3/4 등으로 바꿔도 됨 */
+      height: auto;          /* aspect-ratio가 높이 계산 */
+      object-fit: cover;     /* 중앙 기준으로 넘치는 부분 잘라내기 */
+      object-position: center;
       border-radius: 6px;
-      transition: transform 0.2s;
     }
 
     .gallery-item:hover {
@@ -307,6 +308,65 @@
       color: black;
     }
 
+    /* Lookbook grid navigation styles */
+    .lookbook-nav {
+      position: relative;
+      width: 100%;
+      margin-top: 20px;
+      height: 0;
+    }
+
+    .lookbook-arrow {
+      font-size: 100px;
+      font-weight: 100;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      line-height: 5;
+      color: white;
+      opacity: 1;
+      transition: transform 0.2s ease;
+      cursor: pointer;
+      user-select: none;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2000;
+    }
+
+    .lookbook-arrow.left {
+      left: -40px;
+    }
+
+    .lookbook-arrow.right {
+      right: -40px;
+    }
+
+    .lookbook-arrow:hover {
+      transform: translateY(-50%) scale(1.3);
+    }
+
+    .lookbook-dots {
+      position: relative;
+      top: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+
+    .lookbook-dots .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: gray;
+      margin: 0 4px;
+      display: inline-block;
+      transition: background-color 0.3s;
+    }
+
+    .lookbook-dots .dot.active {
+      background-color: white;
+    }
+
 @media (max-width: 768px) {
   .side-nav {
     width: 100%; /* 가로 전체 차지 */
@@ -512,7 +572,7 @@
 
     <!-- Lookbook 갤러리 -->
     <section class="lookbook-gallery">
-      <div class="lookbook-grid">
+      <div class="lookbook-grid" style="position: relative;">
           <img src="./image/d.__.j2/d.__.j2_1.jpg" alt="룩북1 대표" class="gallery-item" data-gallery="look1" />
           <img src="./image/유일:/1.jpg" alt="룩북2 대표" class="gallery-item" data-gallery="look2" />
           <img src="./image/a.rteen/a.rteen_2.jpg" alt="룩북3 대표" class="gallery-item" data-gallery="look3" />
@@ -522,7 +582,10 @@
           <img src="./image/Rabbit_Yoon/2.png" alt="룩북7 대표" class="gallery-item" data-gallery="look7" /> 
           <img src="./image/dae/1.jpg" alt="룩북7 대표" class="gallery-item" data-gallery="look8" />      
         <!-- 더 추가 가능 -->
+        <div class="lookbook-arrow left" onclick="prevGridSlide()">‹</div>
+        <div class="lookbook-arrow right" onclick="nextGridSlide()">›</div>
       </div>
+      <div class="lookbook-dots" id="gridDotContainer"></div>
     </section>
 
     <!-- 이미지 확대 모달 (PC only) -->
@@ -811,6 +874,48 @@
       currentIndex = (currentIndex + 1) % currentGallery.length;
       updateModalView();
     }
+  </script>
+  <script>
+    // Lookbook grid pagination logic
+    document.addEventListener('DOMContentLoaded', () => {
+      let gridCurrent = 0;
+      const itemsPerPage = 8;
+      const gridItems = document.querySelectorAll('.lookbook-grid .gallery-item');
+      const gridTotalPages = Math.ceil(gridItems.length / itemsPerPage);
+      const container = document.getElementById("gridDotContainer");
+
+      function updateGridView() {
+        gridItems.forEach((item, idx) => {
+          item.style.display = (Math.floor(idx / itemsPerPage) === gridCurrent) ? 'block' : 'none';
+        });
+        updateGridDots();
+      }
+
+      function updateGridDots() {
+        container.innerHTML = '';
+        for (let i = 0; i < gridTotalPages; i++) {
+          const dot = document.createElement('span');
+          dot.className = 'dot' + (i === gridCurrent ? ' active' : '');
+          dot.onclick = () => {
+            gridCurrent = i;
+            updateGridView();
+          };
+          container.appendChild(dot);
+        }
+      }
+
+      window.prevGridSlide = function () {
+        gridCurrent = (gridCurrent - 1 + gridTotalPages) % gridTotalPages;
+        updateGridView();
+      }
+
+      window.nextGridSlide = function () {
+        gridCurrent = (gridCurrent + 1) % gridTotalPages;
+        updateGridView();
+      }
+
+      updateGridView();
+    });
   </script>
 </body>
 </html>
