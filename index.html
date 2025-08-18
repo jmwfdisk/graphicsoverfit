@@ -297,6 +297,223 @@
       font-size: 12px;
     }
 
+/* ==========================
+   [팝업] 오버레이 & 모달 카드
+   ========================== */
+.popup-overlay {
+  position: fixed;
+  top: 145px;           /* 인스타 아이콘(top:100px) 바로 아래 정렬 */
+  right: 40px;          /* 아이콘과 같은 오른쪽 여백 */
+  background: transparent; /* 배경 딤 제거 (페이지 불투명해지지 않음) */
+  display: none;        /* 기본 숨김 */
+  z-index: 1200;        /* SNS(1000)보다 위 */
+  width: auto;
+  height: auto;
+}
+.popup-overlay.open { display: block; }
+
+.popup {
+  position: relative;
+  width: 230px;         /* 원하면 320~420px 등으로 조절 */
+  min-height: 0px;    /* 최소 높이만 보장 */
+  height: auto;         /* 내용에 따라 늘어나게 */
+  max-width: 92vw;
+  border-radius: 10px;
+  padding: 22px 20px 0;
+  overflow: hidden;
+  background: #fff;
+  border: 2px solid #000;
+  color: #000;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.popup h2 {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  letter-spacing: 0.3px;
+  color: #000;
+}
+
+.popup p {
+  margin: 0 0 16px 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333; /* 회색 텍스트 */
+}
+
+.popup-actions { 
+  margin-top: auto;
+  display: flex; 
+  gap: 10px; 
+  justify-content: center; 
+}
+.popup-cta, .popup-secondary {
+  display: inline-block;
+  padding: 10px 16px;
+  text-decoration: none;
+  font-size: 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+}
+.popup-cta {
+  background: #000;   /* 검정 배경 버튼 */
+  color: #fff;        /* 흰색 텍스트 */
+  border-color: #000; /* 검정 테두리 */
+}
+.popup-cta:hover { filter: brightness(1.08); }
+.popup-secondary:hover { background: rgba(0,0,0,0.06); }
+
+.popup-close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 20px;              /* 버튼 크기 */
+  height: 20px;             /* 버튼 크기 */
+  display: flex;            /* 정중앙 정렬 */
+  justify-content: center;  /* 가로 중앙 */
+  border-radius: 50%;
+  border: 1.5px solid #000; /* 검정 테두리 */
+  background: #fff;         /* 흰색 배경 */
+  color: #000;              /* X 글자 색 */
+  font-size: 16px;          /* X 크기 */
+  line-height: 1;           /* 기본값 */
+  padding: 0;               /* 불필요 패딩 제거 */
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  z-index: 5;
+}
+
+.popup-close:focus {
+  outline: none;       /* 포커스 되었을 때도 제거 */
+  box-shadow: none;    /* 혹시 생길 수 있는 외곽선 그림자 제거 */
+}
+
+.popup-close:hover { background: #f2f2f2; }
+
+/* 텍스트 형태의 '오늘 하루 보지 않기' */
+.popup-dontshow {
+  margin-top: 8px;            /* Shop Now와 간격 */
+  text-align: center;         /* 가운데 정렬 */
+}
+
+.popup-dontshow .dontshow-link {
+  font-size: 12px;
+  color: #777;
+  text-decoration: none;      /* 기본은 버튼처럼 보이지 않게 */
+  cursor: pointer;
+}
+
+.popup-dontshow .dontshow-link:hover {
+  text-decoration: underline; /* 호버 시만 밑줄 */
+  color: #000;
+}
+
+/* 배경이미지 비주얼 박스 */
+.popup-visual{
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;                  /* 필요 시 16/9, 1/1 등으로 변경 */
+  background-image: url("./image/popup.png");  /* ← 실제 이미지 경로 */
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 0; 
+}
+
+.popup-visual{ aspect-ratio: 3 / 4; }  /* 세로를 조금 더 확보 */
+
+.popup-visual.full-bleed,
+.popup-visual {
+  width: calc(100% + 40px);   /* .popup 좌우 패딩(20px*2) 상쇄 */
+  margin: -22px -20px 0px;   /* 위 22px, 좌우 20px 제거 + 아래 여백 12px */
+}
+.popup-visual { aspect-ratio: 3 / 4; }  /* 세로형 */
+
+/* 가독성 보강용 그라데이션 (선택) */
+.popup-visual::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;              /* 배경과 같은 층(overlay 아래) */
+  pointer-events: none;    /* 클릭 막지 않음 */
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.35) 0%,
+    rgba(0,0,0,0.15) 35%,
+    rgba(0,0,0,0.50) 100%
+  );
+}
+
+/* 오버레이: 중앙 텍스트 + 하단 버튼 배치 */
+.popup-visual .overlay{
+  position: absolute;
+  inset: 0;
+  display: flex;                /* grid → flex */
+  flex-direction: column;       /* 세로 스택 */
+  align-items: center;
+  text-align: center;
+  padding: 14px;
+  z-index: 1;                
+}
+
+/* 중앙 텍스트 그룹(제목/부제) */
+.popup-visual .overlay-center{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* 하단 버튼/링크: 항상 바닥으로 */
+.popup-visual .popup-bottom{
+  margin-top: auto;             /* 남는 공간을 위로 밀어서 하단 정렬 */
+  display: flex;
+  flex-direction: column;       /* 버튼 아래에 텍스트 */
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 10px;         /* 바닥과 간격 */
+}
+
+/* 배경 위 가독성 */
+.popup-visual .dontshow-link{
+  font-size: 12px;
+  color: rgba(255,255,255,0.9);
+  text-decoration: none;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.45);
+}
+.popup-visual .dontshow-link:hover{ text-decoration: underline; }
+
+/* 버튼을 배경 위에서 더 또렷하게 */
+.popup-visual .popup-cta{ 
+  border: 0.5px solid #fff;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.35)); 
+}
+
+.popup-title{
+  position: relative;
+  top: 15px;            /* +는 아래로, -는 위로 */
+  left: 0; 
+  color: #fff;
+  font-weight: 800;
+  font-size: 18px;       /* 원하면 16~22px로 조절 */
+  line-height: 1.25;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.45);
+}
+.popup-subtitle{
+  color: #f1f1f1;
+  font-size: 16px;
+  line-height: 1.4;
+  margin-top: 150px;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+}
+
+/* 버튼은 카드 하단으로 */
+.popup-actions{ margin-top: auto; }
+
 @media (max-width: 768px) {
   .side-nav {
     width: 100%; /* 가로 전체 차지 */
@@ -425,11 +642,53 @@
   .split-image-section div div {
     font-size: 18px; /* 텍스트 크기도 약간 줄임 */
   }
-}
+
+  .popup { padding: 22px 18px 0; min-height: 0; }
+  .popup h2 { font-size: 14px; }
+  .popup p  { font-size: 10px; }
+
+    /* 모바일에서 배너 위치와 크기 조정 */
+  .popup-visual .overlay{ padding: 12px; }
+  .popup-visual .popup-bottom{ padding-bottom: 8px; }
+  .popup-title{ font-size: 16px; }
+  .popup-subtitle{ font-size: 11px; }
+
+  .popup-visual.full-bleed,
+  .popup-visual {
+    width: calc(100% + 36px);
+    margin: -22px -18px 0;      /* ← 10px → 0 */
+  }
+
+.popup-dontshow .dontshow-link { font-size: 11px; }
   </style>
 </head>
 
 <body>
+<!-- [팝업] 프로모션/공지 모달 -->
+<div id="promo-popup" class="popup-overlay" aria-hidden="true">
+  <div class="popup" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+    <button type="button" class="popup-close" aria-label="닫기">×</button>
+<!-- 비주얼(배경 이미지 + 오버레이 텍스트) -->
+<div class="popup-visual" role="img" aria-label="MUSINSA Global Launch">
+  <div class="overlay">
+    <!-- 중앙 텍스트 묶음 -->
+    <div class="overlay-center">
+      <span id="popup-title" class="popup-title">MUSINSA Global Launch</span>
+    </div>
+    <div class="overlay-center">
+      <span class="popup-subtitle">Japan &amp; USA · 20% OFF<br>('25. 8. 22 ~ 24)</span>
+    </div>
+
+    <!-- 하단 영역: 버튼 + 텍스트 -->
+    <div class="popup-bottom">
+      <a class="popup-cta" href="https://global.musinsa.com/choose-location" target="_blank" rel="noopener">Shop Now</a>
+      <a href="#" class="dontshow-link" data-popup-dismiss>오늘 하루 보지 않기</a>
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+
   <!-- SNS 아이콘 영역: 오른쪽 상단에 고정 -->
   <div class="sns-container">
     <a href="https://www.instagram.com/graphicsoverfit/" target="_blank">
@@ -480,15 +739,18 @@
   <div style="position: relative; top: 85px; width: 98%; height: 3px; background-color: rgba(255, 255, 255, 0.2); margin: 0 auto; z-index: 10;"></div>
 
   <!-- 메인 이미지와 서브 이미지 영역 -->
-  <section class="main-section" style="margin-bottom: 10px;""> 
+  <section class="main-section" style="margin-bottom: 10px;"> 
     <div class="main-image-slider">
-      <img src="./image/summer-main2.png" class="main-image active" alt="Main Image 1">
+      <img src="./image/global-main.png" class="main-image active" alt="Main Image 1">
       <div class="slide-text active"></div>
 
-      <img src="./image/sub-image.png" class="main-image" alt="Main Image 2">
+      <img src="./image/summer-main2.png" class="main-image" alt="Main Image 2">
+      <div class="slide-text"></div>
+
+      <img src="./image/sub-image.png" class="main-image" alt="Main Image 3">
       <div class="slide-text">2025 New Arrivals COMING SOON</div>
 
-      <img src="./image/main-image.gif" class="main-image" alt="Main Image 3">
+      <img src="./image/main-image.gif" class="main-image" alt="Main Image 4">
       <div class="slide-text"></div>
      
       <div class="slider-dots"></div>  
@@ -591,7 +853,61 @@ document.addEventListener('DOMContentLoaded', () => {
     texts[currentSlide].classList.add('active');
     dots[currentSlide].classList.add('active');
   }, 5000);
+
+// ==========================
+// [팝업] 최초 방문시 자동 노출 (24시간 1회)
+// ==========================
+const overlay = document.getElementById('promo-popup');
+const closeBtn = overlay ? overlay.querySelector('.popup-close') : null;
+const dontShow = overlay ? overlay.querySelector('[data-popup-dismiss]') : null;
+
+function openPopup() {
+  if (!overlay) return;
+  overlay.classList.add('open');
+  overlay.setAttribute('aria-hidden', 'false');
+  if (closeBtn) closeBtn.focus(); // 포커스 이동
+}
+
+function closePopup() {
+  if (!overlay) return;
+  overlay.classList.remove('open');
+  overlay.setAttribute('aria-hidden', 'true');
+}
+
+// 24시간 체크
+const KEY = 'gof_popup_ts';
+const now = Date.now();
+const last = parseInt(localStorage.getItem(KEY) || '0', 10);
+const DAY = 24 * 60 * 60 * 1000;
+if (!last || now - last > DAY) {
+  setTimeout(openPopup, 600); // 살짝 지연 후 노출
+}
+
+// 닫기 버튼
+if (closeBtn) closeBtn.addEventListener('click', closePopup);
+
+// ESC로 닫기
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closePopup();
 });
+
+// 오늘 하루 보지 않기
+if (dontShow) {
+  dontShow.addEventListener('click', (e) => {
+    e.preventDefault();
+    localStorage.setItem(KEY, String(Date.now()));
+    closePopup();
+  });
+}
+});
+
+// [팝업] 전역 열기 헬퍼 (원하면 버튼에서 호출 가능)
+function showGofPopup() {
+  const overlay = document.getElementById('promo-popup');
+  if (!overlay) return;
+  overlay.classList.add('open');
+  overlay.setAttribute('aria-hidden', 'false');
+}
   </script>
   
 </body>
