@@ -154,7 +154,7 @@
       color: #a9a9a9;
       text-align: center;
       padding: 12px;
-      margin-top: auto;
+      margin-top: 8px;
     }
 
     footer p {
@@ -272,6 +272,9 @@
       height: 48px; /* 높이 설정 */
       z-index: 3001;
       position: relative;
+      height: 48px; /* 원하는 고정 높이 */
+      border-top: 2px solid rgba(255, 255, 255, 0.1);   /* 위 구분선 */
+      border-bottom: 2px solid rgba(255, 255, 255, 0.1);/* 아래 구분선 */
     }
 
     .sub-footer-left a {
@@ -300,219 +303,222 @@
 /* ==========================
    [팝업] 오버레이 & 모달 카드
    ========================== */
-.popup-overlay {
-  position: fixed;
-  top: 145px;           /* 인스타 아이콘(top:100px) 바로 아래 정렬 */
-  right: 40px;          /* 아이콘과 같은 오른쪽 여백 */
-  background: transparent; /* 배경 딤 제거 (페이지 불투명해지지 않음) */
-  display: none;        /* 기본 숨김 */
-  z-index: 1200;        /* SNS(1000)보다 위 */
-  width: auto;
-  height: auto;
-}
-.popup-overlay.open { display: block; }
+    .popup-overlay {
+      position: fixed;
+      top: 145px;          
+      right: 40px;          
+      background: transparent; 
+      display: none;     
+      z-index: 1200;       
+      width: auto;
+      height: auto;
+    }
 
-.popup {
-  position: relative;
-  width: 230px;         /* 원하면 320~420px 등으로 조절 */
-  min-height: 0px;    /* 최소 높이만 보장 */
-  height: auto;         /* 내용에 따라 늘어나게 */
-  max-width: 92vw;
-  border-radius: 10px;
-  padding: 22px 20px 0;
-  overflow: hidden;
-  background: #fff;
-  border: 2px solid #000;
-  color: #000;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-}
+    .popup-overlay.open { display: block; }
 
-.popup h2 {
-  margin: 0 0 8px 0;
-  font-size: 18px;
-  letter-spacing: 0.3px;
-  color: #000;
-}
+    .popup {
+      position: relative;
+      width: 230px;         
+      min-height: 0px;    
+      height: auto;        
+      max-width: 92vw;
+      border-radius: 10px;
+      padding: 22px 20px 0;
+      overflow: hidden;
+      background: #fff;
+      border: 2px solid #000;
+      color: #000;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+    }
 
-.popup p {
-  margin: 0 0 16px 0;
-  font-size: 14px;
-  line-height: 1.6;
-  color: #333; /* 회색 텍스트 */
-}
+    .popup h2 {
+      margin: 0 0 8px 0;
+      font-size: 18px;
+      letter-spacing: 0.3px;
+      color: #000;
+    }
 
-.popup-actions { 
-  margin-top: auto;
-  display: flex; 
-  gap: 10px; 
-  justify-content: center; 
-}
-.popup-cta, .popup-secondary {
-  display: inline-block;
-  padding: 10px 16px;
-  text-decoration: none;
-  font-size: 14px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.2);
-  color: #fff;
-}
-.popup-cta {
-  background: #000;   /* 검정 배경 버튼 */
-  color: #fff;        /* 흰색 텍스트 */
-  border-color: #000; /* 검정 테두리 */
-}
-.popup-cta:hover { filter: brightness(1.08); }
-.popup-secondary:hover { background: rgba(0,0,0,0.06); }
+    .popup p {
+      margin: 0 0 16px 0;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #333; /* 회색 텍스트 */
+    }
 
-.popup-close {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  width: 20px;              /* 버튼 크기 */
-  height: 20px;             /* 버튼 크기 */
-  display: flex;            /* 정중앙 정렬 */
-  justify-content: center;  /* 가로 중앙 */
-  border-radius: 50%;
-  border: 1.5px solid #000; /* 검정 테두리 */
-  background: #fff;         /* 흰색 배경 */
-  color: #000;              /* X 글자 색 */
-  font-size: 16px;          /* X 크기 */
-  line-height: 1;           /* 기본값 */
-  padding: 0;               /* 불필요 패딩 제거 */
-  text-align: center;
-  cursor: pointer;
-  outline: none;
-  z-index: 5;
-}
+    .popup-actions { 
+      margin-top: auto;
+      display: flex; 
+      gap: 10px; 
+      justify-content: center; 
+    }
 
-.popup-close:focus {
-  outline: none;       /* 포커스 되었을 때도 제거 */
-  box-shadow: none;    /* 혹시 생길 수 있는 외곽선 그림자 제거 */
-}
+    .popup-cta, .popup-secondary {
+      display: inline-block;
+      padding: 10px 16px;
+      text-decoration: none;
+      font-size: 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+    }
 
-.popup-close:hover { background: #f2f2f2; }
+    .popup-cta {
+      background: #000;   /* 검정 배경 버튼 */
+      color: #fff;        /* 흰색 텍스트 */
+      border-color: #000; /* 검정 테두리 */
+    }
 
-/* 텍스트 형태의 '오늘 하루 보지 않기' */
-.popup-dontshow {
-  margin-top: 8px;            /* Shop Now와 간격 */
-  text-align: center;         /* 가운데 정렬 */
-}
+    .popup-cta:hover { filter: brightness(1.08); }
 
-.popup-dontshow .dontshow-link {
-  font-size: 12px;
-  color: #777;
-  text-decoration: none;      /* 기본은 버튼처럼 보이지 않게 */
-  cursor: pointer;
-}
+    .popup-secondary:hover { background: rgba(0,0,0,0.06); }
 
-.popup-dontshow .dontshow-link:hover {
-  text-decoration: underline; /* 호버 시만 밑줄 */
-  color: #000;
-}
 
-/* 배경이미지 비주얼 박스 */
-.popup-visual{
-  position: relative;
-  width: 100%;
-  aspect-ratio: 4 / 5;                  /* 필요 시 16/9, 1/1 등으로 변경 */
-  background-image: url("./image/popup.PNG");  /* ← 실제 이미지 경로 */
-  background-size: cover;
-  background-position: center;
-  border-radius: 8px;
-  overflow: hidden;
-  z-index: 0; 
-}
+    .popup-close {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 20px;              /* 버튼 크기 */
+      height: 20px;             /* 버튼 크기 */
+      display: flex;            /* 정중앙 정렬 */
+      justify-content: center;  /* 가로 중앙 */
+      border-radius: 50%;
+      border: 1.5px solid #000; /* 검정 테두리 */
+      background: #fff;         /* 흰색 배경 */
+      color: #000;              /* X 글자 색 */
+      font-size: 16px;          /* X 크기 */
+      line-height: 1;           /* 기본값 */
+      padding: 0;               
+      text-align: center;
+      cursor: pointer;
+      outline: none;
+      z-index: 5;
+    }
 
-.popup-visual{ aspect-ratio: 3 / 4; }  /* 세로를 조금 더 확보 */
+    .popup-close:focus {
+      outline: none;      
+      box-shadow: none;    
+    }
 
-.popup-visual.full-bleed,
-.popup-visual {
-  width: calc(100% + 40px);   /* .popup 좌우 패딩(20px*2) 상쇄 */
-  margin: -22px -20px 0px;   /* 위 22px, 좌우 20px 제거 + 아래 여백 12px */
-}
-.popup-visual { aspect-ratio: 3 / 4; }  /* 세로형 */
+    .popup-close:hover { background: #f2f2f2; }
 
-/* 가독성 보강용 그라데이션 (선택) */
-.popup-visual::after{
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;              /* 배경과 같은 층(overlay 아래) */
-  pointer-events: none;    /* 클릭 막지 않음 */
-  background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,0.35) 0%,
-    rgba(0,0,0,0.15) 35%,
-    rgba(0,0,0,0.50) 100%
-  );
-}
+    .popup-dontshow {
+      margin-top: 8px;           
+      text-align: center;       
+    }
+
+    .popup-dontshow .dontshow-link {
+      font-size: 12px;
+      color: #777;
+      text-decoration: none;    
+      cursor: pointer;
+    }
+
+    .popup-dontshow .dontshow-link:hover {
+      text-decoration: underline; 
+      color: #000;
+    }
+
+    .popup-visual{
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 5;                  
+      background-image: url("./image/popup.PNG");  
+      background-size: cover;
+      background-position: center;
+      border-radius: 8px;
+      overflow: hidden;
+      z-index: 0; 
+    }
+
+    .popup-visual{ aspect-ratio: 3 / 4; }  
+
+    .popup-visual.full-bleed,
+
+    .popup-visual {
+      width: calc(100% + 40px);   /* .popup 좌우 패딩(20px*2) 상쇄 */
+      margin: -22px -20px 0px;   /* 위 22px, 좌우 20px 제거 + 아래 여백 12px */
+    }
+
+    .popup-visual { aspect-ratio: 3 / 4; }  /* 세로형 */
+
+
+    .popup-visual::after{
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;              /* 배경과 같은 층(overlay 아래) */
+      pointer-events: none;    /* 클릭 막지 않음 */
+      background: linear-gradient(
+      to bottom,
+        rgba(0,0,0,0.35) 0%,
+        rgba(0,0,0,0.15) 35%,
+        rgba(0,0,0,0.50) 100%
+      );
+    }
 
 /* 오버레이: 중앙 텍스트 + 하단 버튼 배치 */
-.popup-visual .overlay{
-  position: absolute;
-  inset: 0;
-  display: flex;                /* grid → flex */
-  flex-direction: column;       /* 세로 스택 */
-  align-items: center;
-  text-align: center;
-  padding: 14px;
-  z-index: 1;                
-}
+    .popup-visual .overlay{
+      position: absolute;
+      inset: 0;
+      display: flex;                /* grid → flex */
+      flex-direction: column;       /* 세로 스택 */
+      align-items: center;
+      text-align: center;
+      padding: 14px;
+      z-index: 1;                
+    }
 
-/* 중앙 텍스트 그룹(제목/부제) */
-.popup-visual .overlay-center{
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
+    .popup-visual .overlay-center{
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
 
-/* 하단 버튼/링크: 항상 바닥으로 */
-.popup-visual .popup-bottom{
-  margin-top: auto;             /* 남는 공간을 위로 밀어서 하단 정렬 */
-  display: flex;
-  flex-direction: column;       /* 버튼 아래에 텍스트 */
-  align-items: center;
-  gap: 8px;
-  padding-bottom: 10px;         /* 바닥과 간격 */
-}
+    .popup-visual .popup-bottom{
+      margin-top: auto;             
+      display: flex;
+      flex-direction: column;       
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 10px;    
+    }
 
-/* 배경 위 가독성 */
-.popup-visual .dontshow-link{
-  font-size: 12px;
-  color: rgba(255,255,255,0.9);
-  text-decoration: none;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.45);
-}
-.popup-visual .dontshow-link:hover{ text-decoration: underline; }
+    .popup-visual .dontshow-link{
+      font-size: 12px;
+      color: rgba(255,255,255,0.9);
+      text-decoration: none;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.45);
+    }
 
-/* 버튼을 배경 위에서 더 또렷하게 */
-.popup-visual .popup-cta{ 
-  border: 0.5px solid #fff;
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.35)); 
-}
+    .popup-visual .dontshow-link:hover{ text-decoration: underline; }
 
-.popup-title{
-  position: relative;
-  top: 15px;            /* +는 아래로, -는 위로 */
-  left: 0; 
-  color: #fff;
-  font-weight: 800;
-  font-size: 18px;       /* 원하면 16~22px로 조절 */
-  line-height: 1.25;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.45);
-}
-.popup-subtitle{
-  color: #f1f1f1;
-  font-size: 16px;
-  line-height: 1.4;
-  margin-top: 150px;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.4);
-}
+    .popup-visual .popup-cta{ 
+      border: 0.5px solid #fff;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.35)); 
+    }
 
-/* 버튼은 카드 하단으로 */
-.popup-actions{ margin-top: auto; }
+    .popup-title{
+      position: relative;
+      top: 15px;            
+      left: 0; 
+      color: #fff;
+      font-weight: 800;
+      font-size: 18px;       
+      line-height: 1.25;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.45);
+    }
+
+    .popup-subtitle{
+      color: #f1f1f1;
+      font-size: 16px;
+      line-height: 1.4;
+      margin-top: 150px;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    }
+
+    .popup-actions{ margin-top: auto; }
 
 @media (max-width: 768px) {
   .side-nav {
@@ -781,8 +787,8 @@
   </div>
 </section>
 
-<div style="width: 100%; height: 2px; background-color: rgba(255, 255, 255, 0.099); margin: 20px auto 0 auto;"></div>
-  <footer class="sub-footer" style="position: relative; z-index: 3001;">
+
+  <footer class="sub-footer">
   <div class="sub-footer-left">
     <a href="#">NEWS</a>
   </div>
@@ -791,7 +797,6 @@
   </div>  
 </footer>
 
-<div style="width: 100%; height: 2px; background-color: rgba(255, 255, 255, 0.099); margin: 5px auto 0 auto;"></div>
   <footer>
     <p>Copyright 곰곰소녀마켓 모든 권리 보유. | 대표 MINWOO JUNG | 사업자등록번호 562-04-02746 | 문의 support@graphicsoverfit.com</p>
   </footer>
