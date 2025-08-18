@@ -812,7 +812,29 @@
         });
       });
     });
-    
+
+    // ====== [모바일] 네비바 바깥 클릭/터치 시 닫기 ======
+const sideNav = document.querySelector('.side-nav');
+const hamburgerBtn = document.querySelector('.hamburger');
+
+// 네비/햄버거 안을 누르면 바깥 클릭으로 오인하지 않도록 전파 중단
+if (sideNav) sideNav.addEventListener('click', (e) => e.stopPropagation());
+if (hamburgerBtn) hamburgerBtn.addEventListener('click', (e) => e.stopPropagation());
+
+function closeNavOnOutside(evt) {
+  if (window.innerWidth > 768) return; // 모바일에서만 동작
+  if (!sideNav) return;
+  const clickedInsideNav = sideNav.contains(evt.target);
+  const clickedHamburger = hamburgerBtn && hamburgerBtn.contains(evt.target);
+  if (sideNav.classList.contains('active') && !clickedInsideNav && !clickedHamburger) {
+    sideNav.classList.remove('active');
+  }
+}
+
+// 클릭/터치 모두 지원
+document.addEventListener('click', closeNavOnOutside);
+document.addEventListener('touchstart', closeNavOnOutside, { passive: true });
+
 document.addEventListener('DOMContentLoaded', () => {
   const menuLinks = document.querySelectorAll('.side-nav a');
   menuLinks.forEach(link => {
