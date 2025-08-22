@@ -871,30 +871,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (!dotContainer || slides.length === 0 || texts.length === 0) return;
 
-  slides.forEach((_, index) => {
+  slides.forEach((_, index) => {                                           // [0-6]
     const dot = document.createElement('div');
     dot.classList.add('dot');
     if (index === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => {
+      slides[currentSlide].classList.remove('active');
+      texts[currentSlide].classList.remove('active');
+      dotContainer.querySelectorAll('.dot')[currentSlide].classList.remove('active');
+
+      currentSlide = index;
+
+      slides[currentSlide].classList.add('active');
+      texts[currentSlide].classList.add('active');
+      dotContainer.querySelectorAll('.dot')[currentSlide].classList.add('active');
+    });
     dotContainer.appendChild(dot);
   });
 
   const dots = document.querySelectorAll('.slider-dots .dot');
 
+setInterval(() => {
+  // remove active from current
+  slides[currentSlide].classList.remove('active');
+  texts[currentSlide].classList.remove('active');
+  if (dots.length) dots[currentSlide].classList.remove('active');
+
+  // advance index
+  currentSlide = (currentSlide + 1) % slides.length;
+
+  // add active to next
   slides[currentSlide].classList.add('active');
   texts[currentSlide].classList.add('active');
-  dots[currentSlide].classList.add('active');
-
-  setInterval(() => {
-    slides[currentSlide].classList.remove('active');
-    texts[currentSlide].classList.remove('active');
-    dots[currentSlide].classList.remove('active');
-
-    currentSlide = (currentSlide + 1) % slides.length;
-
-    slides[currentSlide].classList.add('active');
-    texts[currentSlide].classList.add('active');
-    dots[currentSlide].classList.add('active');
-  }, 5000);
+  if (dots.length) dots[currentSlide].classList.add('active');
+}, 5000);
 
 // ==========================
 // [팝업] 최초 방문시 자동 노출 (24시간 1회)
