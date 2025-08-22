@@ -356,9 +356,9 @@
 
     .popup-cta, .popup-secondary {
       display: inline-block;
-      padding: 10px 16px;
+      padding: 6px 12px;      /* 버튼 크기 ↓ */
       text-decoration: none;
-      font-size: 14px;
+      font-size: 10px;        /* 글자 크기 ↓ */
       border-radius: 10px;
       border: 1px solid rgba(255,255,255,0.2);
       color: #fff;
@@ -479,10 +479,11 @@
     .popup-visual .popup-bottom{
       margin-top: auto;             
       display: flex;
-      flex-direction: column;       
+      flex-direction: row;       /* 세로 → 가로 배치 */
+      justify-content: center;   /* 가운데 정렬 */
       align-items: center;
-      gap: 8px;
-      padding-bottom: 10px;    
+      gap: 10px;                  /* 버튼 간격 */
+      padding-bottom: 5px;  
     }
 
     .popup-visual .dontshow-link{
@@ -518,7 +519,19 @@
       text-shadow: 0 1px 4px rgba(0,0,0,0.4);
     }
 
-    .popup-actions{ margin-top: auto; }
+    .popup-actions{ margin-top: auto; 
+    }
+
+    /* 오늘 하루 보지 않기 링크 색상 고정 */
+    .dontshow-link,
+    .dontshow-link:visited,
+    .dontshow-link:active {
+      color: #777 !important;   /* 항상 회색 */
+    }
+
+    .dontshow-link:hover {
+      color: #000;              /* 마우스 올렸을 때만 검정 */
+    }
 
 @media (max-width: 768px) {
   .side-nav {
@@ -657,7 +670,7 @@
   .popup-visual .overlay{ padding: 12px; }
   .popup-visual .popup-bottom{ padding-bottom: 8px; }
   .popup-title{ font-size: 16px; }
-  .popup-subtitle{ font-size: 11px; }
+  .popup-subtitle{ font-size: 14px; }
 
   .popup-visual.full-bleed,
   .popup-visual {
@@ -665,7 +678,7 @@
     margin: -22px -18px 0;      /* ← 10px → 0 */
   }
 
-.popup-dontshow .dontshow-link { font-size: 11px; }
+  .popup-dontshow .dontshow-link { font-size: 11px; }
   </style>
 </head>
 
@@ -685,9 +698,11 @@
       <span class="popup-subtitle">Japan &amp; USA · 20% OFF<br>('25. 8. 22 ~ 24)</span>
     </div>
 
-    <!-- 하단 영역: 버튼 + 텍스트 -->
     <div class="popup-bottom">
-      <a class="popup-cta" href="https://global.musinsa.com/choose-location" target="_blank" rel="noopener">Shop Now</a>
+      <a class="popup-cta" href="https://global.musinsa.com/jp/brands/graphicsoverfit?page=1&sortCode=NEW" target="_blank" rel="noopener">SHOP JP</a>
+      <a class="popup-cta" href="https://global.musinsa.com/us/brands/graphicsoverfit?page=1&sortCode=NEW" target="_blank" rel="noopener">SHOP US</a>
+    </div>
+    <div class="popup-dontshow">
       <a href="#" class="dontshow-link" data-popup-dismiss>오늘 하루 보지 않기</a>
     </div>
   </div>
@@ -939,4 +954,3 @@ function showGofPopup() {
   
 </body>
 </html>
-
