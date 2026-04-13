@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Graphics Overfit Concept art</title>
+
+  <style>
+    /* 전체 페이지 배경을 검정색으로 설정 */
+    body {
+      background: url("./image/bg.png") no-repeat center center fixed;
+      background-size: cover; /* 화면에 꽉 차게 */
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    
+    /* 왼쪽 세로형 네비게이션바 - 투명하게, 메인 이미지 위에 배치 */
+    .side-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 180px;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.3); /* 반투명 검정 */
+      z-index: 1000; /* 메인 이미지보다 위에 오게 */
+      padding-top: 100px; /* 위쪽 여백 (로고 또는 상단 공간 확보) */
+      transition: background-color 0.3s;
+    }
+
+    .side-nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .side-nav li {
+      text-align: left;
+    }
+
+    .side-nav a {
+      display: block;
+      color: #fff;
+      padding: 12px 16px;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    .side-nav a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* 로고를 메인 이미지 위에 띄우기 위한 스타일 */
+    .floating-logo {
+      position: absolute;
+      top: -20px;          /* 상단 여백 */
+      left: 50%;          /* 가로 가운데 */
+      transform: translateX(-50%); /* 가로 정중앙 */
+      z-index: 1100;
+    }
+
+    /* 로고 이미지 스타일 */
+    .logo-image {
+      width: 130px;
+      height: 130px;
+      object-fit: contain; /* 비율 유지하며 채우기 */
+      background: transparent;
+    }
+
+    /* 푸터 스타일 */
+    footer {
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      margin-top: auto;
+    }
+
+    footer p {
+      margin: 5px 0;
+      font-size: 12px;
+    }
+
+    .hamburger {
+      display: none;
+    }
+
+    .thumbnail-strip img:hover {
+      transform: scale(1.05);
+    }
+
+    .thumbnail-strip img {
+      cursor: pointer; /* 이 줄을 추가하세요 */
+      border-radius: 8px;
+    }
+
+    .mobile-thumbnails {
+      display: none;
+    }
+
+    :root {
+    --mobile-thumb-offset: 120px;  /* 상단에서 이만큼 아래로 내림 */
+    }
+
+    .modal {
+      display: none; 
+      position: fixed;
+      z-index: 5000;
+      padding-top: 60px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto; 
+      background-color: rgba(0,0,0,0.8);
+    }
+
+    .modal-content {
+      margin: auto;
+      display: block;
+      max-width: 90%;
+    }
+
+    .modal-backdrop {
+      position: absolute;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+    }
+
+    .modal-image {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      max-width: 60%;
+      max-height: 60%;
+      object-fit: contain;
+    }
+
+    .modal-image-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .modal-image-container .modal-close {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      font-size: 32px;
+      color: #fff;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .modal-close {
+      display: block;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 28px;
+      color: #fff;
+      background: none;
+      border: none;
+      z-index: 4000;
+      cursor: pointer;
+    }
+
+    .side-nav li {
+      position: relative;
+    }
+
+    .side-nav li ul {
+      opacity: 0;
+      transform: translateY(-10px); /* 위에서 살짝 내려오게 */
+      filter: blur(4px); /* 흐림 효과 */
+      max-height: 0;
+      overflow: hidden;
+      transition:
+        opacity 0.3s ease,
+        transform 0.3s ease,
+        filter 0.3s ease,
+        max-height 0.5s ease;
+    }
+
+    .side-nav li:hover ul {
+      opacity: 1;
+      transform: translateY(0); /* 원래 위치로 */
+      filter: blur(0);
+      max-height: 300px;
+    }
+
+    .side-nav li ul li a {
+      padding-left: 24px;
+      font-size: 14px;
+    }
+
+@media (max-width: 768px) {
+    .side-nav {
+      width: 100%; /* 가로 전체 차지 */
+      height: auto; /* 자동 높이 */
+      background-color: rgba(0, 0, 0, 0.9); /* 더 선명하게 */
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 3000;
+      padding-top: 60px; /* 위 여백 */
+    }
+
+    .side-nav ul {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .side-nav li {
+      text-align: center;
+      width: 100%;
+    }
+
+    .side-nav a {
+      padding: 16px;
+      font-size: 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .floating-logo {
+      top: 10px;
+      width: 80px;
+    }
+  
+    .floating-logo {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2000;
+      width: 90px;
+      height: auto;
+      pointer-events: auto;
+    }
+
+    .logo-image {
+      width: 90px;
+      height: auto;
+    }
+
+    .hamburger {
+      display: block;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 28px;
+      color: white;
+      z-index: 2000;
+      cursor: pointer;
+    }
+
+    .side-nav {
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      width: 220px;
+      background-color: rgba(0, 0, 0, 0.95);
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding-top: 80px;
+      z-index: 3000;
+    }
+
+    .side-nav.active {
+      transform: translateX(0);
+    }
+
+    .side-nav ul {
+      flex-direction: column;
+      align-items: flex-start;
+      padding-left: 20px;
+    }
+  
+    .side-nav li {
+      text-align: left;
+      width: 100%;
+    }
+  
+    .side-nav a {
+      padding: 14px 0;
+      display: block;
+      width: 100%;
+      font-size: 16px;
+    }
+
+    .thumbnail-container {
+      display: none !important;
+    }
+  /* 모바일용만 보이게, 세로 스크롤 허용 */
+    .mobile-thumbnails {
+      display: flex;
+      flex-direction: column;      /* 세로로 쌓기 */
+      gap: 12px;                   /* 아이템 간격 */
+      margin-top: var(--mobile-thumb-offset); 
+      max-height: calc(100vh - 120px); /* 상단 네비/로고 등 제외한 스크롤 영역 */
+      overflow-y: auto;            /* 세로 스크롤 */
+      padding: 16px;               /* 원하는 패딩 */
+    }
+
+    .mobile-thumbnails img {
+      width: 100%;                 /* 가로 꽉 채우기 */
+      height: auto;
+      object-fit: cover;           /* 비율 유지하며 잘림 허용 */
+    }
+  }
+  </style>
+</head>
+
+<body>
+    <!-- 햄버거 버튼 (모바일 전용) -->
+    <div class="hamburger" onclick="toggleMenu()">
+      ☰
+    </div>
+
+    <!-- 로고 아래 구분선 추가 -->
+    <div style="position: relative; top: 85px; width: 98%; height: 3px; background-color: rgba(255, 255, 255, 0.2); margin: 0 auto;"></div>
+
+    <!-- 네비게이션바 영역 -->
+    <nav class="side-nav">
+      <ul>
+        <li><a href="../Brand Culture/Brand Culture.html">Brand Culture</a></li>
+        <li><a href="./Concept art.html">Concept art</a></li>
+        <li><a href="#">Design Studio (coming soon)</a></li>
+        <li><a href="../look book/Model.html">Look Book</a>
+          <ul style="list-style: none; padding-left: 10px; font-size: 14px;">
+            <li><a href="../look book/Model.html">Model Collection</a></li>
+            <li><a href="../look book/Curator.html">Curator Collection</a></li>
+          </ul>
+        </li>
+        <li><a href="#">New & Trending</a>
+          <ul style="list-style: none; padding-left: 10px; font-size: 14px;">
+            <li><a href="../NewTrending/new-arrivals.html">New Arrivals</a></li>
+            <li><a href="../NewTrending/limited-edition.html">Limited Edition</a></li>
+            <li><a href="../NewTrending/Upcoming Collection.html">Upcoming Collection</a></li>
+          </ul>
+        </li>
+        <li><a href="https://smartstore.naver.com/gomgomgirl">Shop</a></li>
+      </ul>
+    </nav>
+
+    <div class="floating-logo">
+        <a href="../index.html">
+          <img src="./image/mainlogo.png" alt="로고" class="logo-image">
+        </a>
+      </div>
+
+<!-- 썸네일 컨테이너: 수동 위치 조정 가능 -->
+    <div class="thumbnail-container" style="position: absolute; top: 100px; left: 250px; transform: none; z-index: 2000; height: auto; overflow: visible;">
+      <div class="thumbnail-strip" style="display: flex; justify-content: center; gap: 15px;">
+        <img src="./image/art/1-1.png" alt="item 1" style="width: 50px; height: 500px;"
+                  data-large-src="./image/art/1.png" alt="Thumb 1">
+        <img src="./image/art/2-1.png" alt="item 2" style="width: 50px; height: auto;"
+                  data-large-src="./image/art/2.png" alt="Thumb 2">
+        <img src="./image/art/no-image1.png" alt="item 3" style="width: 50px; height: auto;"
+                  data-large-src="./image/art/no-image.png" alt="Thumb 3">
+        <img src="./image/art/no-image1.png" alt="item 4" style="width: 50px; height: auto;"
+                  data-large-src="./image/art/no-image.png" alt="Thumb 4">
+        <img src="./image/art/no-image1.png" alt="item 5" style="width: 50px; height: auto;"
+                  data-large-src="./image/art/no-image.png" alt="Thumb 5">
+        <img src="./image/art/no-image1.png" alt="item 6" style="width: 50px; height: auto;"
+                  data-large-src="./image/art/no-image.png" alt="Thumb 6">
+        <img src="./image/art/no-image1.png" alt="item 7" style="width: 50px; height: auto;" 
+                  data-large-src="./image/art/no-image.png" alt="Thumb 7">
+        <img src="./image/art/no-image1.png" alt="item 8" style="width: 50px; height: auto;"
+                  data-large-src="./image/art/no-image.png" alt="Thumb 8">
+        <img src="./image/art/no-image1.png" alt="item 9" style="width: 50px; height: auto;"
+                  data-large-src="./image/art/no-image.png" alt="Thumb 9">
+        <img src="./image/art/no-image1.png" alt="item 10" style="width: 50px; height: auto;"
+                  data-large-src="./image/art/no-image.png" alt="Thumb 10">
+        <img src="./image/art/no-image1.png" alt="item 11" style="width: 50px; height: auto;"
+                  data-large-src="./image/art/no-image.png" alt="Thumb 11">
+        <img src="./image/art/no-image1.png" alt="item 12" style="width: 50px; height: auto;"
+                  data-large-src="./image/art/no-image.png" alt="Thumb 12">
+      </div>
+    </div>
+
+    <div class="mobile-thumbnails">
+      <img src="./image/art/1.png" alt="mobile1">
+      <img src="./image/art/2.png" alt="mobile2">
+      <img src="./image/art/no-image.png" alt="mobile3">
+      <img src="./image/art/no-image.png" alt="mobile4">
+      <img src="./image/art/no-image.png" alt="mobile5">
+      <img src="./image/art/no-image.png" alt="mobile6">
+      <img src="./image/art/no-image.png" alt="mobile7">
+      <img src="./image/art/no-image.png" alt="mobile8">
+      <img src="./image/art/no-image.png" alt="mobile9">
+      <img src="./image/art/no-image.png" alt="mobile10">
+      <img src="./image/art/no-image.png" alt="mobile11">
+      <img src="./image/art/no-image.png" alt="mobile12">
+      <!-- … -->
+    </div>
+
+    <div id="image-modal" class="modal">
+      <button class="modal-close" onclick="document.getElementById('image-modal').style.display='none'">✕</button>
+      <img class="modal-image" src="" alt="Large view">
+    </div>
+
+    <div id="modal" class="modal">
+      <span class="modal-close">&times;</span>
+      <img class="modal-content" id="modal-image">
+    </div>
+
+  <script>
+    function toggleMenu() {
+    const sideNav = document.querySelector('.side-nav');
+    sideNav.classList.toggle('active');
+    }
+
+        // 모바일 메뉴 닫기
+    document.addEventListener("DOMContentLoaded", () => {
+      const menuLinks = document.querySelectorAll('.side-nav a');
+      menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          document.querySelector('.side-nav').classList.remove('active');
+        });
+      });
+    });
+  
+    document.addEventListener('click', (e) => {
+      const sideNav = document.querySelector('.side-nav');
+      const hamburger = document.querySelector('.hamburger');
+      if (!sideNav.contains(e.target) && !hamburger.contains(e.target)) {
+        sideNav.classList.remove('active');
+      }
+    });
+
+    /* 3) JS: 모바일에서 썸네일 클릭 연동을 자동 제거 (옵션) */
+    function initThumbnails() {
+      if (window.innerWidth <= 768) {
+    // 모바일: 기존 썸네일 strip의 클릭 핸들러 전부 제거
+    document
+      .querySelectorAll('.thumbnail-strip img')
+      .forEach(img => img.replaceWith(img.cloneNode(true)));
+    }
+  }
+    window.addEventListener('load', initThumbnails);
+    window.addEventListener('resize', () => {
+      // 리사이즈 시에도 적용
+      initThumbnails();
+    });
+
+    document.querySelectorAll('.thumbnail-strip img').forEach(img => {
+    img.addEventListener('click', (e) => {
+    const largeSrc = e.target.getAttribute('data-large-src');
+    if (!largeSrc) return;
+
+    const modal = document.getElementById('image-modal');
+    const modalImg = modal.querySelector('.modal-image');
+    modalImg.src = largeSrc;
+    modal.style.display = 'block';
+    modalImg.style.display = 'block';
+    });
+});
+
+// 모달 닫기
+    document.querySelector('.modal-close').addEventListener('click', () => {
+      document.getElementById('image-modal').style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+      const modal = document.getElementById('image-modal');
+      if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+});
+  </script>
+</body>
+</html>

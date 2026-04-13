@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Graphics Overfit Concept art</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* 전체 페이지 배경을 검정색으로 설정 */
+    body {
+      background-color: #000;
+      background-image: url('./image/B.C_bg.png'); /* 원하는 이미지 경로 */
+      background-size: cover;                         /* 화면에 꽉 차도록 */
+      background-repeat: no-repeat;                   /* 반복 없이 */
+      background-position: center center;             /* 가운데 정렬 */
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    
+    /* 왼쪽 세로형 네비게이션바 - 투명하게, 메인 이미지 위에 배치 */
+    .side-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 180px;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.3); /* 반투명 검정 */
+      z-index: 1000; /* 메인 이미지보다 위에 오게 */
+      padding-top: 100px; /* 위쪽 여백 (로고 또는 상단 공간 확보) */
+      transition: background-color 0.3s;
+    }
+
+    .side-nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .side-nav li {
+      text-align: left;
+    }
+
+    .side-nav a {
+      display: block;
+      color: #fff;
+      padding: 12px 16px;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    .side-nav a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* 로고를 메인 이미지 위에 띄우기 위한 스타일 */
+    .floating-logo {
+      position: absolute;
+      top: -20px;          /* 상단 여백 */
+      left: 50%;          /* 가로 가운데 */
+      transform: translateX(-50%); /* 가로 정중앙 */
+      z-index: 1100;
+    }
+
+    /* 로고 이미지 스타일 */
+    .logo-image {
+      width: 130px;
+      height: 130px;
+      object-fit: contain; /* 비율 유지하며 채우기 */
+      background: transparent;
+    }
+
+    /* 푸터 스타일 */
+    footer {
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      margin-top: auto;
+    }
+
+    footer p {
+      margin: 5px 0;
+      font-size: 12px;
+    }
+
+    .hamburger {
+      display: none;
+    }
+
+    .video-text-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 100px auto 60px;
+      padding: 0 20px;
+    }
+
+    .description-box {
+      background-color: rgba(199, 248, 255, 0.5);
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 600px;
+      text-align: left;
+      line-height: 2.0;
+      font-size: 16px;
+      font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+      color: #feacac;
+    }
+
+    .description-box p {
+      line-height: 1.8;
+      letter-spacing: 0.3px;
+    }
+
+    .side-nav li {
+      position: relative;
+    }
+
+    .side-nav li ul {
+      opacity: 0;
+      transform: translateY(-10px); /* 위에서 살짝 내려오게 */
+      filter: blur(4px); /* 흐림 효과 */
+      max-height: 0;
+      overflow: hidden;
+      transition:
+        opacity 0.3s ease,
+        transform 0.3s ease,
+        filter 0.3s ease,
+        max-height 0.5s ease;
+    }
+
+    .side-nav li:hover ul {
+      opacity: 1;
+      transform: translateY(0); /* 원래 위치로 */
+      filter: blur(0);
+      max-height: 300px;
+    }
+
+    .side-nav li ul li a {
+      padding-left: 24px;
+      font-size: 14px;
+    }
+
+@media (max-width: 768px) {
+    .side-nav {
+      width: 100%; /* 가로 전체 차지 */
+      height: auto; /* 자동 높이 */
+      background-color: rgba(0, 0, 0, 0.9); /* 더 선명하게 */
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 3000;
+      padding-top: 60px; /* 위 여백 */
+    }
+
+    .side-nav ul {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .side-nav li {
+      text-align: center;
+      width: 100%;
+    }
+
+    .side-nav a {
+      padding: 16px;
+      font-size: 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .floating-logo {
+      top: 10px;
+      width: 80px;
+    }
+  
+    .floating-logo {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2000;
+      width: 90px;
+      height: auto;
+      pointer-events: auto;
+    }
+
+    .logo-image {
+      width: 90px;
+      height: auto;
+    }
+
+    .hamburger {
+      display: block;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 28px;
+      color: white;
+      z-index: 2000;
+      cursor: pointer;
+    }
+
+    .side-nav {
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      width: 220px;
+      background-color: rgba(0, 0, 0, 0.95);
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding-top: 80px;
+      z-index: 3000;
+    }
+
+    .side-nav.active {
+      transform: translateX(0);
+    }
+
+    .side-nav ul {
+      flex-direction: column;
+      align-items: flex-start;
+      padding-left: 20px;
+    }
+  
+    .side-nav li {
+      text-align: left;
+      width: 100%;
+    }
+  
+    .side-nav a {
+      padding: 14px 0;
+      display: block;
+      width: 100%;
+      font-size: 16px;
+    }
+
+    .video-text-wrapper {
+      flex-direction: row;
+      gap: 20px;
+    }
+  }
+  </style>
+</head>
+
+<body>
+    <!-- 햄버거 버튼 (모바일 전용) -->
+    <div class="hamburger" onclick="toggleMenu()">
+      ☰
+    </div>
+
+    <!-- 로고 아래 구분선 추가 -->
+    <div style="position: relative; top: 85px; width: 98%; height: 3px; background-color: rgba(255, 255, 255, 0.2); margin: 0 auto;"></div>
+
+    <!-- 네비게이션바 영역 -->
+    <nav class="side-nav">
+      <ul>
+        <li><a href="./Brand Culture.html">Brand Culture</a></li>
+        <li><a href="../Concept art/Concept art.html">Concept art</a></li>
+        <li><a href="#">Design Studio (coming soon)</a></li>
+        <li><a href="#">Look Book</a>
+          <ul style="list-style: none; padding-left: 10px; font-size: 14px;">
+            <li><a href="../look book/Model.html">Model Collection</a></li>
+            <li><a href="../look book/Curator.html">Curator Collection</a></li>
+          </ul>
+        </li>
+        <li><a href="#">New & Trending</a>
+          <ul style="list-style: none; padding-left: 10px; font-size: 14px;">
+            <li><a href="../NewTrending/new-arrivals.html">New Arrivals</a></li>
+            <li><a href="../NewTrending/limited-edition.html">Limited Edition</a></li>
+            <li><a href="../NewTrending/Upcoming Collection.html">Upcoming Collection</a></li>
+          </ul>
+        </li>
+        <li><a href="https://smartstore.naver.com/gomgomgirl">Shop</a></li>
+      </ul>
+  </nav>
+
+    <div class="floating-logo">
+        <a href="../index.html">
+          <img src="./image/mainlogo.png" alt="로고" class="logo-image">
+        </a>
+    </div>
+
+    <div class="video-text-wrapper">
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        <video width="190" controls style="max-width: 100%; border: 2px solid rgba(255,255,255,0.2); border-radius: 10px;">
+          <source src="./image/거리.mp4" type="video/mp4">
+        </video>
+        <video width="190" controls style="max-width: 100%; border: 2px solid rgba(255,255,255,0.2); border-radius: 10px;">
+          <source src="./image/스케이트 보드.mp4" type="video/mp4">
+        </video>
+      </div>
+      
+      <div class="description-box">
+        <p style="font-weight: 700; font-size: 18px; color: #7eccf0;">그래픽스 오버핏은 창의성과 개성을 담아내는 스트리트웨어 브랜드 입니다.</p>
+        <p>독창적인 그래픽 디자인과 트렌디한 오버핏 실루엣을 결합하여 높은 품질과 편안함을 바탕으로 설계되었습니다. 일상에서 스타일과 실용성을 동시에 추구하는 이들을 위해 제작되었습니다.</p>
+        <p>그래픽스 오버핏은 개인의 자유로운 표현을 중시하며, 시즌별로 감각적인 테마와 독창적인 아트워크를 통해 한정판 컬렉션을 선보입니다. 
+           각 아이템은 디테일에 대한 열정과 창작에 대한 헌신으로 완성되며, 착용자에게 단순한 옷 이상의 가치를 제공하려 노력합니다. </p>
+        <p>우리의 비전은 단순히 패션을 제공하는 것을 넘어, 글로벌 커뮤니티와 함께 소통하며 창의적 문화를 공유하는 것입니다. 
+           그래픽스 오버핏은 당신의 스타일을 업그레이드하고, 일상에 특별함을 더할 수 있는 선택이 될 것입니다.</p>
+      </div>
+    </div>
+
+  <script>
+    function toggleMenu() {
+    const sideNav = document.querySelector('.side-nav');
+    sideNav.classList.toggle('active');
+    }
+
+        // 모바일 메뉴 닫기
+    document.addEventListener("DOMContentLoaded", () => {
+      const menuLinks = document.querySelectorAll('.side-nav a');
+      menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          document.querySelector('.side-nav').classList.remove('active');
+        });
+      });
+    });
+  
+    document.addEventListener('click', (e) => {
+      const sideNav = document.querySelector('.side-nav');
+      const hamburger = document.querySelector('.hamburger');
+      if (!sideNav.contains(e.target) && !hamburger.contains(e.target)) {
+        sideNav.classList.remove('active');
+      }
+    });
+  </script>
+
+</body>
+</html>
