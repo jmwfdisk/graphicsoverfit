@@ -778,22 +778,30 @@
     }
   
     // 슬라이드 드래그/터치 감지
+    // modal-left 안에서 시작된 제스처만 판정 (바깥에서 드래그해 들어와 놓으면 stale startX로 오동작)
     let startX = 0;
-  
+    let swipeStarted = false;
+
     modalLeft.addEventListener("mousedown", (e) => {
       startX = e.clientX;
+      swipeStarted = true;
     });
-  
+
     modalLeft.addEventListener("mouseup", (e) => {
+      if (!swipeStarted) return;
+      swipeStarted = false;
       let endX = e.clientX;
       handleSwipe(endX - startX);
     });
-  
+
     modalLeft.addEventListener("touchstart", (e) => {
       startX = e.touches[0].clientX;
+      swipeStarted = true;
     });
-  
+
     modalLeft.addEventListener("touchend", (e) => {
+      if (!swipeStarted) return;
+      swipeStarted = false;
       let endX = e.changedTouches[0].clientX;
       handleSwipe(endX - startX);
     });
@@ -878,7 +886,9 @@
   </script>
   <script>
     // Lookbook grid pagination logic
-    document.addEventListener('DOMContentLoaded', () => {
+    // 스크립트가 그리드 마크업 뒤에 위치하므로 즉시 실행 — 인라인 onclick이
+    // DOMContentLoaded를 기다리지 않고 prevGridSlide/nextGridSlide를 쓸 수 있게 함
+    (() => {
       let gridCurrent = 0;
       const itemsPerPage = 8;
       const gridItems = document.querySelectorAll('.lookbook-grid .gallery-item');
@@ -916,7 +926,7 @@
       }
 
       updateGridView();
-    });
+    })();
   </script>
 </body>
 </html>

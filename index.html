@@ -827,17 +827,6 @@
       sideNav.classList.toggle('active');
     }
     
-      // 메뉴 항목 클릭 시 닫기 (모바일 전용)
-    document.addEventListener('DOMContentLoaded', () => {
-      const menuLinks = document.querySelectorAll('.side-nav a');
-      menuLinks.forEach(link => {
-        link.addEventListener('click', () => {
-          const sideNav = document.querySelector('.side-nav');
-          sideNav.classList.remove('active');
-        });
-      });
-    });
-
     // ====== [모바일] 네비바 바깥 클릭/터치 시 닫기 ======
 const sideNav = document.querySelector('.side-nav');
 const hamburgerBtn = document.querySelector('.hamburger');

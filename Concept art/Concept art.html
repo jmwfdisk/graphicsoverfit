@@ -434,23 +434,9 @@
       }
     });
 
-    /* 3) JS: 모바일에서 썸네일 클릭 연동을 자동 제거 (옵션) */
-    function initThumbnails() {
-      if (window.innerWidth <= 768) {
-    // 모바일: 기존 썸네일 strip의 클릭 핸들러 전부 제거
-    document
-      .querySelectorAll('.thumbnail-strip img')
-      .forEach(img => img.replaceWith(img.cloneNode(true)));
-    }
-  }
-    window.addEventListener('load', initThumbnails);
-    window.addEventListener('resize', () => {
-      // 리사이즈 시에도 적용
-      initThumbnails();
-    });
-
     document.querySelectorAll('.thumbnail-strip img').forEach(img => {
     img.addEventListener('click', (e) => {
+    if (window.innerWidth <= 768) return; // 모바일에서는 썸네일 확대 모달 비활성
     const largeSrc = e.target.getAttribute('data-large-src');
     if (!largeSrc) return;
 
