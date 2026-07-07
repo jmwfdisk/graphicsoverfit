@@ -53,20 +53,36 @@
       background-color: rgba(255, 255, 255, 0.2);
     }
 
-    /* 로고를 메인 이미지 위에 띄우기 위한 스타일 */
+    /* 로고를 네비바 상단에 고정 */
     .floating-logo {
-      position: absolute;
-      top: -20px;          /* 상단 여백 */
-      left: 50%;          /* 가로 가운데 */
+      position: fixed;     /* 스크롤해도 유지 */
+      top: 4px;            /* 상단에서 살짝 아래 */
+      left: 90px;          /* 사이드바(180px) 정중앙 */
       transform: translateX(-50%); /* 가로 정중앙 */
       z-index: 1100;
     }
 
     /* 로고 이미지 스타일 */
     .logo-image {
+      width: 83px;    /* 104px에서 20% 추가 축소 */
+      height: 83px;
+      object-fit: contain; /* 비율 유지하며 채우기 */
+      background: transparent;
+    }
+
+    /* 페이지 상단 중앙 크레용 로고 */
+    .top-center-logo {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1100;
+    }
+
+    .top-center-logo img {
       width: 130px;
       height: 130px;
-      object-fit: contain; /* 비율 유지하며 채우기 */
+      object-fit: contain;
       background: transparent;
     }
 
@@ -329,6 +345,23 @@
   }
 
 @media (max-width: 768px) {
+    .floating-logo {
+      display: none; /* 모바일 상단 로고는 크레용 로고로 대체 */
+    }
+
+    .top-center-logo {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2000;
+    }
+
+    .top-center-logo img {
+      width: 90px;
+      height: auto;
+    }
+
     .side-nav {
       width: 100%; /* 가로 전체 차지 */
       height: auto; /* 자동 높이 */
@@ -478,6 +511,11 @@
           <img src="./image/mainlogo.png" alt="로고" class="logo-image">
         </a>
       </div>
+
+    <!-- 페이지 상단 중앙 크레용 로고 -->
+    <div class="top-center-logo">
+      <a href="../index.html"><img src="../image/mainlogo2.png" alt="로고"></a>
+    </div>
 
 <div class="product-grid">
   <div class="product" onclick="showModal(
