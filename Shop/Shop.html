@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Graphics Overfit Brand Store</title>
+  <link rel="icon" href="./image/favicon.png" />
+
+  <style>
+    body {
+      background-color: #000;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ===== 공통 셸 (사이드바·로고·햄버거) ===== */
+    .side-nav {
+      position: fixed; top: 0; left: 0; width: 180px; height: 100%;
+      background-color: rgba(0, 0, 0, 0.3); z-index: 1000; padding-top: 100px;
+      transition: background-color 0.3s;
+    }
+    .side-nav ul { list-style-type: none; margin: 0; padding: 0; }
+    .side-nav li { text-align: left; position: relative; }
+    .side-nav a { display: block; color: #fff; padding: 12px 16px; text-decoration: none; font-size: 16px; }
+    .side-nav a:hover { background-color: rgba(255, 255, 255, 0.2); }
+    .side-nav li ul {
+      opacity: 0; transform: translateY(-10px); filter: blur(4px); max-height: 0; overflow: hidden;
+      transition: opacity 0.3s ease, transform 0.3s ease, filter 0.3s ease, max-height 0.5s ease;
+    }
+    .side-nav li:hover ul, .side-nav li.open ul { opacity: 1; transform: translateY(0); filter: blur(0); max-height: 300px; }
+    .side-nav li ul li a { padding-left: 24px; font-size: 14px; }
+
+    .floating-logo { position: fixed; top: 4px; left: 90px; transform: translateX(-50%); z-index: 1100; }
+    .logo-image { width: 83px; height: 83px; object-fit: contain; background: transparent; }
+    .top-center-logo { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); z-index: 1100; }
+    .top-center-logo img { width: 130px; height: 130px; object-fit: contain; background: transparent; }
+    .hamburger { display: none; }
+
+    footer { background-color: #000; color: #888; text-align: center; padding: 24px 20px; margin-top: auto; font-size: 12px; line-height: 1.8; }
+    footer a { color: #aaa; }
+    .ph { color: #feacac; font-weight: bold; }
+
+    /* ===== 스토어 ===== */
+    .store { margin: 110px 40px 40px 220px; max-width: 1400px; }
+    .store-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 0 20px 16px; border-bottom: 1px solid rgba(255,255,255,0.15); }
+    .store-head h1 { font-size: 20px; letter-spacing: 3px; margin: 0; }
+    .filters { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .filters button, .filters select {
+      background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.4); border-radius: 4px; padding: 0 14px; height: 34px; line-height: 32px; font-size: 13px; font-family: inherit; cursor: pointer; box-sizing: border-box; -webkit-appearance: none; appearance: none;
+    }
+    .filters button.active { background: #fff; color: #000; }
+    .filters select {
+      background: #000 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' fill='none' stroke='white' stroke-width='1.5'/></svg>") no-repeat right 10px center;
+      padding-right: 28px;
+    }
+    .cart-link { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; margin-left: 8px; color: #fff; text-decoration: none; border-radius: 50%; }
+    .cart-link:hover { background: rgba(255,255,255,0.15); }
+    .cart-badge { position: absolute; top: -2px; right: -4px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: #fff; color: #000; font-size: 11px; line-height: 18px; text-align: center; font-weight: bold; box-sizing: border-box; }
+    .cart-badge:empty { display: none; }
+
+    .product-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));   /* auto-fill: 필터로 개수가 줄어도 카드 크기 유지 */
+      gap: 40px; padding: 40px 20px 60px;
+    }
+    .product { position: relative; cursor: pointer; }
+    .product .imgwrap { position: relative; }
+    .product img { width: 100%; display: block; transition: opacity 0.3s ease; border: 2px solid #fff; border-radius: 12px; box-sizing: border-box; }
+    .product img.back { position: absolute; top: 0; left: 0; opacity: 0; }
+    .product:hover img.front { opacity: 0; }
+    .product:hover img.back { opacity: 1; }
+    .badge { position: absolute; top: 12px; left: 12px; background: #fff; color: #000; font-size: 11px; font-weight: bold; letter-spacing: 1px; padding: 4px 8px; border-radius: 3px; z-index: 2; }
+    .badge.limited { background: #feacac; }
+    .soldout-overlay { position: absolute; inset: 0; border-radius: 12px; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; font-weight: bold; letter-spacing: 3px; z-index: 2; }
+    .product-info { text-align: center; margin-top: 10px; font-size: 14px; line-height: 1.5; }
+    .product-info .name { font-weight: bold; }
+    .product-info .sub { color: #aaa; font-size: 13px; }
+    .product-info .price { margin-top: 4px; font-size: 15px; }
+
+    /* ===== 상세 모달 ===== */
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); justify-content: center; align-items: flex-start; z-index: 5000; overflow-y: auto; padding: 24px 16px; box-sizing: border-box; -webkit-overflow-scrolling: touch; }
+    .modal.open { display: flex; }
+    .modal-content { background: #111; padding: 24px; border-radius: 10px; max-width: 900px; width: 92%; color: #fff; position: relative; display: flex; flex-direction: row; gap: 28px; flex-wrap: wrap; box-sizing: border-box; margin: auto; }
+    .modal-image-area { flex: 1 1 50%; display: flex; flex-direction: column; align-items: center; min-width: 260px; }
+    .modal-image-area .main { position: relative; width: 100%; }
+    .modal-image-area img.main-img { width: 100%; border-radius: 8px; display: block; }
+    .modal-buy-area { flex: 1 1 40%; display: flex; flex-direction: column; min-width: 240px; }
+    .modal-close { position: absolute; top: 10px; right: 10px; font-size: 12px; cursor: pointer; color: #000; background: #fff; width: 22px; height: 22px; display: flex; justify-content: center; align-items: center; border-radius: 50%; z-index: 3; }
+    .thumbnail-list { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin: 12px 0 8px; }
+    .thumbnail-list img { width: 56px; height: 56px; object-fit: cover; border: 2px solid #fff; border-radius: 4px; cursor: pointer; opacity: 0.6; transition: transform 0.3s, opacity 0.3s; }
+    .thumbnail-list img.active { opacity: 1; transform: scale(1.08); border-color: yellow; }
+    .modal-nav-buttons { display: flex; align-items: center; justify-content: center; gap: 12px; }
+    .dot-indicators { display: flex; gap: 6px; }
+    .dot-indicators span { width: 10px; height: 10px; border-radius: 50%; background: gray; display: inline-block; }
+    .dot-indicators span.active { background: #fff; }
+    .dot-arrow { background: rgba(255,255,255,0.2); color: #fff; border: 1px solid #fff; border-radius: 4px; padding: 6px 16px; font-size: 14px; cursor: pointer; }
+    .dot-arrow:hover { background: rgba(255,255,255,0.5); color: #000; }
+
+    .buy-title { font-size: 18px; margin: 4px 0 4px; }
+    .buy-sub { color: #aaa; font-size: 13px; margin-bottom: 8px; }
+    .buy-price { font-size: 20px; font-weight: bold; margin-bottom: 18px; }
+    .opt-label { font-size: 12px; letter-spacing: 2px; color: #aaa; margin: 10px 0 6px; }
+    .chips { display: flex; gap: 8px; flex-wrap: wrap; }
+    .chip { border: 1px solid rgba(255,255,255,0.5); border-radius: 4px; padding: 8px 14px; font-size: 13px; cursor: pointer; background: transparent; color: #fff; min-width: 44px; text-align: center; }
+    .chip.active { background: #fff; color: #000; border-color: #fff; }
+    .chip.soldout { text-decoration: line-through; opacity: 0.35; cursor: not-allowed; }
+    .chip.color { display: flex; align-items: center; gap: 8px; }
+    .swatch { width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.6); display: inline-block; }
+    .qty { display: inline-flex; align-items: center; border: 1px solid rgba(255,255,255,0.5); border-radius: 4px; }
+    .qty button { background: transparent; color: #fff; border: none; width: 36px; height: 36px; font-size: 18px; cursor: pointer; }
+    .qty span { min-width: 32px; text-align: center; font-size: 14px; }
+    .buy-buttons { display: flex; gap: 10px; margin-top: 18px; }
+    .btn { flex: 1; padding: 14px; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer; border: 1px solid #fff; letter-spacing: 1px; }
+    .btn.ghost { background: transparent; color: #fff; }
+    .btn.solid { background: #fff; color: #000; }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .shake { animation: shake 0.35s; }
+    @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+    .opt-error { color: #feacac; font-size: 12px; margin-top: 6px; min-height: 14px; }
+    .buy-desc { border-top: 1px solid rgba(255,255,255,0.15); margin-top: 20px; padding-top: 14px; font-size: 13px; line-height: 1.7; color: #ccc; }
+    .buy-policy { font-size: 12px; color: #888; line-height: 1.6; margin-top: 12px; }
+
+    .toast { position: fixed; left: 50%; bottom: 30px; transform: translateX(-50%) translateY(20px); background: #fff; color: #000; padding: 12px 20px; border-radius: 6px; font-size: 14px; opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s; z-index: 6000; white-space: nowrap; }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+    .toast a { color: #000; font-weight: bold; margin-left: 10px; }
+
+    @media (max-width: 768px) {
+      .floating-logo { display: none; }
+      .top-center-logo { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 2000; }
+      .top-center-logo img { width: 90px; height: auto; }
+      .hamburger { display: block; position: fixed; top: 20px; left: 20px; font-size: 28px; color: #fff; z-index: 2000; cursor: pointer; }
+      .side-nav { transform: translateX(-100%); transition: transform 0.3s ease; width: 220px; background-color: rgba(0,0,0,0.95); height: 100%; position: fixed; top: 0; left: 0; padding-top: 80px; z-index: 3000; }
+      .side-nav.active { transform: translateX(0); }
+      .side-nav ul { display: flex; flex-direction: column; align-items: flex-start; padding-left: 20px; }
+      .side-nav li { text-align: left; width: 100%; }
+      .side-nav a { padding: 14px 0; display: block; width: 100%; font-size: 16px; }
+      .side-nav li ul { opacity: 1; transform: none; filter: none; max-height: 300px; padding-left: 0; }
+
+      .store { margin: 120px 0 20px; }
+      .store-head { padding: 0 16px 12px; }
+      .product-grid { grid-template-columns: 1fr; padding: 24px 16px 40px; gap: 30px; }
+      .modal { padding: 16px 12px; }
+      .modal-content { padding: 16px; gap: 16px; }
+      .buy-buttons { position: sticky; bottom: 0; background: #111; padding: 10px 0; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="hamburger" onclick="toggleMenu()">☰</div>
+  <div style="position: relative; top: 85px; width: 98%; height: 3px; background-color: rgba(255, 255, 255, 0.2); margin: 0 auto;"></div>
+
+  <nav class="side-nav">
+    <ul>
+      <li><a href="../Brand Culture/Brand Culture.html">Brand Culture</a></li>
+      <li><a href="../Concept art/Concept art.html">Concept art</a></li>
+      <li><a href="#">Design Studio (coming soon)</a></li>
+      <li><a href="#">Look Book</a>
+        <ul style="list-style: none; padding-left: 10px; font-size: 14px;">
+          <li><a href="../look book/Model.html">Model Collection</a></li>
+          <li><a href="../look book/Curator.html">Curator Collection</a></li>
+        </ul>
+      </li>
+      <li><a href="#">New & Trending</a>
+        <ul style="list-style: none; padding-left: 10px; font-size: 14px;">
+          <li><a href="../NewTrending/new-arrivals.html">New Arrivals</a></li>
+          <li><a href="../NewTrending/limited-edition.html">Limited Edition</a></li>
+          <li><a href="../NewTrending/Upcoming Collection.html">Upcoming Collection</a></li>
+        </ul>
+      </li>
+      <li class="open"><a href="./Shop.html">Shop</a>
+        <ul style="list-style: none; padding-left: 10px; font-size: 14px;">
+          <li><a href="./Shop.html">BRAND Store</a></li>
+          <li><a href="https://www.musinsa.com/brand/graphicsoverfit/products?categoryCode=001001&gf=A" target="_blank" rel="noopener">MUSINSA Store</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="floating-logo">
+    <a href="../index.html"><img src="./image/mainlogo.png" alt="로고" class="logo-image"></a>
+  </div>
+  <div class="top-center-logo">
+    <a href="../index.html"><img src="../image/mainlogo2.png" alt="로고"></a>
+  </div>
+
+  <main class="store">
+    <div class="store-head">
+      <h1>BRAND STORE</h1>
+      <div class="filters">
+        <button class="active" data-cat="all">전체</button>
+        <button data-cat="basic">BASIC</button>
+        <button data-cat="artwork">ARTWORK</button>
+        <select id="sort">
+          <option value="default">기본순</option>
+          <option value="priceAsc">낮은 가격순</option>
+          <option value="priceDesc">높은 가격순</option>
+        </select>
+        <a class="cart-link" href="./checkout.html" title="장바구니" aria-label="장바구니">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 4h2l2.4 11.2a1 1 0 0 0 1 .8h9.6a1 1 0 0 0 1-.8L21 8H6.5"/>
+            <circle cx="9.5" cy="20" r="1.3"/><circle cx="17.5" cy="20" r="1.3"/>
+          </svg>
+          <span class="cart-badge"></span>
+        </a>
+      </div>
+    </div>
+    <div class="product-grid" id="grid"></div>
+  </main>
+
+  <footer data-legal-footer="./"></footer>
+
+  <!-- 상세 모달 -->
+  <div class="modal" id="productModal" aria-hidden="true">
+    <div class="modal-content">
+      <div class="modal-close" onclick="closeModal()">X</div>
+
+      <div class="modal-image-area">
+        <div class="main"><img id="modalImage" class="main-img" src="" alt="상품 이미지" /></div>
+        <div class="thumbnail-list" id="thumbnailList"></div>
+        <div class="modal-nav-buttons">
+          <button class="dot-arrow" onclick="prevImage()">이전</button>
+          <div class="dot-indicators" id="dotIndicators"></div>
+          <button class="dot-arrow" onclick="nextImage()">다음</button>
+        </div>
+      </div>
+
+      <div class="modal-buy-area">
+        <h2 class="buy-title" id="buyTitle"></h2>
+        <div class="buy-sub" id="buySub"></div>
+        <div class="buy-price" id="buyPrice"></div>
+
+        <div id="colorBlock">
+          <div class="opt-label">COLOR</div>
+          <div class="chips" id="colorChips"></div>
+        </div>
+        <div class="opt-label">SIZE</div>
+        <div class="chips" id="sizeChips"></div>
+        <div class="opt-error" id="optError"></div>
+        <div class="opt-label">QTY</div>
+        <div class="qty">
+          <button type="button" onclick="changeQty(-1)">−</button>
+          <span id="qtyView">1</span>
+          <button type="button" onclick="changeQty(1)">+</button>
+        </div>
+
+        <div class="buy-buttons">
+          <button class="btn ghost" id="btnCart" onclick="addToCart(false)">장바구니 담기</button>
+          <button class="btn solid" id="btnBuy" onclick="addToCart(true)">바로 구매</button>
+        </div>
+
+        <div class="buy-desc" id="buyDesc"></div>
+        <div class="buy-policy">
+          배송비 무료 · 결제 후 2~3영업일 내 발송<br>
+          교환·반품 : 수령 후 7일 이내, 단순 변심 시 왕복 배송비 6,000원 고객 부담 (불량·오배송은 판매자 부담)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="./config.js"></script>
+  <script src="./products.js"></script>
+  <script src="./cart.js"></script>
+  <script>
+    // ===== 공통 셸 JS =====
+    function toggleMenu() { document.querySelector('.side-nav').classList.toggle('active'); }
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.side-nav a').forEach(link => {
+        link.addEventListener('click', () => document.querySelector('.side-nav').classList.remove('active'));
+      });
+    });
+    document.addEventListener('click', (e) => {
+      const sideNav = document.querySelector('.side-nav');
+      const hamburger = document.querySelector('.hamburger');
+      if (!sideNav.contains(e.target) && !hamburger.contains(e.target)) sideNav.classList.remove('active');
+    });
+
+    // ===== 상품 그리드 =====
+    let currentCat = 'all';
+    const grid = document.getElementById('grid');
+
+    function renderGrid() {
+      let list = GOF_PRODUCTS.filter(p => currentCat === 'all' || p.category === currentCat);
+      const sort = document.getElementById('sort').value;
+      if (sort === 'priceAsc') list = [...list].sort((a, b) => a.price - b.price);
+      if (sort === 'priceDesc') list = [...list].sort((a, b) => b.price - a.price);
+
+      grid.innerHTML = '';
+      list.forEach(p => {
+        const soldOut = GOF.isAllSoldOut(p);
+        const card = document.createElement('div');
+        card.className = 'product';
+        card.innerHTML = `
+          <div class="imgwrap">
+            ${p.badge ? `<span class="badge ${p.badge.toLowerCase()}">${p.badge}</span>` : ''}
+            ${soldOut ? '<div class="soldout-overlay">SOLD OUT</div>' : ''}
+            <img src="${p.front}" class="front" alt="${p.name} 앞면">
+            <img src="${p.back}" class="back" alt="${p.name} 뒷면">
+          </div>
+          <div class="product-info">
+            <div class="name">${p.name}</div>
+            <div class="sub">${p.subtitle}</div>
+            <div class="price">${GOF.won(p.price)}</div>
+          </div>`;
+        card.addEventListener('click', () => openProduct(p.id));
+        grid.appendChild(card);
+      });
+    }
+
+    document.querySelectorAll('.filters button').forEach(b => b.addEventListener('click', () => {
+      document.querySelectorAll('.filters button').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      currentCat = b.dataset.cat;
+      renderGrid();
+    }));
+    document.getElementById('sort').addEventListener('change', renderGrid);
+    renderGrid();
+
+    // ===== 상세 모달 =====
+    const modal = document.getElementById('productModal');
+    let cur = { product: null, color: null, size: null, qty: 1, images: [], index: 0 };
+
+    function openProduct(id) {
+      const p = GOF.findProduct(id);
+      if (!p) return;
+      cur = { product: p, color: GOF.colorsOf(p)[0], size: null, qty: 1, images: [], index: 0 };
+      document.getElementById('buyTitle').textContent = p.name;
+      document.getElementById('buySub').textContent = p.subtitle;
+      document.getElementById('buyPrice').textContent = GOF.won(p.price);
+      document.getElementById('qtyView').textContent = '1';
+      document.getElementById('optError').textContent = '';
+      renderColors();
+      selectColor(cur.color);
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    const SWATCH = { '블랙': '#111', '화이트': '#fff', '베이지': '#e8d9c0' };
+
+    function renderColors() {
+      const p = cur.product;
+      const colors = GOF.colorsOf(p);
+      const block = document.getElementById('colorBlock');
+      const wrap = document.getElementById('colorChips');
+      wrap.innerHTML = '';
+      block.style.display = colors.length > 1 ? '' : 'none';
+      colors.forEach(c => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'chip color' + (GOF.isSoldOut(p, c) ? ' soldout' : '');
+        btn.innerHTML = `<span class="swatch" style="background:${SWATCH[c] || '#888'}"></span>${c}`;
+        btn.addEventListener('click', () => { if (!GOF.isSoldOut(p, c)) selectColor(c); });
+        wrap.appendChild(btn);
+      });
+    }
+
+    function selectColor(color) {
+      const p = cur.product;
+      cur.color = color;
+      cur.size = null;
+      document.querySelectorAll('#colorChips .chip').forEach(b => b.classList.toggle('active', b.textContent.trim() === color));
+      // 사이즈 칩
+      const wrap = document.getElementById('sizeChips');
+      wrap.innerHTML = '';
+      p.sizes.forEach(s => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        const so = GOF.isSoldOut(p, color, s);
+        btn.className = 'chip' + (so ? ' soldout' : '');
+        btn.textContent = s;
+        btn.addEventListener('click', () => {
+          if (so) return;
+          cur.size = s;
+          document.getElementById('optError').textContent = '';
+          document.querySelectorAll('#sizeChips .chip').forEach(b => b.classList.toggle('active', b === btn));
+        });
+        wrap.appendChild(btn);
+      });
+      // 이미지·설명
+      cur.images = GOF.imagesOf(p, color);
+      cur.index = 0;
+      document.getElementById('buyDesc').innerHTML = GOF.descOf(p, color);
+      updateImage();
+      renderThumbs();
+    }
+
+    function updateImage() {
+      document.getElementById('modalImage').src = cur.images[cur.index];
+      document.querySelectorAll('#thumbnailList img').forEach((img, i) => img.classList.toggle('active', i === cur.index));
+      const dots = document.getElementById('dotIndicators');
+      dots.innerHTML = '';
+      cur.images.forEach((_, i) => {
+        const d = document.createElement('span');
+        if (i === cur.index) d.classList.add('active');
+        dots.appendChild(d);
+      });
+    }
+    function renderThumbs() {
+      const c = document.getElementById('thumbnailList');
+      c.innerHTML = '';
+      cur.images.forEach((src, i) => {
+        const t = document.createElement('img');
+        t.src = src;
+        t.alt = '썸네일 ' + (i + 1);
+        if (i === cur.index) t.classList.add('active');
+        t.addEventListener('click', () => { cur.index = i; updateImage(); });
+        c.appendChild(t);
+      });
+    }
+    function nextImage() { cur.index = (cur.index + 1) % cur.images.length; updateImage(); }
+    function prevImage() { cur.index = (cur.index - 1 + cur.images.length) % cur.images.length; updateImage(); }
+
+    function changeQty(d) {
+      cur.qty = Math.min(10, Math.max(1, cur.qty + d));
+      document.getElementById('qtyView').textContent = String(cur.qty);
+    }
+
+    function addToCart(goCheckout) {
+      if (!cur.size) {
+        const chips = document.getElementById('sizeChips');
+        chips.classList.remove('shake'); void chips.offsetWidth; chips.classList.add('shake');
+        document.getElementById('optError').textContent = '사이즈를 선택해 주세요.';
+        return;
+      }
+      Cart.add(cur.product.id, cur.color, cur.size, cur.qty);
+      if (goCheckout) { location.href = './checkout.html'; return; }
+      showToast(`장바구니에 담았습니다 <a href="./checkout.html">보기 →</a>`);
+    }
+
+    let toastTimer;
+    function showToast(html) {
+      const t = document.getElementById('toast');
+      t.innerHTML = html;
+      t.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+    }
+
+    // 스와이프 (모달 이미지 영역)
+    let startX = 0, swipeStarted = false;
+    const imgArea = document.querySelector('.modal-image-area');
+    imgArea.addEventListener('touchstart', e => { startX = e.touches[0].clientX; swipeStarted = true; }, { passive: true });
+    imgArea.addEventListener('touchend', e => {
+      if (!swipeStarted) return; swipeStarted = false;
+      const diff = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) { diff > 0 ? nextImage() : prevImage(); }
+    });
+
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', e => {
+      if (!modal.classList.contains('open')) return;
+      if (e.key === 'Escape') closeModal();
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
+    });
+
+    // ?p=상품id 로 열면 바로 모달
+    const qp = new URLSearchParams(location.search).get('p');
+    if (qp) openProduct(qp);
+  </script>
+</body>
+</html>

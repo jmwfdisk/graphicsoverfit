@@ -1,2 +1,6 @@
 .vscode/
 .DS_Store
+
+api/.dev.vars
+api/node_modules/
+api/.wrangler/

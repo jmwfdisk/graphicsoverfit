@@ -1,0 +1,14 @@
+# api/.dev.vars — 로컬 전용 시크릿. 이 파일을 .dev.vars 로 복사해 값을 채울 것. (.dev.vars 는 git 미추적)
+TOSS_SECRET_KEY=test_gsk_여기에_시크릿키
+ADMIN_TOKEN=아무_긴_랜덤문자열
+# 에러 재현용 (선택): 승인/취소 API 호출에 TossPayments-Test-Code 헤더를 붙임. 예) REJECT_CARD_PAYMENT
+TOSS_TEST_CODE=
+# 아래는 있으면 발송, 없으면 로그만 남김
+RESEND_API_KEY=
+SOLAPI_API_KEY=
+SOLAPI_API_SECRET=
+SOLAPI_SENDER=
+KAKAO_PF_ID=
+KAKAO_TEMPLATE_ORDER=
+KAKAO_TEMPLATE_RETURN=
+ADMIN_PHONE=

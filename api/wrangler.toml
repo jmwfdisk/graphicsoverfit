@@ -1,0 +1,21 @@
+name = "gof-shop-api"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+workers_dev = true
+
+[vars]
+# 허용 origin (쉼표 구분). 로컬 테스트용 localhost 포함.
+ALLOWED_ORIGINS = "https://graphicsoverfit.co.kr,https://www.graphicsoverfit.co.kr,http://localhost:8080,http://127.0.0.1:8080"
+ADMIN_EMAIL = "gomgomgirls@naver.com"
+REPLY_TO = "gomgomgirls@naver.com"
+MAIL_FROM = "Graphics Overfit <support@graphicsoverfit.com>"
+SITE_URL = "https://graphicsoverfit.co.kr"
+
+# 시크릿 (wrangler secret put <NAME> / 로컬은 .dev.vars):
+#   TOSS_SECRET_KEY, RESEND_API_KEY, ADMIN_TOKEN,
+#   SOLAPI_API_KEY, SOLAPI_API_SECRET, SOLAPI_SENDER, KAKAO_PF_ID, KAKAO_TEMPLATE_ORDER, KAKAO_TEMPLATE_RETURN, ADMIN_PHONE
+
+[[d1_databases]]
+binding = "DB"
+database_name = "gof-shop"
+database_id = "REPLACE_WITH_ID_FROM_wrangler_d1_create"

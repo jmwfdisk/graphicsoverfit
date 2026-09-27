@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Graphics Overfit Payment Failed</title>
+  <link rel="icon" href="./image/favicon.png" />
+  <style>
+    body { background-color: #000; margin: 0; padding: 0; font-family: Arial, sans-serif; color: #fff; display: flex; flex-direction: column; min-height: 100vh; }
+    .top-center-logo { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); z-index: 1100; }
+    .top-center-logo img { width: 130px; height: 130px; object-fit: contain; }
+    .wrap { margin: 140px auto 40px; max-width: 560px; width: calc(100% - 32px); background: #111; border-radius: 10px; padding: 32px 28px; box-sizing: border-box; }
+    h1 { font-size: 20px; letter-spacing: 2px; margin: 0 0 16px; color: #feacac; }
+    p { font-size: 14px; line-height: 1.7; color: #ccc; }
+    .code { font-size: 12px; color: #888; }
+    .btns { display: flex; gap: 10px; margin-top: 24px; }
+    .btn { flex: 1; text-align: center; padding: 14px; border-radius: 6px; font-size: 14px; font-weight: bold; text-decoration: none; border: 1px solid #fff; }
+    .btn.solid { background: #fff; color: #000; }
+    .btn.ghost { color: #fff; }
+    @media (max-width: 768px) { .top-center-logo { top: 20px; } .top-center-logo img { width: 90px; height: auto; } .wrap { margin-top: 120px; } }
+      footer a { color: #aaa; } .ph { color: #feacac; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="top-center-logo"><a href="../index.html"><img src="../image/mainlogo2.png" alt="로고"></a></div>
+
+  <div class="wrap">
+    <h1 id="title">✗ 결제에 실패했습니다</h1>
+    <p id="msg"></p>
+    <p class="code" id="code"></p>
+    <p style="font-size:12px; color:#888;">장바구니는 그대로 남아 있습니다. 다른 결제 수단으로 다시 시도해 주세요.</p>
+    <div class="btns">
+      <a class="btn solid" href="./checkout.html">주문서로 돌아가기</a>
+      <a class="btn ghost" href="./Shop.html">스토어</a>
+    </div>
+  </div>
+
+  <footer data-legal-footer="./" style="color:#888; text-align:center; padding:24px 20px; font-size:12px; line-height:1.8;"></footer>
+  <script src="./config.js"></script>
+  <script>
+    const p = new URLSearchParams(location.search);
+    const code = p.get('code') || '';
+    const message = p.get('message') || '';
+    const orderId = p.get('orderId') || '';
+    const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    if (code === 'PAY_PROCESS_CANCELED') {
+      document.getElementById('title').textContent = '결제를 취소하셨습니다';
+      document.getElementById('msg').textContent = '결제창에서 결제가 취소되었습니다.';
+    } else {
+      document.getElementById('msg').textContent = message || '결제 진행 중 문제가 발생했습니다.';
+    }
+    document.getElementById('code').innerHTML = (code ? '코드 : ' + esc(code) : '') + (orderId ? ' · 주문번호 : ' + esc(orderId) : '');
+  </script>
+</body>
+</html>

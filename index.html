@@ -712,7 +712,7 @@
   }
 
   .popup-dontshow .dontshow-link { font-size: 11px; }
-  </style>
+    </style>
 </head>
 
 <body>
@@ -778,7 +778,12 @@
             <li><a href="./NewTrending/Upcoming Collection.html">Upcoming Collection</a></li>
           </ul>
         </li>
-        <li><a href="https://www.musinsa.com/brand/graphicsoverfit/products?categoryCode=001001&gf=A">Shop</a></li>
+        <li><a href="./Shop/Shop.html">Shop</a>
+          <ul style="list-style: none; padding-left: 10px; font-size: 14px;">
+            <li><a href="./Shop/Shop.html">BRAND Store</a></li>
+            <li><a href="https://www.musinsa.com/brand/graphicsoverfit/products?categoryCode=001001&gf=A" target="_blank" rel="noopener">MUSINSA Store</a></li>
+          </ul>
+        </li>
       </ul>
     </nav>
 
@@ -848,7 +853,9 @@
 
   <footer class="sub-footer">
   <div class="sub-footer-left">
-    <a href="#">NEWS</a>
+    <a href="./Shop/terms.html">이용약관</a>
+    <span class="sep">|</span>
+    <a href="./Shop/privacy.html"><b>개인정보처리방침</b></a>
   </div>
   <div class="sub-footer-right">
     <span>© 2025 Graphics Overfit</span>
@@ -856,7 +863,7 @@
 </footer>
 
   <footer>
-    <p>Copyright 곰곰소녀마켓 모든 권리 보유. | 대표 MINWOO JUNG | 사업자등록번호 562-04-02746 | 문의 support@graphicsoverfit.com / gomgomgirls@naver.com</p>
+    <p>Copyright 곰곰소녀마켓 모든 권리 보유 | 대표 MINWOO JUNG | 사업자등록번호 562-04-02746 | 통신판매업신고 제2024-대전대덕-0620호 | 문의 support@graphicsoverfit.com / gomgomgirls@naver.com</p>
   </footer>
   
   <script>
@@ -958,12 +965,14 @@ function closePopup() {
   overlay.setAttribute('aria-hidden', 'true');
 }
 
+// 팝업 표시 스위치 — 다시 켜려면 true (2026-09-28 숨김 처리)
+const POPUP_ENABLED = false;
 // 24시간 체크
 const KEY = 'gof_popup_ts';
 const now = Date.now();
 const last = parseInt(localStorage.getItem(KEY) || '0', 10);
 const DAY = 24 * 60 * 60 * 1000;
-if (!last || now - last > DAY) {
+if (POPUP_ENABLED && (!last || now - last > DAY)) {
   setTimeout(openPopup, 600); // 살짝 지연 후 노출
 }
 
