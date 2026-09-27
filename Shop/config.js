@@ -4,7 +4,7 @@
 (function () {
   const isLocal = ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname);
   window.GOF_CONFIG = {
-    API_BASE: isLocal ? "http://localhost:8787" : "https://gof-shop-api.REPLACE_ACCOUNT.workers.dev",
+    API_BASE: isLocal ? "http://localhost:8787" : "https://gof-shop-api.k-market-pages.workers.dev",
     TOSS_CLIENT_KEY: "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm",
     SUPPORT_EMAIL: "gomgomgirls@naver.com",
     INSTAGRAM: "https://www.instagram.com/graphicsoverfit/",

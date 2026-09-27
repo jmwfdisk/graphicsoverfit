@@ -18,4 +18,4 @@ SITE_URL = "https://graphicsoverfit.co.kr"
 [[d1_databases]]
 binding = "DB"
 database_name = "gof-shop"
-database_id = "REPLACE_WITH_ID_FROM_wrangler_d1_create"
+database_id = "ae13debd-848b-40ed-b3d9-a7ef05966ac4"
