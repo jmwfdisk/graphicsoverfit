@@ -581,6 +581,11 @@
       .hamburger { z-index: 3100; }
       .side-nav.active ~ .top-center-logo { visibility: hidden; }
     }
+  
+    @media (min-width: 769px) and (max-width: 1024px) {
+      /* tablet-1024 */
+      .lookbook-grid { grid-template-columns: repeat(3, 1fr); }
+    }
   </style>
 </head>
 
@@ -624,14 +629,14 @@
     <!-- Lookbook 갤러리 -->
     <section class="lookbook-gallery">
       <div class="lookbook-grid" style="position: relative;">
-          <img src="./image/coming soon.png" alt="룩북1 대표" class="gallery-item" data-gallery="look1" />
-          <img src="./image/coming soon.png" alt="룩북2 대표" class="gallery-item" data-gallery="look2" />
-          <img src="./image/coming soon.png" alt="룩북3 대표" class="gallery-item" data-gallery="look3" />
-          <img src="./image/coming soon.png" alt="룩북4 대표" class="gallery-item" data-gallery="look4" />
-          <img src="./image/coming soon.png" alt="룩북5 대표" class="gallery-item" data-gallery="look5" />
-          <img src="./image/coming soon.png" alt="룩북6 대표" class="gallery-item" data-gallery="look6" />
-          <img src="./image/coming soon.png" alt="룩북7 대표" class="gallery-item" data-gallery="look7" /> 
-          <img src="./image/coming soon.png" alt="룩북7 대표" class="gallery-item" data-gallery="look8" />    
+          <img src="./image/coming soon.png" alt="룩북1 대표" class="gallery-item" data-gallery="look1" / loading="lazy">
+          <img src="./image/coming soon.png" alt="룩북2 대표" class="gallery-item" data-gallery="look2" / loading="lazy">
+          <img src="./image/coming soon.png" alt="룩북3 대표" class="gallery-item" data-gallery="look3" / loading="lazy">
+          <img src="./image/coming soon.png" alt="룩북4 대표" class="gallery-item" data-gallery="look4" / loading="lazy">
+          <img src="./image/coming soon.png" alt="룩북5 대표" class="gallery-item" data-gallery="look5" / loading="lazy">
+          <img src="./image/coming soon.png" alt="룩북6 대표" class="gallery-item" data-gallery="look6" / loading="lazy">
+          <img src="./image/coming soon.png" alt="룩북7 대표" class="gallery-item" data-gallery="look7" / loading="lazy"> 
+          <img src="./image/coming soon.png" alt="룩북7 대표" class="gallery-item" data-gallery="look8" / loading="lazy">    
         <!-- 더 추가 가능 -->
         <div class="lookbook-arrow left" onclick="prevGridSlide()">‹</div>
         <div class="lookbook-arrow right" onclick="nextGridSlide()">›</div>

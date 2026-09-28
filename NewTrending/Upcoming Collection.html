@@ -484,6 +484,11 @@
       .hamburger { z-index: 3100; }
       .side-nav.active ~ .top-center-logo { visibility: hidden; }
     }
+  
+    @media (min-width: 769px) and (max-width: 1024px) {
+      /* tablet-1024 */
+      .product-grid { grid-template-columns: repeat(2, 1fr); margin: 100px 20px 60px 190px; padding: 40px 20px; gap: 28px; }
+    }
   </style>
 </head>
 
@@ -538,6 +543,24 @@
 <div class="product-grid">
   <div class="product" onclick="showModal(
   [
+    './image/up/up-01-f.png',
+    './image/up/up-01-b.png'
+  ],
+  'Upcoming — 출시 예정',
+  `
+    <span style='color: #fff; font-weight: bold;'>- Upcoming</span><br>
+    &nbsp;&nbsp;• 출시 예정 제품입니다. 가격·옵션은 출시 시 공개됩니다.<br>
+  `  
+  )">
+    <img src="./image/up/up-01-f.png" class="front" alt="앞면" loading="lazy">
+    <img src="./image/up/up-01-b.png" class="back" alt="뒷면" loading="lazy">
+    <div class="product-info">
+      Upcoming<br>출시 예정
+    </div>
+  </div>
+
+  <div class="product" onclick="showModal(
+  [
     './image/coming soon.png'
   ],
   '준비중',
@@ -545,8 +568,8 @@
     <span style='color: #fff; font-weight: bold;'>- 준비중</span><br>
   `  
   )">
-    <img src="./image/coming soon.png" class="front" alt="앞면">
-    <img src="./image/coming soon.png" class="back" alt="뒷면">
+    <img src="./image/coming soon.png" class="front" alt="앞면" loading="lazy">
+    <img src="./image/coming soon.png" class="back" alt="뒷면" loading="lazy">
     <div class="product-info">
       coming soon<br>준비중
     </div>
@@ -561,8 +584,8 @@
     <span style='color: #fff; font-weight: bold;'>- 준비중</span><br>
   `  
   )">
-    <img src="./image/coming soon.png" class="front" alt="앞면">
-    <img src="./image/coming soon.png" class="back" alt="뒷면">
+    <img src="./image/coming soon.png" class="front" alt="앞면" loading="lazy">
+    <img src="./image/coming soon.png" class="back" alt="뒷면" loading="lazy">
     <div class="product-info">
       coming soon<br>준비중
     </div>
@@ -577,24 +600,8 @@
     <span style='color: #fff; font-weight: bold;'>- 준비중</span><br>
   `  
   )">
-    <img src="./image/coming soon.png" class="front" alt="앞면">
-    <img src="./image/coming soon.png" class="back" alt="뒷면">
-    <div class="product-info">
-      coming soon<br>준비중
-    </div>
-  </div>
-
-  <div class="product" onclick="showModal(
-  [
-    './image/coming soon.png'
-  ],
-  '준비중',
-  `
-    <span style='color: #fff; font-weight: bold;'>- 준비중</span><br>
-  `  
-  )">
-    <img src="./image/coming soon.png" class="front" alt="앞면">
-    <img src="./image/coming soon.png" class="back" alt="뒷면">
+    <img src="./image/coming soon.png" class="front" alt="앞면" loading="lazy">
+    <img src="./image/coming soon.png" class="back" alt="뒷면" loading="lazy">
     <div class="product-info">
       coming soon<br>준비중
     </div>
@@ -623,6 +630,7 @@
       <div>
         <h2 id="modalTitle" style="font-size: 20px; margin: 0 0 15px 0;">Golden Youth Art TEE</h2>
         <div id="modalDescription" style="font-size: 14px; line-height: 1.6; color: #ccc; margin-top: 0;"></div>
+        <a id="modalBuyLink" href="#" style="display: none; margin-top: 16px; padding: 12px; text-align: center; background: #fff; color: #000; font-weight: bold; border-radius: 6px; text-decoration: none; font-size: 14px;">브랜드 스토어에서 구매</a>
       </div>
     </div>
   </div>
@@ -661,6 +669,9 @@
   imageList = images;
   currentIndex = 0;
   document.getElementById('modalTitle').innerText = title;
+  const SHOP_MAP = {"ESSENTIAL LOGO TEE": "essential-logo-tee", "Golden Youth Art TEE": "golden-youth-art-tee", "Pure Youth Art TEE": "pure-youth-art-tee", "SPIRIT Art TEE": "spirit-art-tee"};
+  const buy = document.getElementById('modalBuyLink');
+  if (SHOP_MAP[title]) { buy.href = '../Shop/Shop.html?p=' + SHOP_MAP[title]; buy.style.display = 'block'; } else { buy.style.display = 'none'; }
   document.getElementById('modalDescription').innerHTML = descriptionHTML;
   document.getElementById('productModal').style.display = 'flex';
   updateModalImage();

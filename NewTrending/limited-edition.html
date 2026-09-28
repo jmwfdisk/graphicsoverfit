@@ -530,6 +530,11 @@
       .hamburger { z-index: 3100; }
       .side-nav.active ~ .top-center-logo { visibility: hidden; }
     }
+  
+    @media (min-width: 769px) and (max-width: 1024px) {
+      /* tablet-1024 */
+      .product-grid { grid-template-columns: repeat(2, 1fr); margin: 100px 20px 60px 190px; padding: 40px 20px; gap: 28px; }
+    }
   </style>
 </head>
 
@@ -604,8 +609,8 @@
   `
   )">
 
-    <img src="./image/limit/limit-01-f.png" class="front" alt="앞면">
-    <img src="./image/limit/limit-01-b.png" class="back" alt="뒷면">
+    <img src="./image/limit/limit-01-f.png" class="front" alt="앞면" loading="lazy">
+    <img src="./image/limit/limit-01-b.png" class="back" alt="뒷면" loading="lazy">
     <div class="product-info">
       [ARTWORK] Golden Youth Art TEE<br>시그니처 캐릭터 그래픽이 디자인된 티셔츠<br>
     </div>
@@ -634,8 +639,8 @@
   `
   )">
 
-    <img src="./image/limit/limit-02-f.png" class="front" alt="앞면">
-    <img src="./image/limit/limit-02-b.png" class="back" alt="뒷면">
+    <img src="./image/limit/limit-02-f.png" class="front" alt="앞면" loading="lazy">
+    <img src="./image/limit/limit-02-b.png" class="back" alt="뒷면" loading="lazy">
     <div class="product-info">
       [ARTWORK] Pure Youth Art TEE<br>시그니처 캐릭터 그래픽이 디자인된 티셔츠<br>
     </div>
@@ -665,8 +670,8 @@
   `
   )">
 
-    <img src="./image/limit/limit-03-f.png" class="front" alt="앞면">
-    <img src="./image/limit/limit-03-b.png" class="back" alt="뒷면">
+    <img src="./image/limit/limit-03-f.png" class="front" alt="앞면" loading="lazy">
+    <img src="./image/limit/limit-03-b.png" class="back" alt="뒷면" loading="lazy">
     <div class="product-info">
       [ARTWORK] SPIRIT Art TEE<br>레드 포인트와 SPIRIT 그래픽이 디자인된<br>티셔츠<br>
     </div>
@@ -675,8 +680,8 @@
   <div class="product" onclick="showModal([
     './image/coming soon.png'
   ], '준비중')">
-    <img src="./image/coming soon.png" class="front" alt="앞면">
-    <img src="./image/coming soon.png" class="back" alt="뒷면">
+    <img src="./image/coming soon.png" class="front" alt="앞면" loading="lazy">
+    <img src="./image/coming soon.png" class="back" alt="뒷면" loading="lazy">
     <div class="product-info">
       comming soon<br>준비중
     </div>
@@ -685,8 +690,8 @@
   <div class="product" onclick="showModal([
     './image/coming soon.png'
   ], '준비중')">
-    <img src="./image/coming soon.png" class="front" alt="앞면">
-    <img src="./image/coming soon.png" class="back" alt="뒷면">
+    <img src="./image/coming soon.png" class="front" alt="앞면" loading="lazy">
+    <img src="./image/coming soon.png" class="back" alt="뒷면" loading="lazy">
     <div class="product-info">
       comming soon<br>준비중
     </div>
@@ -695,8 +700,8 @@
   <div class="product" onclick="showModal([
     './image/coming soon.png'
   ], '준비중')">
-    <img src="./image/coming soon.png" class="front" alt="앞면">
-    <img src="./image/coming soon.png" class="back" alt="뒷면">
+    <img src="./image/coming soon.png" class="front" alt="앞면" loading="lazy">
+    <img src="./image/coming soon.png" class="back" alt="뒷면" loading="lazy">
     <div class="product-info">
       comming soon<br>준비중
     </div>
@@ -705,8 +710,8 @@
   <div class="product" onclick="showModal([
     './image/coming soon.png'
   ], '준비중')">
-    <img src="./image/coming soon.png" class="front" alt="앞면">
-    <img src="./image/coming soon.png" class="back" alt="뒷면">
+    <img src="./image/coming soon.png" class="front" alt="앞면" loading="lazy">
+    <img src="./image/coming soon.png" class="back" alt="뒷면" loading="lazy">
     <div class="product-info">
       comming soon<br>준비중
     </div>
@@ -715,8 +720,8 @@
   <div class="product" onclick="showModal([
     './image/coming soon.png'
   ], '준비중')">
-    <img src="./image/coming soon.png" class="front" alt="앞면">
-    <img src="./image/coming soon.png" class="back" alt="뒷면">
+    <img src="./image/coming soon.png" class="front" alt="앞면" loading="lazy">
+    <img src="./image/coming soon.png" class="back" alt="뒷면" loading="lazy">
     <div class="product-info">
       comming soon<br>준비중
     </div>
@@ -746,6 +751,7 @@
       <div>
         <h2 id="modalTitle" style="font-size: 20px; margin: 0 0 15px 0;">Golden Youth Art TEE</h2>
         <div id="modalDescription" style="font-size: 14px; line-height: 1.6; color: #ccc; margin-top: 0;"></div>
+        <a id="modalBuyLink" href="#" style="display: none; margin-top: 16px; padding: 12px; text-align: center; background: #fff; color: #000; font-weight: bold; border-radius: 6px; text-decoration: none; font-size: 14px;">브랜드 스토어에서 구매</a>
       </div>
     </div>
   </div>
@@ -796,6 +802,9 @@
   imageList = images;
   currentIndex = 0;
   document.getElementById('modalTitle').innerText = title;
+  const SHOP_MAP = {"ESSENTIAL LOGO TEE": "essential-logo-tee", "Golden Youth Art TEE": "golden-youth-art-tee", "Pure Youth Art TEE": "pure-youth-art-tee", "SPIRIT Art TEE": "spirit-art-tee"};
+  const buy = document.getElementById('modalBuyLink');
+  if (SHOP_MAP[title]) { buy.href = '../Shop/Shop.html?p=' + SHOP_MAP[title]; buy.style.display = 'block'; } else { buy.style.display = 'none'; }
   document.getElementById('modalDescription').innerHTML = descriptionHTML;
   document.getElementById('productModal').style.display = 'flex';
   updateModalImage();
