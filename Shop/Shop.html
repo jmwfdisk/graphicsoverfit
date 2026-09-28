@@ -182,7 +182,8 @@
   
     @media (max-width: 768px) {
       /* mobile-nav-fix 2026-09-28 */
-      .side-nav { overflow-y: auto; -webkit-overflow-scrolling: touch; padding-top: 64px; padding-bottom: 40px; box-sizing: border-box; }
+      html, body { overflow-x: hidden; }   /* 가로 넘침으로 iOS가 페이지를 축소해 100% 높이가 화면보다 짧아지는 문제 방지 */
+      .side-nav { overflow-y: auto; -webkit-overflow-scrolling: touch; padding-top: 64px; padding-bottom: 40px; box-sizing: border-box; top: 0; bottom: 0; height: 100vh; height: 100dvh; }
       .side-nav::before { content: ""; display: block; width: 105px; height: 45px; margin: 6px auto 14px; background: url("./image/mainlogo.png") center / contain no-repeat; }
       .side-nav li ul { opacity: 0 !important; transform: none !important; filter: none !important; max-height: 0 !important; overflow: hidden !important; padding-left: 0; transition: max-height 0.3s ease, opacity 0.3s ease; }
       .side-nav li.open > ul { opacity: 1 !important; max-height: 300px !important; }
