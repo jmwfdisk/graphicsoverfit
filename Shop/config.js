@@ -44,8 +44,7 @@
     return `<div class="legal-links"><a href="${prefix}terms.html">이용약관</a> · <a href="${prefix}privacy.html"><b>개인정보처리방침</b></a> · <a href="${prefix}return.html">교환·반품 접수</a></div>
       <div class="legal-biz">
         <span data-biz="company"></span> · 대표 <span data-biz="ceo"></span> · <span data-biz="address"></span> · 전화 <span data-biz="phone"></span> · 이메일 <span data-biz="email"></span><br>
-        사업자등록번호 <span data-biz="bizNo"></span> · 통신판매업신고 <span data-biz="mailOrderNo"></span> · 호스팅 <span data-biz="hosting"></span> · 개인정보보호책임자 <span data-biz="privacyOfficer"></span> (<span data-biz="privacyOfficerContact"></span>)<br>
-        배송비 무료 · 교환/반품은 수령 후 7일 이내 (단순 변심 시 왕복 배송비 6,000원 고객 부담)
+        사업자등록번호 <span data-biz="bizNo"></span> · 통신판매업신고 <span data-biz="mailOrderNo"></span> · 호스팅 <span data-biz="hosting"></span> · 개인정보보호책임자 <span data-biz="privacyOfficer"></span> (<span data-biz="privacyOfficerContact"></span>)
       </div>`;
   };
   document.addEventListener("DOMContentLoaded", () => {
