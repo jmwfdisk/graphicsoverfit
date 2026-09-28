@@ -4,6 +4,15 @@
 
 window.GOF_RETURN_SHIPPING_FEE = 6000; // 단순 변심 교환·반품 왕복 배송비 (고객 부담)
 
+// 상품정보제공고시(의류) 공통 항목 — 빈 문자열이면 모달에 "[항목 입력]" 자리표시자로 표시됨
+window.GOF_NOTICE = {
+  material: "면(코튼) 100% · 20수 싱글 원단",   // 기본값. 제품별 material 필드가 있으면 그 값을 우선
+  maker: "그래픽스 오버핏",   // 제조자 / 수입자
+  origin: "대한민국",        // 제조국
+  washing: "단독 세탁 · 찬물 손세탁 또는 세탁망 사용 · 뒤집어서 세탁 · 표백제 사용 금지 · 건조기 사용 금지 · 그래픽 부위 직접 다림질 금지",
+  warranty: "관계 법령 및 소비자분쟁해결기준에 따름 (수령 후 7일 이내 교환·반품, 불량 시 판매자 부담)",
+};
+
 const GOF_DESC_COMMON = `
     <span style='color: #fff; font-weight: bold;'>- DESC.</span><br>
     &nbsp;&nbsp;• 200G 이상 중량의 20수 싱글원단 사용<br>
@@ -24,6 +33,8 @@ function gofDesc(identityLines, sizeChart) {
 window.GOF_PRODUCTS = [
   {
     id: "essential-logo-tee",
+    material: "면(코튼) 100% · 20수 싱글 원단",
+    detail: { ko: "./image/detail/essential.jpg", ja: "./image/detail/essential-ja.jpg" },   // 상세페이지 (언어별, 모달 이미지 영역 아래)
     musinsaNo: 5225317,
     name: "[BASIC] ESSENTIAL LOGO TEE",
     subtitle: "ESSENTIAL logo가 디자인된 티셔츠",
@@ -46,6 +57,8 @@ window.GOF_PRODUCTS = [
   },
   {
     id: "spirit-art-tee",
+    material: "면(코튼) 100% · 16수 싱글 저지 (400g 이상 중량 원단)",
+    detail: { ko: "./image/detail/spirit.jpg", en: "./image/detail/spirit-en.jpg", ja: "./image/detail/spirit-ja.jpg", zh: "./image/detail/spirit-zh.jpg" },   // 상세페이지 (언어별, 모달 이미지 영역 아래)
     musinsaNo: 4867826,
     name: "[ARTWORK] SPIRIT Art TEE",
     subtitle: "레드 포인트와 SPIRIT 그래픽이 디자인된 티셔츠",
@@ -63,6 +76,8 @@ window.GOF_PRODUCTS = [
   },
   {
     id: "golden-youth-art-tee",
+    material: "면(코튼) 100% · 20수 싱글 원단",
+    detail: { ko: "./image/detail/youth.jpg", en: "./image/detail/youth-en.jpg", ja: "./image/detail/youth-ja.jpg" },   // 상세페이지 (언어별, 모달 이미지 영역 아래)
     musinsaNo: 4685719,
     name: "[ARTWORK] Golden Youth Art TEE",
     subtitle: "시그니처 캐릭터 그래픽이 디자인된 티셔츠",
@@ -80,6 +95,8 @@ window.GOF_PRODUCTS = [
   },
   {
     id: "pure-youth-art-tee",
+    material: "면(코튼) 100% · 20수 싱글 원단",
+    detail: { ko: "./image/detail/youth.jpg", en: "./image/detail/youth-en.jpg", ja: "./image/detail/youth-ja.jpg" },   // 상세페이지 (언어별, 모달 이미지 영역 아래)
     musinsaNo: 4684766,
     name: "[ARTWORK] Pure Youth Art TEE",
     subtitle: "시그니처 캐릭터 그래픽이 디자인된 티셔츠",

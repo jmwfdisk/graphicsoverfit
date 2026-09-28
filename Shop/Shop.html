@@ -88,31 +88,43 @@
     .modal-image-area { flex: 1 1 50%; display: flex; flex-direction: column; align-items: center; min-width: 260px; }
     .modal-image-area .main { position: relative; width: 100%; }
     .modal-image-area img.main-img { width: 100%; border-radius: 8px; display: block; }
-    .modal-buy-area { flex: 1 1 40%; display: flex; flex-direction: column; min-width: 240px; }
+    .modal-buy-area { flex: 1 1 40%; display: flex; flex-direction: column; min-width: 260px; }
     .modal-close { position: absolute; top: 10px; right: 10px; font-size: 12px; cursor: pointer; color: #000; background: #fff; width: 22px; height: 22px; display: flex; justify-content: center; align-items: center; border-radius: 50%; z-index: 3; }
     .thumbnail-list { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin: 12px 0 8px; }
     .thumbnail-list img { width: 56px; height: 56px; object-fit: cover; border: 2px solid #fff; border-radius: 4px; cursor: pointer; opacity: 0.6; transition: transform 0.3s, opacity 0.3s; }
     .thumbnail-list img.active { opacity: 1; transform: scale(1.08); border-color: yellow; }
     .modal-nav-buttons { display: flex; align-items: center; justify-content: center; gap: 12px; }
+    .detail-wrap { position: relative; width: 100%; margin-top: 20px; }
+    .detail-wrap.empty { display: none; }
+    .detail-img { width: 100%; border-radius: 8px; display: block; }
+    .lang-bar { position: absolute; top: 10px; right: 10px; display: flex; gap: 6px; z-index: 2; }
+    .lang-bar button { background: rgba(0,0,0,0.35); color: #fff; border: 1px solid rgba(255,255,255,0.55); border-radius: 4px; padding: 4px 10px; font-size: 12px; cursor: pointer; backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); }
+    .lang-bar button:hover { background: rgba(0,0,0,0.6); }
+    .lang-bar button.active { background: rgba(255,255,255,0.9); color: #000; border-color: #fff; }
     .dot-indicators { display: flex; gap: 6px; }
     .dot-indicators span { width: 10px; height: 10px; border-radius: 50%; background: gray; display: inline-block; }
     .dot-indicators span.active { background: #fff; }
     .dot-arrow { background: rgba(255,255,255,0.2); color: #fff; border: 1px solid #fff; border-radius: 4px; padding: 6px 16px; font-size: 14px; cursor: pointer; }
     .dot-arrow:hover { background: rgba(255,255,255,0.5); color: #000; }
 
-    .buy-title { font-size: 18px; margin: 4px 0 4px; }
+    .title-row { display: flex; align-items: center; justify-content: flex-start; gap: 6px; flex-wrap: wrap; margin: 4px 0 4px; }
+    .buy-title { font-size: 18px; margin: 0; }
+    .icon-btn { flex: none; background: transparent; border: none; color: #aaa; width: 26px; height: 26px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; vertical-align: middle; }
+    .icon-btn:hover { color: #fff; background: rgba(255,255,255,0.12); }
     .buy-sub { color: #aaa; font-size: 13px; margin-bottom: 8px; }
     .buy-price { font-size: 20px; font-weight: bold; margin-bottom: 18px; }
     .opt-label { font-size: 12px; letter-spacing: 2px; color: #aaa; margin: 10px 0 6px; }
     .chips { display: flex; gap: 8px; flex-wrap: wrap; }
-    .chip { border: 1px solid rgba(255,255,255,0.5); border-radius: 4px; padding: 8px 14px; font-size: 13px; cursor: pointer; background: transparent; color: #fff; min-width: 44px; text-align: center; }
+    .chip { border: 1px solid rgba(255,255,255,0.5); border-radius: 4px; padding: 0 14px; line-height: 34px; font-size: 13px; cursor: pointer; background: transparent; color: #fff; min-width: 44px; text-align: center; }
     .chip.active { background: #fff; color: #000; border-color: #fff; }
     .chip.soldout { text-decoration: line-through; opacity: 0.35; cursor: not-allowed; }
     .chip.color { display: flex; align-items: center; gap: 8px; }
     .swatch { width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.6); display: inline-block; }
-    .qty { display: inline-flex; align-items: center; border: 1px solid rgba(255,255,255,0.5); border-radius: 4px; }
-    .qty button { background: transparent; color: #fff; border: none; width: 36px; height: 36px; font-size: 18px; cursor: pointer; }
-    .qty span { min-width: 32px; text-align: center; font-size: 14px; }
+    .size-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .chip, .qty { height: 36px; box-sizing: border-box; }
+    .qty { display: inline-flex; align-items: center; border: 1px solid rgba(255,255,255,0.5); border-radius: 4px; margin-left: auto; }
+    .qty button { background: transparent; color: #fff; border: none; width: 34px; height: 100%; font-size: 16px; cursor: pointer; }
+    .qty span { min-width: 28px; text-align: center; font-size: 13px; }
     .buy-buttons { display: flex; gap: 10px; margin-top: 18px; }
     .btn { flex: 1; padding: 14px; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer; border: 1px solid #fff; letter-spacing: 1px; }
     .btn.ghost { background: transparent; color: #fff; }
@@ -122,7 +134,26 @@
     @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
     .opt-error { color: #feacac; font-size: 12px; margin-top: 6px; min-height: 14px; }
     .buy-desc { border-top: 1px solid rgba(255,255,255,0.15); margin-top: 20px; padding-top: 14px; font-size: 13px; line-height: 1.7; color: #ccc; }
-    .buy-policy { font-size: 12px; color: #888; line-height: 1.6; margin-top: 12px; }
+    .buy-total { display: flex; justify-content: space-between; align-items: baseline; margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.15); font-size: 13px; color: #aaa; }
+    .buy-total b { font-size: 18px; color: #fff; }
+    .buy-links { display: flex; justify-content: flex-end; align-items: center; margin-top: 12px; font-size: 12px; }
+    .buy-links a { color: #ccc; text-decoration: none; border: 1px solid rgba(255,255,255,0.4); border-radius: 999px; padding: 6px 14px; line-height: 1; }
+    .buy-links a:hover { color: #000; background: #fff; border-color: #fff; }
+    .buy-links button { background: transparent; border: 1px solid rgba(255,255,255,0.35); color: #ccc; border-radius: 4px; padding: 4px 10px; font-size: 12px; cursor: pointer; }
+    .buy-links button:hover { color: #fff; border-color: #fff; }
+    .acc { border-top: 1px solid rgba(255,255,255,0.15); margin-top: 14px; font-size: 13px; color: #ccc; }
+    .acc summary { cursor: pointer; padding: 12px 0; color: #fff; font-weight: bold; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+    .acc summary::-webkit-details-marker { display: none; }
+    .acc summary::after { content: "+"; font-size: 16px; color: #aaa; }
+    .acc[open] summary::after { content: "−"; }
+    .acc-body { line-height: 1.8; padding-bottom: 12px; }
+    .acc-body a { color: #fff; }
+    .acc-body .oneline { white-space: nowrap; font-size: 12px; }
+    .acc-body .sub { color: #888; }
+    .notice-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 12px; }
+    .notice-table th, .notice-table td { border-top: 1px solid rgba(255,255,255,0.12); padding: 8px 6px; text-align: left; vertical-align: top; line-height: 1.5; }
+    .notice-table th { width: 34%; color: #aaa; font-weight: normal; white-space: nowrap; }
+    .ph { color: #feacac; font-weight: bold; }
 
     .toast { position: fixed; left: 50%; bottom: 30px; transform: translateX(-50%) translateY(20px); background: #fff; color: #000; padding: 12px 20px; border-radius: 6px; font-size: 14px; opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s; z-index: 6000; white-space: nowrap; }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
@@ -146,6 +177,7 @@
       .modal { padding: 16px 12px; }
       .modal-content { padding: 16px; gap: 16px; }
       .buy-buttons { position: sticky; bottom: 0; background: #111; padding: 10px 0; }
+      .acc-body .oneline { white-space: normal; }
     }
   </style>
 </head>
@@ -227,10 +259,22 @@
           <div class="dot-indicators" id="dotIndicators"></div>
           <button class="dot-arrow" onclick="nextImage()">다음</button>
         </div>
+        <div class="detail-wrap" id="detailWrap">
+          <div class="lang-bar" id="langBar"></div>
+          <img id="detailImg" class="detail-img" src="" alt="상세 설명" loading="lazy" />
+        </div>
       </div>
 
       <div class="modal-buy-area">
-        <h2 class="buy-title" id="buyTitle"></h2>
+        <div class="title-row">
+          <h2 class="buy-title" id="buyTitle"></h2>
+          <button type="button" class="icon-btn" id="copyLink" onclick="copyProductLink()" title="링크 복사" aria-label="링크 복사">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.1 0l2.8-2.8a5 5 0 0 0-7.1-7.1L11 4.9"/>
+              <path d="M14 11a5 5 0 0 0-7.1 0L4.1 13.8a5 5 0 0 0 7.1 7.1L13 19.1"/>
+            </svg>
+          </button>
+        </div>
         <div class="buy-sub" id="buySub"></div>
         <div class="buy-price" id="buyPrice"></div>
 
@@ -239,25 +283,43 @@
           <div class="chips" id="colorChips"></div>
         </div>
         <div class="opt-label">SIZE</div>
-        <div class="chips" id="sizeChips"></div>
-        <div class="opt-error" id="optError"></div>
-        <div class="opt-label">QTY</div>
-        <div class="qty">
-          <button type="button" onclick="changeQty(-1)">−</button>
-          <span id="qtyView">1</span>
-          <button type="button" onclick="changeQty(1)">+</button>
+        <div class="size-row">
+          <div class="chips" id="sizeChips"></div>
+          <div class="qty" title="수량">
+            <button type="button" onclick="changeQty(-1)">−</button>
+            <span id="qtyView">1</span>
+            <button type="button" onclick="changeQty(1)">+</button>
+          </div>
         </div>
+        <div class="opt-error" id="optError"></div>
 
+        <div class="buy-total"><span>합계</span><b id="buyTotal"></b></div>
         <div class="buy-buttons">
           <button class="btn ghost" id="btnCart" onclick="addToCart(false)">장바구니 담기</button>
           <button class="btn solid" id="btnBuy" onclick="addToCart(true)">바로 구매</button>
         </div>
+        <div class="buy-links">
+          <a id="musinsaLink" href="#" target="_blank" rel="noopener">무신사에서 후기 보기</a>
+        </div>
 
         <div class="buy-desc" id="buyDesc"></div>
-        <div class="buy-policy">
-          배송비 무료 · 결제 후 2~3영업일 내 발송<br>
-          교환·반품 : 수령 후 7일 이내, 단순 변심 시 왕복 배송비 6,000원 고객 부담 (불량·오배송은 판매자 부담)
-        </div>
+
+        <details class="acc" id="noticeAcc">
+          <summary>상품 정보 (상품정보제공고시)</summary>
+          <table class="notice-table" id="noticeTable"></table>
+        </details>
+        <details class="acc">
+          <summary>배송 · 교환/반품 안내</summary>
+          <div class="acc-body">
+            <span class="oneline"><b>배송</b> : 전 상품 무료 배송 · CJ대한통운 · 결제 완료 후 2~3영업일 내 발송</span><br>
+            <span class="sub">(가상계좌는 입금 확인 후)</span><br>
+            <b>교환·반품</b> : 수령 후 7일 이내 (미착용 · 택 제거 전 · 오염 없음)<br>
+            <b>단순 변심</b> : 왕복 배송비 6,000원 고객 부담 (반품 시 환불액에서 차감)<br>
+            <b>불량·오배송</b> : 배송비 판매자 부담, 전액 환불 또는 교환<br>
+            <b>반품 주소</b> : <span id="accAddr"></span><br>
+            <b>접수</b> : <a href="./return.html">교환·반품 접수 페이지</a> · <span id="accMail"></span>
+          </div>
+        </details>
       </div>
     </div>
   </div>
@@ -335,6 +397,12 @@
       document.getElementById('buyPrice').textContent = GOF.won(p.price);
       document.getElementById('qtyView').textContent = '1';
       document.getElementById('optError').textContent = '';
+      document.getElementById('musinsaLink').href = 'https://www.musinsa.com/products/' + p.musinsaNo;
+      document.getElementById('accAddr').textContent = GOF_CONFIG.RETURN_ADDRESS;
+      document.getElementById('accMail').textContent = GOF_CONFIG.SUPPORT_EMAIL;
+      document.getElementById('noticeAcc').open = false;
+      renderNotice(p);
+      updateTotal();
       renderColors();
       selectColor(cur.color);
       modal.classList.add('open');
@@ -393,8 +461,32 @@
       cur.images = GOF.imagesOf(p, color);
       cur.index = 0;
       document.getElementById('buyDesc').innerHTML = GOF.descOf(p, color);
+      renderDetail(p);
       updateImage();
       renderThumbs();
+    }
+
+    // ===== 상세페이지 (언어별) =====
+    const LANG_LABEL = { ko: '한국어', en: 'English', ja: '日本語', zh: '中文' };
+    let detailLang = 'ko';
+    function renderDetail(p) {
+      const wrap = document.getElementById('detailWrap');
+      const bar = document.getElementById('langBar');
+      const img = document.getElementById('detailImg');
+      const d = (p.detail && typeof p.detail === 'object') ? p.detail : (p.detail ? { ko: p.detail } : null);
+      if (!d) { wrap.classList.add('empty'); img.src = ''; bar.innerHTML = ''; return; }
+      wrap.classList.remove('empty');
+      const langs = ['ko', 'en', 'ja', 'zh'].filter(l => d[l]);
+      if (!d[detailLang]) detailLang = 'ko';
+      bar.innerHTML = '';
+      if (langs.length > 1) langs.forEach(l => {
+        const b = document.createElement('button');
+        b.type = 'button'; b.textContent = LANG_LABEL[l]; b.lang = l;
+        if (l === detailLang) b.classList.add('active');
+        b.addEventListener('click', () => { detailLang = l; renderDetail(p); });
+        bar.appendChild(b);
+      });
+      img.src = d[detailLang];
     }
 
     function updateImage() {
@@ -426,6 +518,35 @@
     function changeQty(d) {
       cur.qty = Math.min(10, Math.max(1, cur.qty + d));
       document.getElementById('qtyView').textContent = String(cur.qty);
+      updateTotal();
+    }
+    function updateTotal() {
+      document.getElementById('buyTotal').textContent = GOF.won(cur.product.price * cur.qty) + (cur.qty > 1 ? ' (' + cur.qty + '개)' : '');
+    }
+    const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+    // 상품정보제공고시 표
+    function renderNotice(p) {
+      const v = (x, label) => x ? esc(x) : `<span class="ph">[${label} 입력]</span>`;
+      const biz = window.GOF_BUSINESS || {};
+      const rows = [
+        ['제품 소재', v(p.material || GOF_NOTICE.material, '소재').replace(/ \((.+)\)$/, '<br><span style="color:#888">($1)</span>')],
+        ['색상', esc(GOF.colorsOf(p).join(', '))],
+        ['치수', esc(p.sizes.join(' / ')) + '<br><span style="color:#888">(상세 치수는 상세 이미지의 사이즈표 참조)</span>'],
+        ['제조자 / 수입자', v(GOF_NOTICE.maker, '제조자')],
+        ['제조국', v(GOF_NOTICE.origin, '제조국')],
+        ['세탁 방법 및 취급 시 주의사항', v(GOF_NOTICE.washing, '세탁 방법')],
+        ['품질보증기준', v(GOF_NOTICE.warranty, '품질보증기준')],
+        ['A/S 책임자와 전화번호', (biz.company ? esc(biz.company) : '<span class="ph">[상호 입력]</span>') + ' · ' + (biz.phone ? esc(biz.phone) : '<span class="ph">[전화번호 입력]</span>')],
+      ];
+      document.getElementById('noticeTable').innerHTML = rows.map(r => `<tr><th>${r[0]}</th><td>${r[1]}</td></tr>`).join('');
+    }
+
+    // 링크 복사
+    async function copyProductLink() {
+      const url = location.origin + location.pathname + '?p=' + encodeURIComponent(cur.product.id);
+      try { await navigator.clipboard.writeText(url); showToast('링크를 복사했습니다'); }
+      catch (e) { prompt('아래 링크를 복사하세요', url); }
     }
 
     function addToCart(goCheckout) {
