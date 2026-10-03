@@ -139,7 +139,7 @@
   gap: 40px;
   padding: 60px 40px;
   max-width: 1400px;
-  margin: 100px auto 60px 200px;
+  margin: 100px 0 60px 200px; /* body가 flex(column)라 좌우 margin에 auto가 있으면 stretch가 꺼져 카드 4열 폭(1200px)으로 고정, 화면 밖으로 넘침 */
   justify-content: center;
 }
 
@@ -490,27 +490,31 @@
       .product-grid { grid-template-columns: repeat(2, 1fr); margin: 100px 20px 60px 190px; padding: 40px 20px; gap: 28px; }
     }
 
-    /* 2027 Summer 홍보 배너 — 좌우 여백은 아래 .product-grid 콘텐츠 시작선(200+40px)에 맞춤 */
-    .upcoming-hero { position: relative; margin: 100px 40px 0 240px; max-width: 1320px; border-radius: 12px; overflow: hidden; background: #c9cdd0; }
+    /* 2027 Summer 홍보 배너 (카드 그리드 아래) — 좌우 여백은 .product-grid 콘텐츠 시작선(200+40px)에 맞춤 */
+    .upcoming-hero { position: relative; margin: 0 40px 60px 240px; max-width: 1320px; border-radius: 12px; overflow: hidden; background: #c9cdd0; container-type: inline-size; }
     .upcoming-hero img { display: block; width: 100%; height: auto; }
-    /* 이미지 왼쪽 아래 빈 회색 영역(스크립트 로고 아래, 모델 왼쪽)에 문구 배치 */
+    /* 문구는 배너 폭 비례(cqw) — 배너 폭 1160px 기준 크기를 어느 폭에서나 같은 비율로 유지해 이미지 속 스크립트 로고와 겹치지 않음 */
     .upcoming-hero .hero-copy { position: absolute; left: 7%; bottom: 10%; max-width: 32%; color: #1a1a1a; }
-    .hero-eyebrow { font-size: 13px; font-weight: bold; letter-spacing: 0.3em; margin: 0 0 10px; opacity: 0.75; }
-    .hero-title { font-size: clamp(36px, 5vw, 72px); font-weight: 900; line-height: 1; letter-spacing: -0.02em; margin: 0 0 16px; }
-    .hero-sub { font-size: 16px; line-height: 1.6; margin: 0 0 20px; }
-    .hero-badge { display: inline-block; padding: 8px 18px; border: 2px solid currentColor; border-radius: 999px; font-size: 13px; font-weight: bold; letter-spacing: 0.2em; }
-    .upcoming-hero + .product-grid { margin-top: 0; }
+    .hero-eyebrow { font-size: max(9px, 1.12cqw); font-weight: bold; letter-spacing: 0.3em; margin: 0 0 0.86cqw; opacity: 0.75; }
+    .hero-title { font-size: 6.2cqw; font-weight: 900; line-height: 1; letter-spacing: -0.02em; margin: 0 0 1.38cqw; }
+    .hero-sub { font-size: max(10px, 1.38cqw); line-height: 1.6; margin: 0 0 1.72cqw; }
+    .hero-badge { display: inline-block; padding: 0.7cqw 1.55cqw; border: 2px solid currentColor; border-radius: 999px; font-size: max(9px, 1.12cqw); font-weight: bold; letter-spacing: 0.2em; }
+    .product-grid:has(+ .upcoming-hero) { margin-bottom: 20px; }
 
     @media (max-width: 1024px) {
-      /* 1024px 이하는 문구가 이미지 속 스크립트 로고·모델과 겹치므로 이미지 아래 검정 영역으로 분리 */
-      .upcoming-hero { margin: 100px 40px 0 210px; background: #000; border: 2px solid #fff; }
-      .upcoming-hero .hero-copy { position: static; max-width: none; color: #fff; padding: 24px 20px 28px; text-align: center; }
-      .hero-title { font-size: 40px; }
-      .hero-sub { font-size: 15px; }
+      .upcoming-hero { margin: 0 40px 60px 210px; }
     }
 
     @media (max-width: 768px) {
-      .upcoming-hero { margin: 90px 20px 0; }
+      /* 모바일은 비례 축소하면 글씨가 읽히지 않음 → 정사각형 크롭(스크립트 로고~모델 전부 포함되는 47% 지점) + 하단 그라데이션 위 흰 글씨 */
+      .upcoming-hero { margin: 0 20px 40px; }
+      .upcoming-hero img { aspect-ratio: 1 / 1; object-fit: cover; object-position: 47% top; }
+      .upcoming-hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 55%; background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0)); pointer-events: none; }
+      .upcoming-hero .hero-copy { left: 0; right: 0; bottom: 0; max-width: none; padding: 0 16px 20px; color: #fff; text-align: center; z-index: 1; }
+      .hero-eyebrow { font-size: 10px; margin-bottom: 6px; opacity: 0.85; }
+      .hero-title { font-size: 34px; margin-bottom: 8px; }
+      .hero-sub { font-size: 13px; line-height: 1.5; margin-bottom: 12px; }
+      .hero-badge { font-size: 11px; padding: 6px 14px; }
     }
   </style>
 </head>
@@ -563,6 +567,75 @@
       <a href="../index.html"><img src="../image/mainlogo2.png" alt="로고"></a>
     </div>
 
+<div class="product-grid">
+  <div class="product" onclick="showModal(
+  [
+    './image/up/up-01-f.jpg',
+    './image/up/up-01-b.jpg'
+  ],
+  '[BASIC] Brush Typography Logo Hoodie',
+  `
+    <span style='color: #fff; font-weight: bold;'>- Upcoming</span><br>
+    &nbsp;&nbsp;• 출시 예정 제품입니다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;가격·옵션은 출시 시 공개됩니다.<br>
+  `  
+  )">
+    <img src="./image/up/up-01-f.jpg" class="front" alt="앞면" loading="lazy">
+    <img src="./image/up/up-01-b.jpg" class="back" alt="뒷면" loading="lazy">
+    <div class="product-info">
+      Brush Typography Logo Hoodie<br>출시 예정
+    </div>
+  </div>
+
+  <div class="product" onclick="showModal(
+  [
+    './image/coming soon.png'
+  ],
+  '준비중',
+  `
+    <span style='color: #fff; font-weight: bold;'>- 준비중</span><br>
+  `  
+  )">
+    <img src="./image/coming soon.png" class="front" alt="앞면" loading="lazy">
+    <img src="./image/coming soon.png" class="back" alt="뒷면" loading="lazy">
+    <div class="product-info">
+      coming soon<br>준비중
+    </div>
+  </div>
+
+  <div class="product" onclick="showModal(
+  [
+    './image/coming soon.png'
+  ],
+  '준비중',
+  `
+    <span style='color: #fff; font-weight: bold;'>- 준비중</span><br>
+  `  
+  )">
+    <img src="./image/coming soon.png" class="front" alt="앞면" loading="lazy">
+    <img src="./image/coming soon.png" class="back" alt="뒷면" loading="lazy">
+    <div class="product-info">
+      coming soon<br>준비중
+    </div>
+  </div>
+
+  <div class="product" onclick="showModal(
+  [
+    './image/coming soon.png'
+  ],
+  '준비중',
+  `
+    <span style='color: #fff; font-weight: bold;'>- 준비중</span><br>
+  `  
+  )">
+    <img src="./image/coming soon.png" class="front" alt="앞면" loading="lazy">
+    <img src="./image/coming soon.png" class="back" alt="뒷면" loading="lazy">
+    <div class="product-info">
+      coming soon<br>준비중
+    </div>
+  </div>
+</div>
+
 <!-- 2027 Summer 홍보 배너 -->
 <section class="upcoming-hero">
   <img src="./image/up/upcoming-2027summer.jpg" alt="Graphics Overfit 2027 Summer Collection">
@@ -573,71 +646,6 @@
     <span class="hero-badge">COMING SOON</span>
   </div>
 </section>
-
-<div class="product-grid">
-  <div class="product" onclick="showModal(
-  [
-    './image/coming soon.png'
-  ],
-  '준비중',
-  `
-    <span style='color: #fff; font-weight: bold;'>- 준비중</span><br>
-  `  
-  )">
-    <img src="./image/coming soon.png" class="front" alt="앞면" loading="lazy">
-    <img src="./image/coming soon.png" class="back" alt="뒷면" loading="lazy">
-    <div class="product-info">
-      coming soon<br>준비중
-    </div>
-  </div>
-
-  <div class="product" onclick="showModal(
-  [
-    './image/coming soon.png'
-  ],
-  '준비중',
-  `
-    <span style='color: #fff; font-weight: bold;'>- 준비중</span><br>
-  `  
-  )">
-    <img src="./image/coming soon.png" class="front" alt="앞면" loading="lazy">
-    <img src="./image/coming soon.png" class="back" alt="뒷면" loading="lazy">
-    <div class="product-info">
-      coming soon<br>준비중
-    </div>
-  </div>
-
-  <div class="product" onclick="showModal(
-  [
-    './image/coming soon.png'
-  ],
-  '준비중',
-  `
-    <span style='color: #fff; font-weight: bold;'>- 준비중</span><br>
-  `  
-  )">
-    <img src="./image/coming soon.png" class="front" alt="앞면" loading="lazy">
-    <img src="./image/coming soon.png" class="back" alt="뒷면" loading="lazy">
-    <div class="product-info">
-      coming soon<br>준비중
-    </div>
-  </div>
-
-  <div class="product" onclick="showModal(
-  [
-    './image/coming soon.png'
-  ],
-  '준비중',
-  `
-    <span style='color: #fff; font-weight: bold;'>- 준비중</span><br>
-  `  
-  )">
-    <img src="./image/coming soon.png" class="front" alt="앞면" loading="lazy">
-    <img src="./image/coming soon.png" class="back" alt="뒷면" loading="lazy">
-    <div class="product-info">
-      coming soon<br>준비중
-    </div>
-  </div>
 
 <div class="modal" id="productModal">
   <div class="modal-content">
