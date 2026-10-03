@@ -489,6 +489,29 @@
       /* tablet-1024 */
       .product-grid { grid-template-columns: repeat(2, 1fr); margin: 100px 20px 60px 190px; padding: 40px 20px; gap: 28px; }
     }
+
+    /* 2027 Summer 홍보 배너 — 좌우 여백은 아래 .product-grid 콘텐츠 시작선(200+40px)에 맞춤 */
+    .upcoming-hero { position: relative; margin: 100px 40px 0 240px; max-width: 1320px; border-radius: 12px; overflow: hidden; background: #c9cdd0; }
+    .upcoming-hero img { display: block; width: 100%; height: auto; }
+    /* 이미지 왼쪽 아래 빈 회색 영역(스크립트 로고 아래, 모델 왼쪽)에 문구 배치 */
+    .upcoming-hero .hero-copy { position: absolute; left: 7%; bottom: 10%; max-width: 32%; color: #1a1a1a; }
+    .hero-eyebrow { font-size: 13px; font-weight: bold; letter-spacing: 0.3em; margin: 0 0 10px; opacity: 0.75; }
+    .hero-title { font-size: clamp(36px, 5vw, 72px); font-weight: 900; line-height: 1; letter-spacing: -0.02em; margin: 0 0 16px; }
+    .hero-sub { font-size: 16px; line-height: 1.6; margin: 0 0 20px; }
+    .hero-badge { display: inline-block; padding: 8px 18px; border: 2px solid currentColor; border-radius: 999px; font-size: 13px; font-weight: bold; letter-spacing: 0.2em; }
+    .upcoming-hero + .product-grid { margin-top: 0; }
+
+    @media (max-width: 1024px) {
+      /* 1024px 이하는 문구가 이미지 속 스크립트 로고·모델과 겹치므로 이미지 아래 검정 영역으로 분리 */
+      .upcoming-hero { margin: 100px 40px 0 210px; background: #000; border: 2px solid #fff; }
+      .upcoming-hero .hero-copy { position: static; max-width: none; color: #fff; padding: 24px 20px 28px; text-align: center; }
+      .hero-title { font-size: 40px; }
+      .hero-sub { font-size: 15px; }
+    }
+
+    @media (max-width: 768px) {
+      .upcoming-hero { margin: 90px 20px 0; }
+    }
   </style>
 </head>
 
@@ -539,6 +562,17 @@
     <div class="top-center-logo">
       <a href="../index.html"><img src="../image/mainlogo2.png" alt="로고"></a>
     </div>
+
+<!-- 2027 Summer 홍보 배너 -->
+<section class="upcoming-hero">
+  <img src="./image/up/upcoming-2027summer.jpg" alt="Graphics Overfit 2027 Summer Collection">
+  <div class="hero-copy">
+    <p class="hero-eyebrow">UPCOMING COLLECTION</p>
+    <h1 class="hero-title">2027 Summer</h1>
+    <p class="hero-sub">Graphics, oversized.<br>새로운 시즌이 곧 찾아옵니다.</p>
+    <span class="hero-badge">COMING SOON</span>
+  </div>
+</section>
 
 <div class="product-grid">
   <div class="product" onclick="showModal(
