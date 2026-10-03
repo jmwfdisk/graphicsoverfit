@@ -172,8 +172,9 @@
 
   .product-info {
     text-align: center;
-    margin-top: 10px;
+    margin-top: 12px;
     font-size: 14px;
+    line-height: 1.6;
     color: rgb(255, 255, 255);
   }
 
@@ -535,6 +536,13 @@
       /* tablet-1024 */
       .product-grid { grid-template-columns: repeat(2, 1fr); margin: 100px 20px 60px 190px; padding: 40px 20px; gap: 28px; }
     }
+    /* 공용 법정 푸터 — 고정 사이드바(180px)를 피해 배치. 내용은 ../Shop/config.js가 [data-legal-footer]에 채움 */
+    footer.site-footer { background: #000; color: #888; text-align: center; margin-top: auto; padding: 24px 20px 28px 200px; font-size: 12px; line-height: 1.8; border-top: 1px solid rgba(255,255,255,0.1); position: relative; z-index: 1; }
+    footer.site-footer a { color: #aaa; }
+    footer.site-footer .ph { color: #feacac; font-weight: bold; }
+    @media (max-width: 768px) {
+      footer.site-footer { padding: 24px 16px 28px; }
+    }
   </style>
 </head>
 
@@ -551,7 +559,7 @@
     <nav class="side-nav">
       <ul>
         <li><a href="https://graphicsoverfit.com" target="_blank" rel="noopener">Brand Culture</a></li>
-        <li><a href="../Concept art/Concept art.html">Concept art</a></li>
+        <li><a href="#">Concept art<br><span style="font-size: 0.8em; color: #aaa;">(coming soon)</span></a></li>
         <li><a href="#">Design Studio<br><span style="font-size: 0.8em; color: #aaa;">(coming soon)</span></a></li>
         <li><a href="#">Look Book</a>
           <ul style="list-style: none; padding-left: 10px; font-size: 14px;">
@@ -683,7 +691,7 @@
     <img src="./image/coming soon.png" class="front" alt="앞면" loading="lazy">
     <img src="./image/coming soon.png" class="back" alt="뒷면" loading="lazy">
     <div class="product-info">
-      comming soon<br>준비중
+      coming soon<br>준비중
     </div>
   </div>
 
@@ -693,7 +701,7 @@
     <img src="./image/coming soon.png" class="front" alt="앞면" loading="lazy">
     <img src="./image/coming soon.png" class="back" alt="뒷면" loading="lazy">
     <div class="product-info">
-      comming soon<br>준비중
+      coming soon<br>준비중
     </div>
   </div>
 
@@ -703,7 +711,7 @@
     <img src="./image/coming soon.png" class="front" alt="앞면" loading="lazy">
     <img src="./image/coming soon.png" class="back" alt="뒷면" loading="lazy">
     <div class="product-info">
-      comming soon<br>준비중
+      coming soon<br>준비중
     </div>
   </div>
 
@@ -713,7 +721,7 @@
     <img src="./image/coming soon.png" class="front" alt="앞면" loading="lazy">
     <img src="./image/coming soon.png" class="back" alt="뒷면" loading="lazy">
     <div class="product-info">
-      comming soon<br>준비중
+      coming soon<br>준비중
     </div>
   </div>
   
@@ -723,7 +731,7 @@
     <img src="./image/coming soon.png" class="front" alt="앞면" loading="lazy">
     <img src="./image/coming soon.png" class="back" alt="뒷면" loading="lazy">
     <div class="product-info">
-      comming soon<br>준비중
+      coming soon<br>준비중
     </div>
   </div>
 </div>
@@ -757,17 +765,6 @@
   </div>
 </div>
 
-<div style="width: 100%; height: 2px; background-color: rgba(255, 255, 255, 0.099); margin: 5px auto 0 auto;"></div>
-  <footer class="sub-footer" style="position: relative; z-index: 3001;">
-  <div class="sub-footer-left">
-    <a href="#">NEWS</a>
-  </div>
-  <div class="sub-footer-right">
-    <span>© 2025 Graphics Overfit</span>
-  </div>  
-</footer>
-
-<div style="width: 100%; height: 2px; background-color: rgba(255, 255, 255, 0.099); margin: 5px auto 0 auto;"></div>
 
   <script>
     function toggleMenu() {
@@ -906,5 +903,9 @@
       }, true);
     })();
   </script>
+<footer class="site-footer">
+  <div data-legal-footer="../Shop/"></div>
+</footer>
+<script src="../Shop/config.js"></script>
 </body>
 </html>

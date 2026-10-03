@@ -99,6 +99,17 @@
       margin: 5px 0;
       font-size: 12px;
     }
+    /* 고정 사이드바(180px)를 피해 배치. 법정 정보는 ../Shop/config.js가 [data-legal-footer]에 채움 */
+    /* 안내문 + 푸터를 한 묶음으로 바닥에 붙임(body가 flex column) — 안내문은 푸터 경계선 위 */
+    .page-bottom { margin-top: auto; }
+    .upcoming-notice { color: #bbb; margin: 0; padding: 0 20px 16px 200px; font-size: 12px; text-align: center; word-break: keep-all; }
+    footer.site-footer { color: #888; padding: 24px 20px 28px 200px; font-size: 12px; line-height: 1.8; border-top: 1px solid rgba(255,255,255,0.1); }
+    footer.site-footer a { color: #aaa; }
+    footer.site-footer .ph { color: #feacac; font-weight: bold; }
+    @media (max-width: 768px) {
+      footer.site-footer { padding: 24px 16px 28px; }
+      .upcoming-notice { padding: 0 16px 16px; }
+    }
 
     .hamburger {
       display: none;
@@ -172,8 +183,9 @@
 
   .product-info {
     text-align: center;
-    margin-top: 10px;
+    margin-top: 12px;
     font-size: 14px;
+    line-height: 1.6;
     color: rgb(255, 255, 255);
   }
 
@@ -490,8 +502,8 @@
       .product-grid { grid-template-columns: repeat(2, 1fr); margin: 100px 20px 60px 190px; padding: 40px 20px; gap: 28px; }
     }
 
-    /* 2027 Summer 홍보 배너 (카드 그리드 아래) — 좌우 여백은 .product-grid 콘텐츠 시작선(200+40px)에 맞춤 */
-    .upcoming-hero { position: relative; margin: 0 40px 60px 240px; max-width: 1320px; border-radius: 12px; overflow: hidden; background: #c9cdd0; container-type: inline-size; }
+    /* 2027 Summer 홍보 배너 (카드 그리드 위) — 좌우 여백은 .product-grid 콘텐츠 시작선(200+40px)에 맞춤 */
+    .upcoming-hero { position: relative; margin: 100px 40px 0 240px; max-width: 1320px; border-radius: 12px; overflow: hidden; background: #c9cdd0; container-type: inline-size; }
     .upcoming-hero img { display: block; width: 100%; height: auto; }
     /* 문구는 배너 폭 비례(cqw) — 배너 폭 1160px 기준 크기를 어느 폭에서나 같은 비율로 유지해 이미지 속 스크립트 로고와 겹치지 않음 */
     .upcoming-hero .hero-copy { position: absolute; left: 7%; bottom: 10%; max-width: 32%; color: #1a1a1a; }
@@ -499,15 +511,15 @@
     .hero-title { font-size: 6.2cqw; font-weight: 900; line-height: 1; letter-spacing: -0.02em; margin: 0 0 1.38cqw; }
     .hero-sub { font-size: max(10px, 1.38cqw); line-height: 1.6; margin: 0 0 1.72cqw; }
     .hero-badge { display: inline-block; padding: 0.7cqw 1.55cqw; border: 2px solid currentColor; border-radius: 999px; font-size: max(9px, 1.12cqw); font-weight: bold; letter-spacing: 0.2em; }
-    .product-grid:has(+ .upcoming-hero) { margin-bottom: 20px; }
+    .upcoming-hero + .product-grid { margin-top: 0; }
 
     @media (max-width: 1024px) {
-      .upcoming-hero { margin: 0 40px 60px 210px; }
+      .upcoming-hero { margin: 100px 40px 0 210px; }
     }
 
     @media (max-width: 768px) {
       /* 모바일은 비례 축소하면 글씨가 읽히지 않음 → 정사각형 크롭(스크립트 로고~모델 전부 포함되는 47% 지점) + 하단 그라데이션 위 흰 글씨 */
-      .upcoming-hero { margin: 0 20px 40px; }
+      .upcoming-hero { margin: 90px 20px 0; }
       .upcoming-hero img { aspect-ratio: 1 / 1; object-fit: cover; object-position: 47% top; }
       .upcoming-hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 55%; background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0)); pointer-events: none; }
       .upcoming-hero .hero-copy { left: 0; right: 0; bottom: 0; max-width: none; padding: 0 16px 20px; color: #fff; text-align: center; z-index: 1; }
@@ -532,7 +544,7 @@
     <nav class="side-nav">
       <ul>
         <li><a href="https://graphicsoverfit.com" target="_blank" rel="noopener">Brand Culture</a></li>
-        <li><a href="../Concept art/Concept art.html">Concept art</a></li>
+        <li><a href="#">Concept art<br><span style="font-size: 0.8em; color: #aaa;">(coming soon)</span></a></li>
         <li><a href="#">Design Studio<br><span style="font-size: 0.8em; color: #aaa;">(coming soon)</span></a></li>
         <li><a href="#">Look Book</a>
           <ul style="list-style: none; padding-left: 10px; font-size: 14px;">
@@ -567,6 +579,17 @@
       <a href="../index.html"><img src="../image/mainlogo2.png" alt="로고"></a>
     </div>
 
+<!-- 2027 Summer 홍보 배너 -->
+<section class="upcoming-hero">
+  <img src="./image/up/upcoming-2027summer.jpg" alt="Graphics Overfit 2027 Summer Collection">
+  <div class="hero-copy">
+    <p class="hero-eyebrow">UPCOMING COLLECTION</p>
+    <h1 class="hero-title">2027 Summer</h1>
+    <p class="hero-sub">Graphics, oversized.<br>새로운 시즌이 곧 찾아옵니다.</p>
+    <span class="hero-badge">COMING SOON</span>
+  </div>
+</section>
+
 <div class="product-grid">
   <div class="product" onclick="showModal(
   [
@@ -576,14 +599,14 @@
   '[BASIC] Brush Typography Logo Hoodie',
   `
     <span style='color: #fff; font-weight: bold;'>- Upcoming</span><br>
-    &nbsp;&nbsp;• 출시 예정 제품입니다.<br>
+    &nbsp;&nbsp;• 겨울 시즌 출시 예정 제품입니다.<br>
     &nbsp;&nbsp;&nbsp;&nbsp;가격·옵션은 출시 시 공개됩니다.<br>
   `  
   )">
     <img src="./image/up/up-01-f.jpg" class="front" alt="앞면" loading="lazy">
     <img src="./image/up/up-01-b.jpg" class="back" alt="뒷면" loading="lazy">
     <div class="product-info">
-      Brush Typography Logo Hoodie<br>출시 예정
+      Brush Typography Logo Hoodie<br>겨울 시즌 출시 예정
     </div>
   </div>
 
@@ -636,17 +659,6 @@
   </div>
 </div>
 
-<!-- 2027 Summer 홍보 배너 -->
-<section class="upcoming-hero">
-  <img src="./image/up/upcoming-2027summer.jpg" alt="Graphics Overfit 2027 Summer Collection">
-  <div class="hero-copy">
-    <p class="hero-eyebrow">UPCOMING COLLECTION</p>
-    <h1 class="hero-title">2027 Summer</h1>
-    <p class="hero-sub">Graphics, oversized.<br>새로운 시즌이 곧 찾아옵니다.</p>
-    <span class="hero-badge">COMING SOON</span>
-  </div>
-</section>
-
 <div class="modal" id="productModal">
   <div class="modal-content">
     <div class="modal-close" onclick="closeModal()">X</div>
@@ -674,6 +686,13 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="page-bottom">
+  <p class="upcoming-notice">※ 출시 예정 상품의 디자인·사양·출시 일정은 사전 예고 없이 변경되거나 출시가 취소될 수 있습니다.</p>
+  <footer class="site-footer">
+    <div data-legal-footer="../Shop/"></div>
+  </footer>
 </div>
 
   <script>
@@ -813,5 +832,6 @@
       }, true);
     })();
   </script>
+  <script src="../Shop/config.js"></script>
 </body>
 </html>

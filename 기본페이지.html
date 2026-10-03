@@ -229,6 +229,13 @@
       .hamburger { z-index: 3100; }
       .side-nav.active ~ .top-center-logo { visibility: hidden; }
     }
+    /* 공용 법정 푸터 — 고정 사이드바(180px)를 피해 배치. 내용은 ../Shop/config.js가 [data-legal-footer]에 채움 */
+    footer.site-footer { background: #000; color: #888; text-align: center; margin-top: auto; padding: 24px 20px 28px 200px; font-size: 12px; line-height: 1.8; border-top: 1px solid rgba(255,255,255,0.1); position: relative; z-index: 1; }
+    footer.site-footer a { color: #aaa; }
+    footer.site-footer .ph { color: #feacac; font-weight: bold; }
+    @media (max-width: 768px) {
+      footer.site-footer { padding: 24px 16px 28px; }
+    }
   </style>
 </head>
 
@@ -245,7 +252,7 @@
     <nav class="side-nav">
         <ul>
           <li><a href="https://graphicsoverfit.com" target="_blank" rel="noopener">Brand Culture</a></li>
-          <li><a href="#">Concept art</a></li>
+          <li><a href="#">Concept art<br><span style="font-size: 0.8em; color: #aaa;">(coming soon)</span></a></li>
           <li><a href="#">Design Studio<br><span style="font-size: 0.8em; color: #aaa;">(coming soon)</span></a></li>
           <li><a href="#">Look Book</a></li>
           <li><a href="#">New & Trending</a></li>
@@ -310,5 +317,9 @@
       }, true);
     })();
   </script>
+<footer class="site-footer">
+  <div data-legal-footer="../Shop/"></div>
+</footer>
+<script src="../Shop/config.js"></script>
 </body>
 </html>

@@ -32,7 +32,7 @@ python3 -m http.server 8080   # 또는 npx serve .
 ```
 index.html                              # 메인 홈페이지 (슬라이더 + 프로모 팝업)
 Brand Culture/Brand Culture.html        # 브랜드 소개 텍스트 (메뉴에서는 더 이상 링크 안 함 — graphicsoverfit.com으로 대체)
-Concept art/Concept art.html            # 썸네일 스트립 → 확대 모달 (데스크탑 전용)
+Concept art/Concept art.html            # 썸네일 스트립 → 확대 모달 (데스크탑 전용). 메뉴에서 미연결(coming soon 표기)
 look book/Model.html                    # Model Collection 룩북 (대부분 "coming soon" 플레이스홀더)
 look book/Curator.html                  # Curator Collection 룩북 (실제 이미지, 스마트스토어 제품 링크)
 NewTrending/new-arrivals.html           # 제품 그리드 + 상세 모달
@@ -68,14 +68,14 @@ api/                                    # Cloudflare Worker + D1 (결제 승인�
 - **`.floating-logo`** (사이드바 상단): 검정 박스 로고 `./image/mainlogo.png`(각 폴더 사본). `position: fixed; top: 4px; left: 90px; translateX(-50%)`, 83px. 모바일 `display: none`.
 - **`.top-center-logo`** (상단 중앙): 크레용 로고 — **루트 `image/mainlogo2.png` 한 파일**을 전 페이지가 참조(하위 폴더에서는 `../image/mainlogo2.png`). `position: absolute; top: -20px; left: 50%`, 데스크탑 130px / 모바일 90px. 클릭 시 메인 이동.
 
-메뉴 구조: Brand Culture (외부 사이트 https://graphicsoverfit.com 새 탭, 2026-10-03~) / Concept art / Design Studio (coming soon, `href="#"`) / Look Book → Model, Curator / New & Trending → New Arrivals, Limited Edition, Upcoming Collection / Shop (무신사 외부 링크).
+메뉴 구조: Brand Culture (외부 사이트 https://graphicsoverfit.com 새 탭, 2026-10-03~) / Concept art (coming soon, `href="#"`) / Design Studio (coming soon, `href="#"`) / Look Book → Model, Curator / New & Trending → New Arrivals, Limited Edition, Upcoming Collection / Shop (무신사 외부 링크).
 
 ### 링크 경로 규칙
 
 상대 경로 사용. 하위 폴더 페이지에서는 `../index.html`, `../look book/Model.html` 형태.
 
 주의할 현재 상태:
-- `index.html`은 루트에 있으면서도 Concept art·Look Book 링크에 `../`를 씀 (브라우저가 루트 위로 못 올라가서 우연히 동작). NewTrending 링크만 `./`. 새 링크 추가 시 `./` 사용.
+- `index.html`은 루트에 있으면서도 Look Book 링크에 `../`를 씀 (브라우저가 루트 위로 못 올라가서 우연히 동작). NewTrending 링크만 `./`. 새 링크 추가 시 `./` 사용.
 - `기본페이지.html`의 메뉴 링크는 Brand Culture(외부 URL)를 빼고 전부 `href="#"` 플레이스홀더이고 로고 링크는 `../index.html`(하위 폴더 배치 전제). 복사해 쓸 때 링크·이미지 경로를 깊이에 맞게 수정.
 
 ### 반응형
