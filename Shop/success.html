@@ -3,40 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Graphics Overfit Order Complete</title>
+  <title>주문 완료 | Graphics Overfit</title>
   <link rel="icon" href="./image/favicon.png" />
+  <link rel="stylesheet" href="../assets/site.css" />
   <style>
-    body { background-color: #000; margin: 0; padding: 0; font-family: Arial, sans-serif; color: #fff; display: flex; flex-direction: column; min-height: 100vh; }
-    .top-center-logo { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); z-index: 1100; }
-    .top-center-logo img { width: 130px; height: 130px; object-fit: contain; }
-    .wrap { margin: 140px auto 40px; max-width: 560px; width: calc(100% - 32px); background: #111; border-radius: 10px; padding: 32px 28px; box-sizing: border-box; }
-    h1 { font-size: 20px; letter-spacing: 2px; margin: 0 0 20px; }
-    .spinner { width: 28px; height: 28px; border: 3px solid rgba(255,255,255,0.2); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 20px auto; }
+    /* 결제 결과 카드 */
+    .result-card { max-width: 580px; margin: 0 auto; }
+    .result-card h1 { margin: 0 0 20px; font-size: 26px; font-weight: 950; line-height: 1.15; letter-spacing: -0.05em; }
+    .result-card h1.fail, .result-card.is-fail h1 { color: #b8431a; }
+    .spinner { width: 28px; height: 28px; margin: 20px auto; border: 3px solid var(--line); border-top-color: var(--ink); border-radius: 50%; animation: spin 0.8s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .row { display: flex; justify-content: space-between; font-size: 14px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1); color: #ccc; }
-    .row b { color: #fff; }
-    .items { margin: 16px 0; font-size: 13px; color: #ccc; line-height: 1.8; }
-    .va { background: rgba(255,255,255,0.06); border-radius: 6px; padding: 12px 14px; font-size: 13px; line-height: 1.8; margin: 14px 0; }
-    .note { font-size: 12px; color: #888; line-height: 1.7; margin-top: 18px; }
+    .row { display: flex; justify-content: space-between; gap: 16px; padding: 9px 0; border-bottom: 1px dashed var(--line); font-size: 14px; color: var(--muted); }
+    .row b { color: var(--ink); font-family: var(--mono); font-size: 13px; }
+    .items { margin: 16px 0; font-size: 13px; line-height: 1.8; color: var(--muted); }
+    .va { margin: 14px 0; padding: 12px 14px; border: 1px dashed var(--ink); border-radius: 12px; font-size: 13px; line-height: 1.8; }
+    .note { margin-top: 18px; font-size: 12px; line-height: 1.7; color: var(--muted); }
+    .note a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+    .msg { margin: 0 0 10px; font-size: 14px; line-height: 1.7; color: var(--muted); }
+    .code { margin: 0 0 6px; font-family: var(--mono); font-size: 11px; color: var(--soft); }
+    .hint { margin: 0; font-size: 12px; color: var(--muted); text-align: center; }
     .btns { display: flex; gap: 10px; margin-top: 24px; }
-    .btn { flex: 1; text-align: center; padding: 14px; border-radius: 6px; font-size: 14px; font-weight: bold; text-decoration: none; border: 1px solid #fff; }
-    .btn.solid { background: #fff; color: #000; }
-    .btn.ghost { color: #fff; }
-    .fail { color: #feacac; }
-    @media (max-width: 768px) { .top-center-logo { top: 20px; } .top-center-logo img { width: 90px; height: auto; } .wrap { margin-top: 120px; } }
-      footer a { color: #aaa; } .ph { color: #feacac; font-weight: bold; }
+    .btns .btn-full { flex: 1; }
   </style>
 </head>
+
 <body>
-  <div class="top-center-logo"><a href="../index.html"><img src="../image/mainlogo2.png" alt="로고"></a></div>
+  <div id="site-header"></div>
 
-  <div class="wrap" id="box">
-    <h1>결제를 확인하고 있습니다</h1>
-    <div class="spinner"></div>
-    <p style="text-align:center; color:#aaa; font-size:13px;">잠시만 기다려 주세요. 창을 닫지 마세요.</p>
-  </div>
+  <main id="main">
+    <section class="section section--first">
+      <div class="wrap">
+        <div class="result-card card-box" id="box">
+          <h1>결제를 확인하고 있습니다</h1>
+          <div class="spinner"></div>
+          <p class="hint">잠시만 기다려 주세요. 창을 닫지 마세요.</p>
+        </div>
+      </div>
+    </section>
+  </main>
 
-  <footer data-legal-footer="./" style="color:#888; text-align:center; padding:24px 20px; font-size:12px; line-height:1.8;"></footer>
+  <div id="site-footer"></div>
+
   <script src="./config.js"></script>
   <script src="./products.js"></script>
   <script src="./cart.js"></script>
@@ -90,27 +97,28 @@
         ${va}
         <div class="note">
           주문번호는 교환·반품 접수 시 필요하니 보관해 주세요. 주문 확인 메일을 발송했습니다.<br>
-          교환·반품 : 수령 후 7일 이내 <a href="./return.html" style="color:#fff">반품 접수</a>, 또는 이메일(${esc(GOF_CONFIG.SUPPORT_EMAIL)})<br>
+          교환·반품 : 수령 후 7일 이내 <a href="./return.html">반품 접수</a>, 또는 이메일(${esc(GOF_CONFIG.SUPPORT_EMAIL)})<br>
           단순 변심 시 왕복 배송비 6,000원 고객 부담
         </div>
         <div class="btns">
-          <a class="btn solid" href="./Shop.html">쇼핑 계속하기</a>
-          <a class="btn ghost" href="../index.html">홈으로</a>
+          <a class="btn-full" href="./Shop.html">쇼핑 계속하기</a>
+          <a class="btn-full ghost" href="../index.html">홈으로</a>
         </div>`;
     }
 
     function renderFail(code, message, orderId) {
       box.innerHTML = `
         <h1 class="fail">✗ 결제를 완료하지 못했습니다</h1>
-        <p style="font-size:14px; line-height:1.7; color:#ccc;">${esc(message)}</p>
-        <p style="font-size:12px; color:#888;">코드 : ${esc(code)}${orderId ? ' · 주문번호 : ' + esc(orderId) : ''}</p>
+        <p class="msg">${esc(message)}</p>
+        <p class="code">코드 : ${esc(code)}${orderId ? ' · 주문번호 : ' + esc(orderId) : ''}</p>
         <div class="btns">
-          <a class="btn solid" href="./checkout.html">주문서로 돌아가기</a>
-          <a class="btn ghost" href="./Shop.html">스토어</a>
+          <a class="btn-full" href="./checkout.html">주문서로 돌아가기</a>
+          <a class="btn-full ghost" href="./Shop.html">스토어</a>
         </div>`;
     }
 
     run();
   </script>
+  <script src="../assets/site.js"></script>
 </body>
 </html>

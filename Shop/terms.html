@@ -3,200 +3,105 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Graphics Overfit 이용약관</title>
+  <title>이용약관 | Graphics Overfit</title>
   <link rel="icon" href="./image/favicon.png" />
-  <style>
-    body { background-color: #000; margin: 0; padding: 0; font-family: Arial, sans-serif; color: #fff; display: flex; flex-direction: column; min-height: 100vh; }
-    .side-nav { position: fixed; top: 0; left: 0; width: 180px; height: 100%; background-color: rgba(0,0,0,0.3); z-index: 1000; padding-top: 100px; }
-    .side-nav ul { list-style-type: none; margin: 0; padding: 0; }
-    .side-nav li { text-align: left; position: relative; }
-    .side-nav a { display: block; color: #fff; padding: 12px 16px; text-decoration: none; font-size: 16px; }
-    .side-nav a:hover { background-color: rgba(255,255,255,0.2); }
-    .side-nav li ul { opacity: 0; transform: translateY(-10px); filter: blur(4px); max-height: 0; overflow: hidden; transition: opacity 0.3s ease, transform 0.3s ease, filter 0.3s ease, max-height 0.5s ease; }
-    .side-nav li:hover ul, .side-nav li.open ul { opacity: 1; transform: translateY(0); filter: blur(0); max-height: 300px; }
-    .side-nav li ul li a { padding-left: 24px; font-size: 14px; }
-    .floating-logo { position: fixed; top: 4px; left: 90px; transform: translateX(-50%); z-index: 1100; }
-    .logo-image { width: 83px; height: 83px; object-fit: contain; }
-    .top-center-logo { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); z-index: 1100; }
-    .top-center-logo img { width: 130px; height: 130px; object-fit: contain; }
-    .hamburger { display: none; }
-    footer { background-color: #000; color: #888; text-align: center; padding: 24px 20px; margin-top: auto; font-size: 12px; line-height: 1.8; }
-    footer a { color: #aaa; }
-    .ph { color: #feacac; font-weight: bold; }
-
-    .doc { margin: 110px 40px 40px 220px; max-width: 820px; font-size: 14px; line-height: 1.8; color: #ddd; }
-    .doc h1 { font-size: 20px; letter-spacing: 3px; margin: 0 0 6px; color: #fff; }
-    .doc .meta { color: #888; font-size: 12px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.15); }
-    .doc h2 { font-size: 15px; color: #fff; margin: 28px 0 8px; }
-    .doc ol, .doc ul { padding-left: 22px; margin: 6px 0; }
-    .doc li { margin: 3px 0; }
-    .notice { background: rgba(254,172,172,0.12); border: 1px solid #feacac; border-radius: 6px; padding: 10px 14px; font-size: 13px; color: #feacac; margin-bottom: 20px; }
-    @media (max-width: 768px) {
-      .floating-logo { display: none; }
-      .top-center-logo { top: 20px; } .top-center-logo img { width: 90px; height: auto; }
-      .hamburger { display: block; position: fixed; top: 20px; left: 20px; font-size: 28px; color: #fff; z-index: 2000; cursor: pointer; }
-      .side-nav { transform: translateX(-100%); transition: transform 0.3s ease; width: 220px; background-color: rgba(0,0,0,0.95); padding-top: 80px; z-index: 3000; }
-      .side-nav.active { transform: translateX(0); }
-      .side-nav ul { display: flex; flex-direction: column; align-items: flex-start; padding-left: 20px; }
-      .side-nav li { width: 100%; } .side-nav a { padding: 14px 0; width: 100%; }
-      .side-nav li ul { opacity: 1; transform: none; filter: none; max-height: 300px; padding-left: 0; }
-      .doc { margin: 120px 16px 20px; }
-    }
-  
-    @media (max-width: 768px) {
-      /* mobile-nav-fix 2026-09-28 */
-      html, body { overflow-x: hidden; }   /* 가로 넘침으로 iOS가 페이지를 축소해 100% 높이가 화면보다 짧아지는 문제 방지 */
-      .side-nav { overflow-y: auto; -webkit-overflow-scrolling: touch; padding-top: 64px; padding-bottom: 40px; box-sizing: border-box; top: 0; bottom: 0; height: 100vh; height: 100dvh; }
-      .side-nav::before { content: ""; display: block; width: 105px; height: 45px; margin: 6px auto 14px; background: url("./image/mainlogo.png") center / contain no-repeat; }
-      .side-nav li ul { opacity: 0 !important; transform: none !important; filter: none !important; max-height: 0 !important; overflow: hidden !important; padding-left: 0; transition: max-height 0.3s ease, opacity 0.3s ease; }
-      .side-nav li.open > ul { opacity: 1 !important; max-height: 300px !important; }
-      .side-nav li ul li a { padding-left: 16px; font-size: 14px; color: #ccc; }
-      .hamburger { z-index: 3100; }
-      .side-nav.active ~ .top-center-logo { visibility: hidden; }
-    }
-  </style>
+  <link rel="stylesheet" href="../assets/site.css" />
 </head>
+
 <body>
-  <div class="hamburger" onclick="toggleMenu()">☰</div>
-  <div style="position: relative; top: 85px; width: 98%; height: 3px; background-color: rgba(255, 255, 255, 0.2); margin: 0 auto;"></div>
-  <nav class="side-nav">
-    <ul>
-      <li><a href="https://graphicsoverfit.com" target="_blank" rel="noopener">Brand Culture</a></li>
-      <li><a href="#">Concept art<br><span style="font-size: 0.8em; color: #aaa;">(coming soon)</span></a></li>
-      <li><a href="#">Design Studio<br><span style="font-size: 0.8em; color: #aaa;">(coming soon)</span></a></li>
-      <li><a href="#">Look Book</a>
-        <ul style="list-style: none; padding-left: 10px; font-size: 14px;">
-          <li><a href="../look book/Model.html">Model Collection</a></li>
-          <li><a href="../look book/Curator.html">Curator Collection</a></li>
-        </ul>
-      </li>
-      <li><a href="#">New & Trending</a>
-        <ul style="list-style: none; padding-left: 10px; font-size: 14px;">
-          <li><a href="../NewTrending/new-arrivals.html">New Arrivals</a></li>
-          <li><a href="../NewTrending/limited-edition.html">Limited Edition</a></li>
-          <li><a href="../NewTrending/Upcoming Collection.html">Upcoming Collection</a></li>
-        </ul>
-      </li>
-      <li class="open"><a href="./Shop.html">Shop</a>
-        <ul style="list-style: none; padding-left: 10px; font-size: 14px;">
-          <li><a href="./Shop.html">BRAND Store</a></li>
-          <li><a href="https://www.musinsa.com/brand/graphicsoverfit/products?categoryCode=001001&gf=A" target="_blank" rel="noopener">MUSINSA Store</a></li>
-        </ul>
-      </li>
-    </ul>
-  </nav>
-  <div class="floating-logo"><a href="../index.html"><img src="./image/mainlogo.png" alt="로고" class="logo-image"></a></div>
-  <div class="top-center-logo"><a href="../index.html"><img src="../image/mainlogo2.png" alt="로고"></a></div>
+  <div id="site-header"></div>
 
-  <main class="doc">
-    <h1>이용약관</h1>
-    <div class="meta">시행일 : <span data-biz="effectiveDate"></span> · 사이버몰 운영자 : <span data-biz="company"></span></div>
+  <main id="main">
+    <section class="section section--first">
+      <div class="wrap">
+        <div class="doc">
+          <h1>이용약관</h1>
+          <div class="meta">시행일 : <span data-biz="effectiveDate"></span> · 사이버몰 운영자 : <span data-biz="company"></span></div>
 
-    <h2>제1조 (목적)</h2>
-    <p>이 약관은 <span data-biz="company"></span>(이하 "회사")가 운영하는 그래픽스오버핏 온라인 스토어(이하 "몰")에서 제공하는 전자상거래 관련 서비스를 이용함에 있어 회사와 이용자의 권리·의무 및 책임사항을 규정함을 목적으로 합니다.</p>
+          <h2>제1조 (목적)</h2>
+          <p>이 약관은 <span data-biz="company"></span>(이하 "회사")가 운영하는 그래픽스오버핏 온라인 스토어(이하 "몰")에서 제공하는 전자상거래 관련 서비스를 이용함에 있어 회사와 이용자의 권리·의무 및 책임사항을 규정함을 목적으로 합니다.</p>
 
-    <h2>제2조 (정의)</h2>
-    <ol>
-      <li>"몰"이란 회사가 재화를 이용자에게 판매하기 위하여 컴퓨터 등 정보통신설비를 이용하여 재화를 거래할 수 있도록 설정한 가상의 영업장을 말합니다.</li>
-      <li>"이용자"란 몰에 접속하여 이 약관에 따라 몰이 제공하는 서비스를 받는 자를 말합니다. 몰은 회원가입 없이 비회원 주문만 제공합니다.</li>
-    </ol>
+          <h2>제2조 (정의)</h2>
+          <ol>
+            <li>"몰"이란 회사가 재화를 이용자에게 판매하기 위하여 컴퓨터 등 정보통신설비를 이용하여 재화를 거래할 수 있도록 설정한 가상의 영업장을 말합니다.</li>
+            <li>"이용자"란 몰에 접속하여 이 약관에 따라 몰이 제공하는 서비스를 받는 자를 말합니다. 몰은 회원가입 없이 비회원 주문만 제공합니다.</li>
+          </ol>
 
-    <h2>제3조 (약관 등의 명시와 개정)</h2>
-    <ol>
-      <li>회사는 이 약관의 내용과 상호, 대표자 성명, 영업소 소재지, 전화번호, 전자우편주소, 사업자등록번호, 통신판매업 신고번호, 개인정보보호책임자 등을 이용자가 쉽게 알 수 있도록 몰의 초기 서비스화면에 게시합니다.</li>
-      <li>회사는 「전자상거래 등에서의 소비자보호에 관한 법률」, 「약관의 규제에 관한 법률」 등 관련 법을 위배하지 않는 범위에서 이 약관을 개정할 수 있으며, 개정 시 적용일자 및 개정사유를 명시하여 적용일자 7일 전부터 공지합니다. 이용자에게 불리한 개정은 30일 전부터 공지합니다.</li>
-    </ol>
+          <h2>제3조 (약관 등의 명시와 개정)</h2>
+          <ol>
+            <li>회사는 이 약관의 내용과 상호, 대표자 성명, 영업소 소재지, 전화번호, 전자우편주소, 사업자등록번호, 통신판매업 신고번호, 개인정보보호책임자 등을 이용자가 쉽게 알 수 있도록 몰의 초기 서비스화면에 게시합니다.</li>
+            <li>회사는 「전자상거래 등에서의 소비자보호에 관한 법률」, 「약관의 규제에 관한 법률」 등 관련 법을 위배하지 않는 범위에서 이 약관을 개정할 수 있으며, 개정 시 적용일자 및 개정사유를 명시하여 적용일자 7일 전부터 공지합니다. 이용자에게 불리한 개정은 30일 전부터 공지합니다.</li>
+          </ol>
 
-    <h2>제4조 (서비스의 제공 및 변경)</h2>
-    <ol>
-      <li>회사는 재화에 대한 정보 제공 및 구매계약의 체결, 구매계약이 체결된 재화의 배송 업무를 수행합니다.</li>
-      <li>재화의 품절 또는 기술적 사양의 변경 등의 경우 회사는 장차 체결되는 계약에 의해 제공할 재화의 내용을 변경할 수 있으며, 이 경우 변경된 내용과 제공일자를 명시하여 즉시 공지합니다.</li>
-    </ol>
+          <h2>제4조 (서비스의 제공 및 변경)</h2>
+          <ol>
+            <li>회사는 재화에 대한 정보 제공 및 구매계약의 체결, 구매계약이 체결된 재화의 배송 업무를 수행합니다.</li>
+            <li>재화의 품절 또는 기술적 사양의 변경 등의 경우 회사는 장차 체결되는 계약에 의해 제공할 재화의 내용을 변경할 수 있으며, 이 경우 변경된 내용과 제공일자를 명시하여 즉시 공지합니다.</li>
+          </ol>
 
-    <h2>제5조 (구매신청 및 개인정보 제공 동의)</h2>
-    <ol>
-      <li>이용자는 몰에서 재화·색상·사이즈·수량을 선택하고, 주문자 성명·연락처·전자우편주소·수령지 주소를 입력한 뒤 결제수단을 선택하여 구매를 신청합니다.</li>
-      <li>회사는 구매신청 시 이용자에게 이 약관 및 개인정보 수집·이용에 대한 동의를 받습니다.</li>
-    </ol>
+          <h2>제5조 (구매신청 및 개인정보 제공 동의)</h2>
+          <ol>
+            <li>이용자는 몰에서 재화·색상·사이즈·수량을 선택하고, 주문자 성명·연락처·전자우편주소·수령지 주소를 입력한 뒤 결제수단을 선택하여 구매를 신청합니다.</li>
+            <li>회사는 구매신청 시 이용자에게 이 약관 및 개인정보 수집·이용에 대한 동의를 받습니다.</li>
+          </ol>
 
-    <h2>제6조 (계약의 성립)</h2>
-    <ol>
-      <li>회사는 신청 내용에 허위·기재누락·오기가 있거나, 품절 등으로 재화를 제공할 수 없는 경우 구매신청을 승낙하지 않을 수 있습니다.</li>
-      <li>계약은 회사가 결제 승인을 완료하고 주문 완료 화면 및 주문 확인 전자우편으로 통지한 시점에 성립합니다.</li>
-    </ol>
+          <h2>제6조 (계약의 성립)</h2>
+          <ol>
+            <li>회사는 신청 내용에 허위·기재누락·오기가 있거나, 품절 등으로 재화를 제공할 수 없는 경우 구매신청을 승낙하지 않을 수 있습니다.</li>
+            <li>계약은 회사가 결제 승인을 완료하고 주문 완료 화면 및 주문 확인 전자우편으로 통지한 시점에 성립합니다.</li>
+          </ol>
 
-    <h2>제7조 (지급방법)</h2>
-    <p>이용자는 신용카드·체크카드, 간편결제(토스페이, 네이버페이 등), 실시간 계좌이체, 가상계좌(무통장입금) 중 하나로 대금을 지급할 수 있습니다. 결제는 전자결제대행사 토스페이먼츠㈜를 통해 처리되며, 회사는 카드번호 등 결제정보를 저장하지 않습니다.</p>
+          <h2>제7조 (지급방법)</h2>
+          <p>이용자는 신용카드·체크카드, 간편결제(토스페이, 네이버페이 등), 실시간 계좌이체, 가상계좌(무통장입금) 중 하나로 대금을 지급할 수 있습니다. 결제는 전자결제대행사 토스페이먼츠㈜를 통해 처리되며, 회사는 카드번호 등 결제정보를 저장하지 않습니다.</p>
 
-    <h2>제8조 (배송)</h2>
-    <ol>
-      <li>배송은 CJ대한통운 택배로 하며, 배송비는 회사가 부담합니다(무료 배송). 결제 완료 후 2~3영업일 이내에 발송하며, 가상계좌는 입금 확인 후를 기준으로 합니다.</li>
-      <li>천재지변, 재화의 품절 등 부득이한 사유로 지연되는 경우 회사는 이용자에게 그 사유를 통지합니다.</li>
-    </ol>
+          <h2>제8조 (배송)</h2>
+          <ol>
+            <li>배송은 CJ대한통운 택배로 하며, 배송비는 회사가 부담합니다(무료 배송). 결제 완료 후 2~3영업일 이내에 발송하며, 가상계좌는 입금 확인 후를 기준으로 합니다.</li>
+            <li>천재지변, 재화의 품절 등 부득이한 사유로 지연되는 경우 회사는 이용자에게 그 사유를 통지합니다.</li>
+          </ol>
 
-    <h2>제9조 (청약철회 등)</h2>
-    <ol>
-      <li>이용자는 재화를 공급받은 날부터 7일 이내에 청약을 철회(반품·교환)할 수 있습니다.</li>
-      <li>다음의 경우에는 청약철회가 제한됩니다 : 이용자에게 책임 있는 사유로 재화가 멸실·훼손된 경우(포장 훼손 제외), 사용 또는 일부 소비로 재화의 가치가 현저히 감소한 경우(착용·세탁·택 제거 등), 시간 경과로 재판매가 곤란할 정도로 가치가 감소한 경우.</li>
-      <li>재화의 내용이 표시·광고 내용과 다르거나 계약 내용과 다르게 이행된 경우에는 재화를 공급받은 날부터 3개월 이내, 그 사실을 안 날부터 30일 이내에 청약을 철회할 수 있습니다.</li>
-    </ol>
+          <h2>제9조 (청약철회 등)</h2>
+          <ol>
+            <li>이용자는 재화를 공급받은 날부터 7일 이내에 청약을 철회(반품·교환)할 수 있습니다.</li>
+            <li>다음의 경우에는 청약철회가 제한됩니다 : 이용자에게 책임 있는 사유로 재화가 멸실·훼손된 경우(포장 훼손 제외), 사용 또는 일부 소비로 재화의 가치가 현저히 감소한 경우(착용·세탁·택 제거 등), 시간 경과로 재판매가 곤란할 정도로 가치가 감소한 경우.</li>
+            <li>재화의 내용이 표시·광고 내용과 다르거나 계약 내용과 다르게 이행된 경우에는 재화를 공급받은 날부터 3개월 이내, 그 사실을 안 날부터 30일 이내에 청약을 철회할 수 있습니다.</li>
+          </ol>
 
-    <h2>제10조 (청약철회 등의 효과)</h2>
-    <ol>
-      <li>회사는 반품된 재화를 확인한 날부터 3영업일 이내에 대금을 환급합니다. 신용카드·간편결제는 해당 결제 승인을 취소하며, 계좌이체·가상계좌는 이용자가 지정한 계좌로 환급합니다.</li>
-      <li><b>단순 변심에 의한 반품·교환의 경우 왕복 배송비 6,000원은 이용자가 부담</b>하며, 반품 시 환급액에서 차감하고 교환 시 별도 안내에 따라 지급합니다. 재화의 하자 또는 오배송의 경우 배송비는 회사가 부담합니다.</li>
-      <li>반품 주소 : <span data-biz="address"></span>. 접수는 몰의 교환·반품 접수 페이지 또는 전자우편(<span data-biz="email"></span>)으로 할 수 있습니다.</li>
-    </ol>
+          <h2>제10조 (청약철회 등의 효과)</h2>
+          <ol>
+            <li>회사는 반품된 재화를 확인한 날부터 3영업일 이내에 대금을 환급합니다. 신용카드·간편결제는 해당 결제 승인을 취소하며, 계좌이체·가상계좌는 이용자가 지정한 계좌로 환급합니다.</li>
+            <li><b>단순 변심에 의한 반품·교환의 경우 왕복 배송비 6,000원은 이용자가 부담</b>하며, 반품 시 환급액에서 차감하고 교환 시 별도 안내에 따라 지급합니다. 재화의 하자 또는 오배송의 경우 배송비는 회사가 부담합니다.</li>
+            <li>반품 주소 : <span data-biz="address"></span>. 접수는 몰의 교환·반품 접수 페이지 또는 전자우편(<span data-biz="email"></span>)으로 할 수 있습니다.</li>
+          </ol>
 
-    <h2>제11조 (개인정보보호)</h2>
-    <p>회사는 이용자의 개인정보를 구매계약 이행 및 배송 목적으로만 최소한으로 수집·이용하며, 자세한 사항은 <a href="./privacy.html" style="color:#fff">개인정보처리방침</a>에 따릅니다.</p>
+          <h2>제11조 (개인정보보호)</h2>
+          <p>회사는 이용자의 개인정보를 구매계약 이행 및 배송 목적으로만 최소한으로 수집·이용하며, 자세한 사항은 <a href="./privacy.html">개인정보처리방침</a>에 따릅니다.</p>
 
-    <h2>제12조 (회사의 의무)</h2>
-    <p>회사는 법령과 이 약관이 금지하거나 공서양속에 반하는 행위를 하지 않으며, 재화를 계속적이고 안정적으로 제공하기 위하여 최선을 다합니다. 이용자가 원하지 않는 영리목적의 광고성 전자우편을 발송하지 않습니다.</p>
+          <h2>제12조 (회사의 의무)</h2>
+          <p>회사는 법령과 이 약관이 금지하거나 공서양속에 반하는 행위를 하지 않으며, 재화를 계속적이고 안정적으로 제공하기 위하여 최선을 다합니다. 이용자가 원하지 않는 영리목적의 광고성 전자우편을 발송하지 않습니다.</p>
 
-    <h2>제13조 (이용자의 의무)</h2>
-    <p>이용자는 신청 시 허위 내용을 등록하거나, 타인의 정보를 도용하거나, 몰의 운영을 방해하는 행위를 하여서는 안 됩니다.</p>
+          <h2>제13조 (이용자의 의무)</h2>
+          <p>이용자는 신청 시 허위 내용을 등록하거나, 타인의 정보를 도용하거나, 몰의 운영을 방해하는 행위를 하여서는 안 됩니다.</p>
 
-    <h2>제14조 (분쟁해결)</h2>
-    <ol>
-      <li>회사는 이용자가 제기하는 정당한 의견이나 불만을 반영하고 피해를 보상처리하기 위하여 전자우편(<span data-biz="email"></span>)으로 접수를 받으며, 접수 후 1영업일 이내에 처리 경과를 안내합니다.</li>
-      <li>회사와 이용자 간 발생한 전자상거래 분쟁과 관련하여 이용자의 피해구제 신청이 있는 경우 공정거래위원회 또는 시·도지사가 의뢰하는 분쟁조정기관의 조정에 따를 수 있습니다.</li>
-    </ol>
+          <h2>제14조 (분쟁해결)</h2>
+          <ol>
+            <li>회사는 이용자가 제기하는 정당한 의견이나 불만을 반영하고 피해를 보상처리하기 위하여 전자우편(<span data-biz="email"></span>)으로 접수를 받으며, 접수 후 1영업일 이내에 처리 경과를 안내합니다.</li>
+            <li>회사와 이용자 간 발생한 전자상거래 분쟁과 관련하여 이용자의 피해구제 신청이 있는 경우 공정거래위원회 또는 시·도지사가 의뢰하는 분쟁조정기관의 조정에 따를 수 있습니다.</li>
+          </ol>
 
-    <h2>제15조 (재판권 및 준거법)</h2>
-    <p>회사와 이용자 간 전자상거래 분쟁에 관한 소송은 제소 당시 이용자의 주소에 의하고, 주소가 없는 경우 거소를 관할하는 지방법원의 전속관할로 합니다. 전자상거래 분쟁에 관한 소송에는 대한민국 법을 적용합니다.</p>
+          <h2>제15조 (재판권 및 준거법)</h2>
+          <p>회사와 이용자 간 전자상거래 분쟁에 관한 소송은 제소 당시 이용자의 주소에 의하고, 주소가 없는 경우 거소를 관할하는 지방법원의 전속관할로 합니다. 전자상거래 분쟁에 관한 소송에는 대한민국 법을 적용합니다.</p>
 
-    <p style="margin-top:32px; color:#888;">부칙 : 이 약관은 <span data-biz="effectiveDate"></span>부터 적용됩니다.</p>
+          <p style="margin-top:32px;">부칙 : 이 약관은 <span data-biz="effectiveDate"></span>부터 적용됩니다.</p>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <footer data-legal-footer="./"></footer>
+  <div id="site-footer"></div>
 
   <script src="./config.js"></script>
-  <script>
-    function toggleMenu() { document.querySelector('.side-nav').classList.toggle('active'); }
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('.side-nav a').forEach(link => link.addEventListener('click', () => document.querySelector('.side-nav').classList.remove('active')));
-    });
-    document.addEventListener('click', (e) => {
-      const sideNav = document.querySelector('.side-nav'); const hamburger = document.querySelector('.hamburger');
-      if (!sideNav.contains(e.target) && !hamburger.contains(e.target)) sideNav.classList.remove('active');
-    });
-  </script>
-  <script>
-    // 모바일 사이드 메뉴: 상위 항목 탭 → 하위 메뉴 아코디언 (2026-09-28)
-    (function () {
-      const items = document.querySelectorAll('.side-nav > ul > li');
-      items.forEach(li => { if (li.querySelector(':scope > ul')) li.classList.add('has-sub'); });
-      document.addEventListener('click', function (e) {
-        if (window.innerWidth > 768) return;
-        const a = e.target.closest('.side-nav > ul > li.has-sub > a');
-        if (!a) return;
-        e.preventDefault(); e.stopPropagation();
-        const li = a.parentElement;
-        items.forEach(x => { if (x !== li) x.classList.remove('open'); });
-        li.classList.toggle('open');
-      }, true);
-    })();
-  </script>
+  <script src="./cart.js"></script>
+  <script src="../assets/site.js"></script>
 </body>
 </html>

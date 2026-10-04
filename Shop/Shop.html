@@ -3,271 +3,137 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Graphics Overfit Brand Store</title>
+  <title>Brand Store | Graphics Overfit</title>
   <link rel="icon" href="./image/favicon.png" />
-
+  <link rel="stylesheet" href="../assets/site.css" />
   <style>
-    body {
-      background-color: #000;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
+    /* ===== 스토어 목록 ===== */
+    .filters { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .filters button, .filters select { height: 38px; padding: 0 18px; border: 1px solid var(--ink); border-radius: 30px; background: transparent; color: var(--ink); font-family: inherit; font-size: 12px; line-height: 36px; cursor: pointer; -webkit-appearance: none; appearance: none; }
+    .filters button:hover { background: rgba(32, 35, 30, 0.08); }
+    .filters button.active { background: var(--ink); color: var(--paper); }
+    .filters select { padding-right: 32px; background: transparent url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' fill='none' stroke='%2320231e' stroke-width='1.5'/></svg>") no-repeat right 14px center; }
 
-    /* ===== 공통 셸 (사이드바·로고·햄버거) ===== */
-    .side-nav {
-      position: fixed; top: 0; left: 0; width: 180px; height: 100%;
-      background-color: rgba(0, 0, 0, 0.3); z-index: 1000; padding-top: 100px;
-      transition: background-color 0.3s;
-    }
-    .side-nav ul { list-style-type: none; margin: 0; padding: 0; }
-    .side-nav li { text-align: left; position: relative; }
-    .side-nav a { display: block; color: #fff; padding: 12px 16px; text-decoration: none; font-size: 16px; }
-    .side-nav a:hover { background-color: rgba(255, 255, 255, 0.2); }
-    .side-nav li ul {
-      opacity: 0; transform: translateY(-10px); filter: blur(4px); max-height: 0; overflow: hidden;
-      transition: opacity 0.3s ease, transform 0.3s ease, filter 0.3s ease, max-height 0.5s ease;
-    }
-    .side-nav li:hover ul, .side-nav li.open ul { opacity: 1; transform: translateY(0); filter: blur(0); max-height: 300px; }
-    .side-nav li ul li a { padding-left: 24px; font-size: 14px; }
-
-    .floating-logo { position: fixed; top: 4px; left: 90px; transform: translateX(-50%); z-index: 1100; }
-    .logo-image { width: 83px; height: 83px; object-fit: contain; background: transparent; }
-    .top-center-logo { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); z-index: 1100; }
-    .top-center-logo img { width: 130px; height: 130px; object-fit: contain; background: transparent; }
-    .hamburger { display: none; }
-
-    footer { background-color: #000; color: #888; text-align: center; padding: 24px 20px; margin-top: auto; font-size: 12px; line-height: 1.8; }
-    footer a { color: #aaa; }
-    .ph { color: #feacac; font-weight: bold; }
-
-    /* ===== 스토어 ===== */
-    .store { margin: 110px 40px 40px 220px; max-width: 1400px; }
-    .store-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 0 20px 16px; border-bottom: 1px solid rgba(255,255,255,0.15); }
-    .store-head h1 { font-size: 20px; letter-spacing: 3px; margin: 0; }
-    .filters { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-    .filters button, .filters select {
-      background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.4); border-radius: 4px; padding: 0 14px; height: 34px; line-height: 32px; font-size: 13px; font-family: inherit; cursor: pointer; box-sizing: border-box; -webkit-appearance: none; appearance: none;
-    }
-    .filters button.active { background: #fff; color: #000; }
-    .filters select {
-      background: #000 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' fill='none' stroke='white' stroke-width='1.5'/></svg>") no-repeat right 10px center;
-      padding-right: 28px;
-    }
-    .cart-link { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; margin-left: 8px; color: #fff; text-decoration: none; border-radius: 50%; }
-    .cart-link:hover { background: rgba(255,255,255,0.15); }
-    .cart-badge { position: absolute; top: -2px; right: -4px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: #fff; color: #000; font-size: 11px; line-height: 18px; text-align: center; font-weight: bold; box-sizing: border-box; }
-    .cart-badge:empty { display: none; }
-
-    .product-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));   /* auto-fill: 필터로 개수가 줄어도 카드 크기 유지 */
-      gap: 40px; padding: 40px 20px 60px;
-    }
-    .product { position: relative; cursor: pointer; }
     .product .imgwrap { position: relative; }
-    .product img { width: 100%; display: block; transition: opacity 0.3s ease; border: 2px solid #fff; border-radius: 12px; box-sizing: border-box; }
-    .product img.back { position: absolute; top: 0; left: 0; opacity: 0; }
-    .product:hover img.front { opacity: 0; }
-    .product:hover img.back { opacity: 1; }
-    .badge { position: absolute; top: 12px; left: 12px; background: #fff; color: #000; font-size: 11px; font-weight: bold; letter-spacing: 1px; padding: 4px 8px; border-radius: 3px; z-index: 2; }
-    .badge.limited { background: #feacac; }
-    .soldout-overlay { position: absolute; inset: 0; border-radius: 12px; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; font-weight: bold; letter-spacing: 3px; z-index: 2; }
-    .product-info { text-align: center; margin-top: 10px; font-size: 14px; line-height: 1.5; }
-    .product-info .name { font-weight: bold; }
-    .product-info .sub { color: #aaa; font-size: 13px; }
-    .product-info .price { margin-top: 4px; font-size: 15px; }
+    .badge { position: absolute; top: 12px; left: 12px; z-index: 2; padding: 5px 10px; border: 1px solid var(--ink); border-radius: 30px; background: var(--paper); font-family: var(--mono); font-size: 10px; letter-spacing: 1px; line-height: 1.3; }
+    .badge.limited { background: var(--green); }
+    .soldout-overlay { position: absolute; inset: 0; z-index: 2; display: flex; align-items: center; justify-content: center; border-radius: 14px; background: rgba(243, 241, 233, 0.72); font-family: var(--mono); font-size: 12px; letter-spacing: 3px; }
+    .product-info { text-align: left; }
+    .product-info .name { font-size: 15px; font-weight: 950; letter-spacing: -0.03em; line-height: 1.3; }
+    .product-info .sub { font-size: 12px; color: var(--muted); }
+    .product-info .price { margin-top: 6px; font-family: var(--mono); font-size: 12px; letter-spacing: 1px; }
 
-    /* ===== 상세 모달 ===== */
-    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); justify-content: center; align-items: flex-start; z-index: 5000; overflow-y: auto; padding: 24px 16px; box-sizing: border-box; -webkit-overflow-scrolling: touch; }
-    .modal.open { display: flex; }
-    .modal-content { background: #111; padding: 24px; border-radius: 10px; max-width: 900px; width: 92%; color: #fff; position: relative; display: grid; grid-template-columns: 1.15fr 1fr; grid-template-areas: "gallery buy" "detail buy"; align-items: start; column-gap: 28px; row-gap: 20px; box-sizing: border-box; margin: auto; }
-    .modal-image-area { grid-area: gallery; display: flex; flex-direction: column; align-items: center; min-width: 0; }
+    /* ===== 상세 모달 (공용 .modal 위에 스토어 전용 배치) ===== */
+    #productModal.open { display: flex; align-items: flex-start; }
+    #productModal .modal-content { display: grid; grid-template-columns: 1.15fr 1fr; grid-template-areas: "gallery buy" "detail buy"; column-gap: 30px; row-gap: 22px; align-items: start; max-width: 980px; }
+    .modal-image-area { grid-area: gallery; }
     .modal-image-area .main { position: relative; width: 100%; }
-    .modal-image-area img.main-img { width: 100%; border-radius: 8px; display: block; }
     .modal-buy-area { grid-area: buy; display: flex; flex-direction: column; min-width: 0; }
-    .modal-close { position: absolute; top: 10px; right: 10px; font-size: 12px; cursor: pointer; color: #000; background: #fff; width: 22px; height: 22px; display: flex; justify-content: center; align-items: center; border-radius: 50%; z-index: 3; }
-    .thumbnail-list { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin: 12px 0 8px; }
-    .thumbnail-list img { width: 56px; height: 56px; object-fit: cover; border: 2px solid #fff; border-radius: 4px; cursor: pointer; opacity: 0.6; transition: transform 0.3s, opacity 0.3s; }
-    .thumbnail-list img.active { opacity: 1; transform: scale(1.08); border-color: yellow; }
-    .modal-nav-buttons { display: flex; align-items: center; justify-content: center; gap: 12px; }
     .detail-wrap { grid-area: detail; position: relative; width: 100%; }
     .detail-wrap.empty { display: none; }
-    .detail-img { width: 100%; border-radius: 8px; display: block; }
-    .lang-bar { position: absolute; top: 10px; right: 10px; display: flex; gap: 6px; z-index: 2; }
-    .lang-bar button { background: rgba(0,0,0,0.35); color: #fff; border: 1px solid rgba(255,255,255,0.55); border-radius: 4px; padding: 4px 10px; font-size: 12px; cursor: pointer; backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); }
-    .lang-bar button:hover { background: rgba(0,0,0,0.6); }
-    .lang-bar button.active { background: rgba(255,255,255,0.9); color: #000; border-color: #fff; }
-    .dot-indicators { display: flex; gap: 6px; }
-    .dot-indicators span { width: 10px; height: 10px; border-radius: 50%; background: gray; display: inline-block; }
-    .dot-indicators span.active { background: #fff; }
-    .dot-arrow { background: rgba(255,255,255,0.2); color: #fff; border: 1px solid #fff; border-radius: 4px; padding: 6px 16px; font-size: 14px; cursor: pointer; }
-    .dot-arrow:hover { background: rgba(255,255,255,0.5); color: #000; }
+    .detail-img { display: block; width: 100%; border: 1px solid var(--line); border-radius: 12px; }
+    .lang-bar { position: absolute; top: 10px; right: 10px; z-index: 2; display: flex; gap: 6px; }
+    .lang-bar button { padding: 5px 11px; border: 1px solid var(--ink); border-radius: 30px; background: rgba(243, 241, 233, 0.85); font-size: 11px; line-height: 1.2; }
+    .lang-bar button.active { background: var(--ink); color: var(--paper); }
 
-    .title-row { display: flex; align-items: center; justify-content: flex-start; gap: 6px; flex-wrap: wrap; margin: 4px 0 4px; }
-    .buy-title { font-size: 18px; margin: 0; }
-    .icon-btn { flex: none; background: transparent; border: none; color: #aaa; width: 26px; height: 26px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; vertical-align: middle; }
-    .icon-btn:hover { color: #fff; background: rgba(255,255,255,0.12); }
-    .buy-sub { color: #aaa; font-size: 13px; margin-bottom: 8px; }
-    .buy-price { font-size: 20px; font-weight: bold; margin-bottom: 18px; }
-    .opt-label { font-size: 12px; letter-spacing: 2px; color: #aaa; margin: 10px 0 6px; }
-    .chips { display: flex; gap: 8px; flex-wrap: wrap; }
-    .chip { border: 1px solid rgba(255,255,255,0.5); border-radius: 4px; padding: 0 14px; line-height: 34px; font-size: 13px; cursor: pointer; background: transparent; color: #fff; min-width: 44px; text-align: center; }
-    .chip.active { background: #fff; color: #000; border-color: #fff; }
-    .chip.soldout { text-decoration: line-through; opacity: 0.35; cursor: not-allowed; }
-    .chip.color { display: flex; align-items: center; gap: 8px; }
-    .swatch { width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.6); display: inline-block; }
-    .size-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
-    .chip, .qty { height: 36px; box-sizing: border-box; }
-    .qty { display: inline-flex; align-items: center; border: 1px solid rgba(255,255,255,0.5); border-radius: 4px; margin-left: auto; }
-    .qty button { background: transparent; color: #fff; border: none; width: 34px; height: 100%; font-size: 16px; cursor: pointer; }
-    .qty span { min-width: 28px; text-align: center; font-size: 13px; }
-    .buy-buttons { display: flex; gap: 10px; margin-top: 18px; }
-    .btn { flex: 1; padding: 14px; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer; border: 1px solid #fff; letter-spacing: 1px; }
-    .btn.ghost { background: transparent; color: #fff; }
-    .btn.solid { background: #fff; color: #000; }
-    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .title-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin: 4px 0; padding-right: 34px; }
+    .buy-title { margin: 0; font-size: 22px; font-weight: 950; line-height: 1.15; letter-spacing: -0.04em; }
+    .icon-btn { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; color: var(--muted); }
+    .icon-btn:hover { background: rgba(32, 35, 30, 0.08); color: var(--ink); }
+    .buy-sub { margin-bottom: 8px; font-size: 13px; color: var(--muted); }
+    .buy-price { margin-bottom: 16px; font-size: 20px; font-weight: 950; letter-spacing: -0.03em; }
+    .opt-label { margin: 12px 0 7px; font-family: var(--mono); font-size: 10px; letter-spacing: 1px; color: var(--muted); }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    /* 옵션 버튼 — 공용 .chip(이미지 캡션)의 고정폭·대문자 스타일을 되돌린다 */
+    .chips .chip { justify-content: center; height: 36px; min-width: 46px; padding: 0 16px; background: transparent; font-family: inherit; font-size: 13px; letter-spacing: 0; text-transform: none; cursor: pointer; }
+    .chips .chip:hover { background: rgba(32, 35, 30, 0.08); }
+    .chips .chip.active { background: var(--ink); color: var(--paper); }
+    .chips .chip.soldout { text-decoration: line-through; opacity: 0.35; cursor: not-allowed; }
+    .swatch { display: inline-block; width: 13px; height: 13px; border: 1px solid var(--ink); border-radius: 50%; }
+    .chip.active .swatch { border-color: var(--paper); }
+    .size-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; }
+    .qty { display: inline-flex; align-items: center; height: 36px; margin-left: auto; border: 1px solid var(--ink); border-radius: 30px; }
+    .qty button { width: 36px; height: 100%; font-size: 16px; }
+    .qty span { min-width: 26px; text-align: center; font-size: 13px; }
+    .opt-error { min-height: 16px; margin-top: 6px; font-size: 12px; color: var(--orange); }
     .shake { animation: shake 0.35s; }
-    @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
-    .opt-error { color: #feacac; font-size: 12px; margin-top: 6px; min-height: 14px; }
-    .buy-desc { border-top: 1px solid rgba(255,255,255,0.15); margin-top: 20px; padding-top: 14px; font-size: 13px; line-height: 1.7; color: #ccc; }
-    .buy-total { display: flex; justify-content: space-between; align-items: baseline; margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.15); font-size: 13px; color: #aaa; }
-    .buy-total b { font-size: 18px; color: #fff; }
-    .buy-links { display: flex; justify-content: flex-end; align-items: center; margin-top: 12px; font-size: 12px; }
-    .buy-links a { color: #ccc; text-decoration: none; border: 1px solid rgba(255,255,255,0.4); border-radius: 999px; padding: 6px 14px; line-height: 1; }
-    .buy-links a:hover { color: #000; background: #fff; border-color: #fff; }
-    .buy-links button { background: transparent; border: 1px solid rgba(255,255,255,0.35); color: #ccc; border-radius: 4px; padding: 4px 10px; font-size: 12px; cursor: pointer; }
-    .buy-links button:hover { color: #fff; border-color: #fff; }
-    .acc { border-top: 1px solid rgba(255,255,255,0.15); margin-top: 14px; font-size: 13px; color: #ccc; }
-    .acc summary { cursor: pointer; padding: 12px 0; color: #fff; font-weight: bold; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+    @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+
+    .buy-total { display: flex; justify-content: space-between; align-items: baseline; margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--line); font-size: 13px; color: var(--muted); }
+    .buy-total b { font-size: 18px; color: var(--ink); }
+    .buy-buttons { display: flex; gap: 10px; margin-top: 16px; }
+    .btn { flex: 1; padding: 15px 12px; border: 1px solid var(--ink); border-radius: 30px; font-size: 13px; font-weight: bold; }
+    .btn.ghost { background: transparent; }
+    .btn.ghost:hover { background: rgba(32, 35, 30, 0.08); }
+    .btn.solid { background: var(--ink); color: var(--paper); }
+    .btn.solid:hover { background: transparent; color: var(--ink); }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .buy-links { display: flex; justify-content: flex-end; margin-top: 12px; }
+    .buy-links a { padding-bottom: 3px; border-bottom: 1px solid var(--ink); font-size: 12px; }
+    .buy-desc { margin-top: 20px; padding-top: 16px; border-top: 1px dashed var(--line); font-size: 13px; line-height: 1.75; color: var(--muted); word-break: keep-all; }
+    /* products.js의 설명 HTML은 검정 배경용 인라인 색(#fff)과 밝은 선 사이즈표를 쓰므로 여기서 보정 */
+    .buy-desc [style*="color"] { color: var(--ink) !important; }
+    .buy-desc img { display: block; padding: 8px; border-radius: 10px; background: var(--ink); }
+    .acc { margin-top: 14px; border-top: 1px dashed var(--line); font-size: 13px; color: var(--muted); }
+    .acc summary { display: flex; justify-content: space-between; align-items: center; padding: 13px 0; color: var(--ink); font-weight: bold; cursor: pointer; list-style: none; }
     .acc summary::-webkit-details-marker { display: none; }
-    .acc summary::after { content: "+"; font-size: 16px; color: #aaa; }
-    .acc[open] summary::after { content: "−"; }
-    .acc-body { line-height: 1.8; padding-bottom: 12px; }
-    .acc-body a { color: #fff; }
-    .acc-body .oneline { white-space: nowrap; font-size: 12px; }
-    .acc-body .sub { color: #888; }
-    .notice-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 12px; }
-    .notice-table th, .notice-table td { border-top: 1px solid rgba(255,255,255,0.12); padding: 8px 6px; text-align: left; vertical-align: top; line-height: 1.5; }
-    .notice-table th { width: 34%; color: #aaa; font-weight: normal; white-space: nowrap; }
-    .ph { color: #feacac; font-weight: bold; }
+    .acc summary::after { content: "+"; font-family: var(--mono); font-size: 16px; font-weight: normal; }
+    .acc[open] summary::after { content: "–"; }
+    .acc-body { padding-bottom: 12px; line-height: 1.8; }
+    .acc-body a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+    .acc-body b { color: var(--ink); }
+    .acc-body .oneline { font-size: 12px; }
+    .acc-body .sub { color: var(--soft); }
+    .notice-table { width: 100%; margin-bottom: 12px; border-collapse: collapse; font-size: 12px; }
+    .notice-table th, .notice-table td { padding: 8px 6px; border-top: 1px dashed var(--line); text-align: left; vertical-align: top; line-height: 1.5; }
+    .notice-table th { width: 34%; font-weight: normal; color: var(--muted); }
+    .ph { color: var(--orange); font-weight: bold; }
 
-    .toast { position: fixed; left: 50%; bottom: 30px; transform: translateX(-50%) translateY(20px); background: #fff; color: #000; padding: 12px 20px; border-radius: 6px; font-size: 14px; opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s; z-index: 6000; white-space: nowrap; }
+    .toast { position: fixed; left: 50%; bottom: 30px; z-index: 6000; transform: translateX(-50%) translateY(20px); padding: 13px 22px; border-radius: 30px; background: var(--ink); color: var(--paper); font-size: 13px; opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s; white-space: nowrap; }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
-    .toast a { color: #000; font-weight: bold; margin-left: 10px; }
+    .toast a { margin-left: 10px; font-weight: bold; text-decoration: underline; text-underline-offset: 3px; }
 
     @media (max-width: 768px) {
-      .floating-logo { display: none; }
-      .top-center-logo { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 2000; }
-      .top-center-logo img { width: 90px; height: auto; }
-      .hamburger { display: block; position: fixed; top: 20px; left: 20px; font-size: 28px; color: #fff; z-index: 2000; cursor: pointer; }
-      .side-nav { transform: translateX(-100%); transition: transform 0.3s ease; width: 220px; background-color: rgba(0,0,0,0.95); height: 100%; position: fixed; top: 0; left: 0; padding-top: 80px; z-index: 3000; }
-      .side-nav.active { transform: translateX(0); }
-      .side-nav ul { display: flex; flex-direction: column; align-items: flex-start; padding-left: 20px; }
-      .side-nav li { text-align: left; width: 100%; }
-      .side-nav a { padding: 14px 0; display: block; width: 100%; font-size: 16px; }
-      .side-nav li ul { opacity: 1; transform: none; filter: none; max-height: 300px; padding-left: 0; }
-
-      .store { margin: 120px 0 20px; }
-      .store-head { padding: 0 16px 12px; }
-      .product-grid { grid-template-columns: 1fr; padding: 24px 16px 40px; gap: 30px; }
-      .modal { padding: 16px 12px; }
-      .modal-content { padding: 16px; grid-template-columns: 1fr; grid-template-areas: "gallery" "buy" "detail"; row-gap: 16px; }
-      .buy-buttons { position: sticky; bottom: 0; background: #111; padding: 10px 0; }
-      .acc-body .oneline { white-space: normal; }
-    }
-  
-    @media (max-width: 768px) {
-      /* mobile-nav-fix 2026-09-28 */
-      html, body { overflow-x: hidden; }   /* 가로 넘침으로 iOS가 페이지를 축소해 100% 높이가 화면보다 짧아지는 문제 방지 */
-      .side-nav { overflow-y: auto; -webkit-overflow-scrolling: touch; padding-top: 64px; padding-bottom: 40px; box-sizing: border-box; top: 0; bottom: 0; height: 100vh; height: 100dvh; }
-      .side-nav::before { content: ""; display: block; width: 105px; height: 45px; margin: 6px auto 14px; background: url("./image/mainlogo.png") center / contain no-repeat; }
-      .side-nav li ul { opacity: 0 !important; transform: none !important; filter: none !important; max-height: 0 !important; overflow: hidden !important; padding-left: 0; transition: max-height 0.3s ease, opacity 0.3s ease; }
-      .side-nav li.open > ul { opacity: 1 !important; max-height: 300px !important; }
-      .side-nav li ul li a { padding-left: 16px; font-size: 14px; color: #ccc; }
-      .hamburger { z-index: 3100; }
-      .side-nav.active ~ .top-center-logo { visibility: hidden; }
-    }
-  
-    @media (min-width: 769px) and (max-width: 1024px) {
-      /* tablet-1024 */
-      .store { margin: 110px 20px 40px 200px; }
-      .product-grid { grid-template-columns: repeat(2, 1fr); gap: 28px; }
+      .filters { width: 100%; }
+      #productModal .modal-content { grid-template-columns: 1fr; grid-template-areas: "gallery" "buy" "detail"; row-gap: 16px; }
+      .buy-buttons { position: sticky; bottom: 0; padding: 10px 0; background: var(--paper); }
     }
   </style>
 </head>
 
 <body>
-  <div class="hamburger" onclick="toggleMenu()">☰</div>
-  <div style="position: relative; top: 85px; width: 98%; height: 3px; background-color: rgba(255, 255, 255, 0.2); margin: 0 auto;"></div>
+  <div id="site-header"></div>
 
-  <nav class="side-nav">
-    <ul>
-      <li><a href="https://graphicsoverfit.com" target="_blank" rel="noopener">Brand Culture</a></li>
-      <li><a href="#">Concept art<br><span style="font-size: 0.8em; color: #aaa;">(coming soon)</span></a></li>
-      <li><a href="#">Design Studio<br><span style="font-size: 0.8em; color: #aaa;">(coming soon)</span></a></li>
-      <li><a href="#">Look Book</a>
-        <ul style="list-style: none; padding-left: 10px; font-size: 14px;">
-          <li><a href="../look book/Model.html">Model Collection</a></li>
-          <li><a href="../look book/Curator.html">Curator Collection</a></li>
-        </ul>
-      </li>
-      <li><a href="#">New & Trending</a>
-        <ul style="list-style: none; padding-left: 10px; font-size: 14px;">
-          <li><a href="../NewTrending/new-arrivals.html">New Arrivals</a></li>
-          <li><a href="../NewTrending/limited-edition.html">Limited Edition</a></li>
-          <li><a href="../NewTrending/Upcoming Collection.html">Upcoming Collection</a></li>
-        </ul>
-      </li>
-      <li class="open"><a href="./Shop.html">Shop</a>
-        <ul style="list-style: none; padding-left: 10px; font-size: 14px;">
-          <li><a href="./Shop.html">BRAND Store</a></li>
-          <li><a href="https://www.musinsa.com/brand/graphicsoverfit/products?categoryCode=001001&gf=A" target="_blank" rel="noopener">MUSINSA Store</a></li>
-        </ul>
-      </li>
-    </ul>
-  </nav>
-
-  <div class="floating-logo">
-    <a href="../index.html"><img src="./image/mainlogo.png" alt="로고" class="logo-image"></a>
-  </div>
-  <div class="top-center-logo">
-    <a href="../index.html"><img src="../image/mainlogo2.png" alt="로고"></a>
-  </div>
-
-  <main class="store">
-    <div class="store-head">
-      <h1>BRAND STORE</h1>
-      <div class="filters">
-        <button class="active" data-cat="all">전체</button>
-        <button data-cat="basic">BASIC</button>
-        <button data-cat="artwork">ARTWORK</button>
-        <select id="sort">
-          <option value="default">기본순</option>
-          <option value="priceAsc">낮은 가격순</option>
-          <option value="priceDesc">높은 가격순</option>
-        </select>
-        <a class="cart-link" href="./checkout.html" title="장바구니" aria-label="장바구니">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M3 4h2l2.4 11.2a1 1 0 0 0 1 .8h9.6a1 1 0 0 0 1-.8L21 8H6.5"/>
-            <circle cx="9.5" cy="20" r="1.3"/><circle cx="17.5" cy="20" r="1.3"/>
-          </svg>
-          <span class="cart-badge"></span>
-        </a>
+  <main id="main">
+    <section class="section section--first">
+      <div class="wrap">
+        <div class="section-head section-head--action">
+          <p class="label"><span>Shop</span><span>·</span><span>Brand store · 무료 배송</span></p>
+          <div class="section-head-grid">
+            <h1 class="display display--md">BRAND <span class="outline">STORE</span><span class="title-dot">.</span></h1>
+            <div class="filters">
+              <button class="active" data-cat="all">전체</button>
+              <button data-cat="basic">BASIC</button>
+              <button data-cat="artwork">ARTWORK</button>
+              <select id="sort" aria-label="정렬">
+                <option value="default">기본순</option>
+                <option value="priceAsc">낮은 가격순</option>
+                <option value="priceDesc">높은 가격순</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="product-grid" id="grid"></div>
       </div>
-    </div>
-    <div class="product-grid" id="grid"></div>
+    </section>
   </main>
 
-  <footer data-legal-footer="./"></footer>
+  <div id="site-footer"></div>
 
   <!-- 상세 모달 -->
   <div class="modal" id="productModal" aria-hidden="true">
     <div class="modal-content">
-      <div class="modal-close" onclick="closeModal()">X</div>
+      <button type="button" class="modal-close" onclick="closeModal()" aria-label="닫기">×</button>
 
       <div class="modal-image-area">
         <div class="main"><img id="modalImage" class="main-img" src="" alt="상품 이미지" /></div>
@@ -349,19 +215,6 @@
   <script src="./products.js"></script>
   <script src="./cart.js"></script>
   <script>
-    // ===== 공통 셸 JS =====
-    function toggleMenu() { document.querySelector('.side-nav').classList.toggle('active'); }
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('.side-nav a').forEach(link => {
-        link.addEventListener('click', () => document.querySelector('.side-nav').classList.remove('active'));
-      });
-    });
-    document.addEventListener('click', (e) => {
-      const sideNav = document.querySelector('.side-nav');
-      const hamburger = document.querySelector('.hamburger');
-      if (!sideNav.contains(e.target) && !hamburger.contains(e.target)) sideNav.classList.remove('active');
-    });
-
     // ===== 상품 그리드 =====
     let currentCat = 'all';
     const grid = document.getElementById('grid');
@@ -611,21 +464,6 @@
     const qp = new URLSearchParams(location.search).get('p');
     if (qp) openProduct(qp);
   </script>
-  <script>
-    // 모바일 사이드 메뉴: 상위 항목 탭 → 하위 메뉴 아코디언 (2026-09-28)
-    (function () {
-      const items = document.querySelectorAll('.side-nav > ul > li');
-      items.forEach(li => { if (li.querySelector(':scope > ul')) li.classList.add('has-sub'); });
-      document.addEventListener('click', function (e) {
-        if (window.innerWidth > 768) return;
-        const a = e.target.closest('.side-nav > ul > li.has-sub > a');
-        if (!a) return;
-        e.preventDefault(); e.stopPropagation();
-        const li = a.parentElement;
-        items.forEach(x => { if (x !== li) x.classList.remove('open'); });
-        li.classList.toggle('open');
-      }, true);
-    })();
-  </script>
+  <script src="../assets/site.js"></script>
 </body>
 </html>
