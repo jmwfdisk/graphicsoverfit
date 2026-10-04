@@ -76,6 +76,7 @@
     .roster-visual { position: relative; min-height: 520px; border-radius: 4px; overflow: hidden; background: var(--ink); }
     .roster-visual img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.4s ease; }
     .roster-visual img.active { opacity: 1; }
+    .roster-visual img[data-key="yuil"] { object-position: center top; } /* 틀이 사진보다 납작해 가운데 기준이면 모자가 잘림 */
 
     /* 마지막 어두운 안내 띠 */
     .cta { padding: 130px 0; text-align: center; }
@@ -313,7 +314,7 @@
           <div class="roster-visual">
             <img class="active" data-key="dj" src="./look book/image/d.__.j2/d.__.j2_1.jpg" alt="D.__.J2 룩북" loading="lazy">
             <img data-key="dae" src="./look book/image/dae/1.jpg" alt="DAE 룩북" loading="lazy">
-            <img data-key="yuil" src="./look book/image/yuil/1.jpg" alt="YUIL 룩북" loading="lazy">
+            <img data-key="yuil" src="./look book/image/yuil/yuil-new.webp" alt="YUIL 룩북" loading="lazy">
             <img data-key="all" src="./look book/image/dae/2.jpg" alt="Curator 룩북" loading="lazy">
           </div>
         </div>
