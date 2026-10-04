@@ -31,9 +31,9 @@ python3 -m http.server 8080       # 기본 서버. 캐시 지시를 안 보내 S
 
 **의도적으로 git 미추적 유지** (저장소가 공개 배포용이므로 iCloud로만 공유): `doc/`, `AGENTS.md`, `이미지소스/`, 디자인 소스(`.psd`/`.psb`/`.pxm`/`.ai`), 각 폴더의 `test*.html`. `.gitignore`에는 `.vscode/`, `.DS_Store`만 등록되어 있으므로 **`git add -A`/`git add .` 금지** — 변경한 파일만 명시적으로 add.
 
-## 재디자인 (2026-10-04, `redesign` 브랜치)
+## 재디자인 (2026-10-04 배포, 커밋 `f1df78f`)
 
-레이아웃 구성은 antimetal.com 참고, 색·글씨·버튼은 graphicsoverfit.com 기준, 푸터는 사이트맵형. 14개 페이지 적용 완료, **아직 `main`에 합치지 않음(미배포)**. 이력·결정은 `doc/재디자인_계획.md`·개발일지.
+레이아웃 구성은 antimetal.com 참고, 색·글씨·버튼은 graphicsoverfit.com 기준, 푸터는 사이트맵형. 14개 페이지 적용 후 `main`에 합쳐 배포함(`redesign` 브랜치는 로컬에 남아 있음). 이력·결정은 `doc/재디자인_계획.md`·개발일지.
 
 - 백업 : 태그 `backup-2026-10-04-pre-redesign` (재디자인 전 `main`, 검정 테마·사이드바 구조). 2차 샘플(사이드바 유지안)은 `doc/samples/v2-sidebar/`.
 - 옛 구조 그대로 남은 페이지 : `Brand Culture/Brand Culture.html`, `Concept art/Concept art.html` (메뉴·사이트맵에서 연결하지 않음. 살릴 때 새 틀로 다시 만들 것).
