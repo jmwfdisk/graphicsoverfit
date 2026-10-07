@@ -107,7 +107,7 @@ api/                                    # Cloudflare Worker + D1 (결제 승인�
 
 | 기능 | 위치 | 핵심 로직 |
 |---|---|---|
-| 목록 ↔ 그림 전환 | `index.html` | `[data-switcher]` 안의 `a[data-key]`를 켜면 같은 key의 `figure`/`img`가 보임. `scroll`은 IntersectionObserver(화면 가운데, 900px 초과만), `hover`는 마우스·포커스 |
+| 목록 ↔ 그림 전환 | `index.html` | `[data-switcher]` 안의 `a[data-key]`를 켜면 같은 key의 `figure`/`img`가 보임. `scroll`은 IntersectionObserver(화면 가운데, 900px 초과만)+마우스·포커스, `hover`는 마우스·포커스만. 컬렉션(`.story`)·큐레이터(`.roster`) 둘 다 `scroll` |
 | 프로모 팝업 | `index.html` | `#promo-popup`, `localStorage` `gof_popup_ts`(24시간 비표시), `POPUP_ENABLED` 스위치(현재 false), `showGofPopup()` 전역 헬퍼 |
 | 제품 상세 모달 | `NewTrending/*.html` | 인라인 `onclick="showModal([이미지경로...], 제목, 설명HTML)"`. 이미지 배열은 모바일 크롭(`-m*`)을 앞에, 원본 `-f`/`-b`를 뒤에. 제목이 `SHOP_MAP`에 있으면 "브랜드 스토어에서 구매" 버튼 표시 |
 | 제품 카드 hover | `.product` 공용 | `img.back`이 있으면 hover 시 앞면 ↔ 뒷면 |
@@ -118,7 +118,7 @@ api/                                    # Cloudflare Worker + D1 (결제 승인�
 
 - 계획·결정 이력: `doc/Shop_직접구매_토스페이먼츠_연동계획.md`. 결제는 토스페이먼츠 결제위젯 v2, 승인은 Worker(`api/src/index.js`)가 수행.
 - API 라우트 : `POST /orders`, `/payments/confirm`, `/webhooks/toss`, `GET /orders/lookup`, `POST /returns`, `/admin/cancel`(Bearer `ADMIN_TOKEN`), `GET /health`. D1 테이블 `orders`·`returns`·`lookup_attempts`(조회 5회 실패 → 10분 차단). 알림은 `api/src/notify.js`(Resend 메일, 솔라피 알림톡 — 키 없으면 로그만).
-- **가격·품절은 두 곳 동시 수정**: `Shop/products.js`(표시용) ↔ `api/src/catalog.js`(서버 신뢰 원본). 서버는 클라이언트가 보낸 금액을 무시하고 카탈로그로 재계산. 메인 `index.html`의 제품 4칸에도 가격이 하드코딩되어 있으니 함께 수정.
+- **가격·품절은 두 곳 동시 수정 후 Worker 재배포**: `Shop/products.js`(표시용) ↔ `api/src/catalog.js`(서버 신뢰 원본, `cd api && npx wrangler deploy`). 서버는 클라이언트가 보낸 금액을 무시하고 카탈로그로 재계산. 메인 `index.html`의 제품 4칸에도 가격이 하드코딩되어 있으니 함께 수정. 품절은 `soldOut[색상]`에 사이즈 배열 — 전 색상 품절이면 카드에 SOLD OUT 덮개, 선택 색상이 전 사이즈 품절이면 모달의 장바구니·바로 구매 비활성(`updateBuyButtons`), 모달은 품절이 아닌 첫 색상을 기본 선택. `limitedUntil: "2026. 12. 25"`가 있으면 카드 이미지 상자 하단 중앙·모달 가격 아래에 한정 판매 종료 알약. `musinsaNo`가 없으면 모달의 무신사 링크 숨김.
 - `Shop/config.js`: `API_BASE`는 localhost면 `http://localhost:8787`(wrangler dev), 아니면 배포된 workers.dev 주소. `TOSS_CLIENT_KEY`만 여기 둔다. **시크릿 키는 `api/.dev.vars`(git 미추적)·`wrangler secret`에만**.
 - 장바구니: `localStorage["gof_cart"]` = `[{id,color,size,qty}]`. 전 페이지가 `Shop/cart.js`를 로드해 상단 메뉴의 `.cart-badge`를 채움.
 - `products.js`의 설명 HTML은 옛 검정 테마용 인라인 색(`#fff`)과 밝은 선 사이즈표 이미지를 쓴다 → 모달 CSS에서 보정 중(`.buy-desc [style*="color"]`, 사이즈표는 어두운 판 위). 설명을 고칠 때 인라인 색을 빼면 보정 규칙도 필요 없어진다.
