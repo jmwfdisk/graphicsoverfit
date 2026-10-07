@@ -168,7 +168,7 @@
   imageList = images;
   currentIndex = 0;
   document.getElementById('modalTitle').innerText = title;
-  const SHOP_MAP = {"ESSENTIAL LOGO TEE": "essential-logo-tee", "Golden Youth Art TEE": "golden-youth-art-tee", "Pure Youth Art TEE": "pure-youth-art-tee", "SPIRIT Art TEE": "spirit-art-tee"};
+  const SHOP_MAP = {"Brush Typography Logo TEE": "brush-typography-logo-tee", "ESSENTIAL LOGO TEE": "essential-logo-tee", "Golden Youth Art TEE": "golden-youth-art-tee", "Pure Youth Art TEE": "pure-youth-art-tee", "SPIRIT Art TEE": "spirit-art-tee"};
   const buy = document.getElementById('modalBuyLink');
   if (SHOP_MAP[title]) { buy.href = '../Shop/Shop.html?p=' + SHOP_MAP[title]; buy.style.display = 'block'; } else { buy.style.display = 'none'; }
   document.getElementById('modalDescription').innerHTML = descriptionHTML;

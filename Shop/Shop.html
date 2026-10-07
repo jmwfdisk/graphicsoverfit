@@ -269,7 +269,9 @@
       document.getElementById('buyPrice').textContent = GOF.won(p.price);
       document.getElementById('qtyView').textContent = '1';
       document.getElementById('optError').textContent = '';
-      document.getElementById('musinsaLink').href = 'https://www.musinsa.com/products/' + p.musinsaNo;
+      const ml = document.getElementById('musinsaLink');
+      ml.href = p.musinsaNo ? 'https://www.musinsa.com/products/' + p.musinsaNo : '#';
+      ml.style.display = p.musinsaNo ? '' : 'none';
       document.getElementById('accAddr').textContent = GOF_CONFIG.RETURN_ADDRESS;
       document.getElementById('accMail').textContent = GOF_CONFIG.SUPPORT_EMAIL;
       document.getElementById('noticeAcc').open = false;

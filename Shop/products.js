@@ -32,6 +32,24 @@ function gofDesc(identityLines, sizeChart) {
 
 window.GOF_PRODUCTS = [
   {
+    id: "brush-typography-logo-tee",
+    material: "면(코튼) 100% · 20수 싱글 원단",
+    detail: { ko: "./image/detail/brush.jpg" },   // 상세페이지 (모달 이미지 영역 아래)
+    // musinsaNo 없음 (무신사 미판매) → 모달의 무신사 링크 숨김
+    name: "[BASIC] Brush Typography Logo TEE",
+    subtitle: "Brush Typography logo가 디자인된 티셔츠",
+    price: 25900,
+    category: "basic",
+    sizes: ["S", "M", "L"],
+    colors: {
+      "블랙": ["./image/new-01-b-m1.png", "./image/new-01-f-m2.png", "./image/new-01-f-m3.png", "./image/new-01-f.png", "./image/new-01-b.png"],
+    },
+    front: "./image/new-01-f.png",
+    back: "./image/new-01-b.png",
+    soldOut: { "블랙": ["S", "M", "L"] },   // 전 사이즈 품절 (2026-10-07)
+    description: gofDesc("&nbsp;&nbsp;• 감각적인 Brush Typography Logo가 디자인된<br>&nbsp;&nbsp;&nbsp;&nbsp;티셔츠<br>&nbsp;&nbsp;• 넓어짐을 최소화한 라운드 넥, 포인트 라벨로<br>&nbsp;&nbsp;&nbsp;&nbsp;차별화된 감각<br>&nbsp;&nbsp;• 부드러운 터치감과 내구성이 뛰어난 20수 100%<br>&nbsp;&nbsp;&nbsp;&nbsp;코튼 원단<br>", "./image/size-sp.png"),
+  },
+  {
     id: "essential-logo-tee",
     material: "면(코튼) 100% · 20수 싱글 원단",
     detail: { ko: "./image/detail/essential.jpg", ja: "./image/detail/essential-ja.jpg" },   // 상세페이지 (언어별, 모달 이미지 영역 아래)

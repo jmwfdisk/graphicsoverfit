@@ -4,6 +4,13 @@
 export const RETURN_SHIPPING_FEE = 6000;
 
 export const CATALOG = {
+  "brush-typography-logo-tee": {
+    name: "[BASIC] Brush Typography Logo TEE",
+    price: 25900,
+    sizes: ["S", "M", "L"],
+    colors: ["블랙"],
+    soldOut: { "블랙": ["S", "M", "L"] },   // 전 사이즈 품절 (2026-10-07)
+  },
   "essential-logo-tee": {
     name: "[BASIC] ESSENTIAL LOGO TEE",
     price: 31900,
