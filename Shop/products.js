@@ -67,7 +67,7 @@ window.GOF_PRODUCTS = [
     // 카드에 보일 앞/뒤 이미지 (기본 색상 기준)
     front: "./image/new-02-f.png",
     back: "./image/new-02-b.png",
-    soldOut: { "블랙": [], "화이트": [] },
+    soldOut: { "블랙": ["S", "M", "L"], "화이트": [] },   // 블랙 전 사이즈 품절 (2026-10-07)
     description: {
       "블랙":   gofDesc("&nbsp;&nbsp;• 차콜그레이 색상의 ESSENTIAL LOGO가<br>&nbsp;&nbsp;&nbsp;&nbsp;디자인된 티셔츠<br>&nbsp;&nbsp;• 어디서든 돋보이는 유니크한 디자인<br>", "./image/size-sp.png"),
       "화이트": gofDesc("&nbsp;&nbsp;• 아이스그레이 색상의 ESSENTIAL LOGO가<br>&nbsp;&nbsp;&nbsp;&nbsp;디자인된 티셔츠<br>&nbsp;&nbsp;• 어디서든 돋보이는 유니크한 디자인<br>", "./image/size-sp.png"),
@@ -83,6 +83,7 @@ window.GOF_PRODUCTS = [
     price: 48900,
     category: "artwork",
     badge: "LIMITED",
+    limitedUntil: "2026. 12. 25",   // 한정판 판매 종료일 (카드·모달 알약 안내)
     sizes: ["S", "M", "L"],
     colors: {
       "화이트": ["./image/limit-03-f-m1.png", "./image/limit-03-f-m3.png", "./image/limit-03-b-m4.png", "./image/limit-03-f.png", "./image/limit-03-b.png"],
@@ -102,6 +103,7 @@ window.GOF_PRODUCTS = [
     price: 48900,
     category: "artwork",
     badge: "LIMITED",
+    limitedUntil: "2026. 12. 25",   // 한정판 판매 종료일 (카드·모달 알약 안내)
     sizes: ["S", "M", "L"],
     colors: {
       "베이지": ["./image/limit-01-b-m1.png", "./image/limit-01-f.png", "./image/limit-01-b.png"],
@@ -121,6 +123,7 @@ window.GOF_PRODUCTS = [
     price: 48900,
     category: "artwork",
     badge: "LIMITED",
+    limitedUntil: "2026. 12. 25",   // 한정판 판매 종료일 (카드·모달 알약 안내)
     sizes: ["S", "M", "L"],
     colors: {
       "화이트": ["./image/limit-02-f-m1.png", "./image/limit-02-b-m2.png", "./image/limit-02-f.png", "./image/limit-02-b.png"],

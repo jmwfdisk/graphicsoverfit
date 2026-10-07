@@ -16,7 +16,7 @@ export const CATALOG = {
     price: 31900,
     sizes: ["S", "M", "L"],
     colors: ["블랙", "화이트"],
-    soldOut: { "블랙": [], "화이트": [] },
+    soldOut: { "블랙": ["S", "M", "L"], "화이트": [] },   // 블랙 전 사이즈 품절 (2026-10-07)
   },
   "spirit-art-tee": {
     name: "[ARTWORK] SPIRIT Art TEE",
