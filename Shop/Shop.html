@@ -67,7 +67,7 @@
     .btn.ghost:hover { background: rgba(32, 35, 30, 0.08); }
     .btn.solid { background: var(--ink); color: var(--paper); }
     .btn.solid:hover { background: transparent; color: var(--ink); }
-    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
     .buy-links { display: flex; justify-content: flex-end; margin-top: 12px; }
     .buy-links a { padding-bottom: 3px; border-bottom: 1px solid var(--ink); font-size: 12px; }
     .buy-desc { margin-top: 20px; padding-top: 16px; border-top: 1px dashed var(--line); font-size: 13px; line-height: 1.75; color: var(--muted); word-break: keep-all; }
@@ -331,6 +331,7 @@
         });
         wrap.appendChild(btn);
       });
+      updateBuyButtons();
       // 이미지·설명
       cur.images = GOF.imagesOf(p, color);
       cur.index = 0;
@@ -423,7 +424,17 @@
       catch (e) { prompt('아래 링크를 복사하세요', url); }
     }
 
+    // 선택한 색상의 전 사이즈가 품절이면 장바구니·바로 구매 버튼을 막는다
+    function updateBuyButtons() {
+      const so = GOF.isSoldOut(cur.product, cur.color);
+      const bc = document.getElementById('btnCart'), bb = document.getElementById('btnBuy');
+      bc.disabled = so; bb.disabled = so;
+      bb.textContent = so ? 'SOLD OUT' : '바로 구매';
+      document.getElementById('optError').textContent = so ? '품절된 상품입니다.' : '';
+    }
+
     function addToCart(goCheckout) {
+      if (GOF.isSoldOut(cur.product, cur.color)) return;
       if (!cur.size) {
         const chips = document.getElementById('sizeChips');
         chips.classList.remove('shake'); void chips.offsetWidth; chips.classList.add('shake');
