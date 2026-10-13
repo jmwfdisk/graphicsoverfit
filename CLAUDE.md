@@ -17,13 +17,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ```bash
 python3 doc/dev_server.py        # http://localhost:8090 — 캐시 없는 미리보기 서버 (추천)
 python3 -m http.server 8080       # 기본 서버. 캐시 지시를 안 보내 Safari가 예전 HTML을 다시 보여 줄 수 있음 (⌥⌘R 필요)
+cd api && npm run dev             # 결제 Worker 로컬 (포트 8787). 최초 1회 npm install && npm run db:local, .dev.vars는 .dev.vars.example 복사
+cd api && npm run deploy          # Worker 배포 (= npx wrangler deploy). 시크릿은 npx wrangler secret put NAME
 ```
+
+브라우저 주소는 `localhost`로 접속할 것 — 사용자 맥의 `127.0.0.1:8080`에는 .com 사이트 서버가 따로 떠 있어 다른 사이트가 나온다. Worker CORS는 `localhost`·`127.0.0.1`의 모든 포트를 허용하므로 8090에서도 API 호출 가능.
 
 빌드, 린트, 테스트 명령어는 존재하지 않습니다. 인라인 JS 문법 검증은 `<script>` 블록을 추출해 `node --check`로, 공용 스크립트는 `node --check assets/site.js`로 확인.
 
-배포: `main` 브랜치 push → GitHub Pages 자동 배포 (graphicsoverfit.co.kr, 1~2분 소요).
+배포: `main` 브랜치 push → GitHub Pages 자동 배포 (graphicsoverfit.co.kr, 1~2분 소요). push 후 `curl`로 라이브에 바뀐 문자열이 보일 때까지 폴링해 확인하고 보고. 방문자 캐시 때문에 최대 10분쯤 옛 화면이 보일 수 있음.
 
-**화면 검증 방법** : 헤드리스 크롬 `--screenshot`은 가상 시간에서 CSS 전환이 멈춰 보이고 스크롤 연동·클릭 상태를 못 본다. 원격 디버깅(CDP)으로 실제 스크롤·클릭하며 캡처할 것(Node 24 내장 `WebSocket`으로 충분, 별도 패키지 불필요). 헤드리스 창은 500px보다 좁게 그리지 못하므로 실제 폰 폭은 실기기로 확인.
+**화면 검증 방법** : 헤드리스 크롬 `--screenshot`은 가상 시간에서 CSS 전환이 멈춰 보이고 스크롤 연동·클릭 상태를 못 본다. 원격 디버깅(CDP)으로 실제 스크롤·클릭하며 캡처할 것(Node 24 내장 `WebSocket`으로 충분, 별도 패키지 불필요). 헤드리스 창은 500px보다 좁게 그리지 못하므로 실제 폰 폭은 실기기로 확인. 도구는 `doc/tools/`(git 미추적)에 있음 :
+
+```bash
+cd doc/tools && node sweep.mjs http://localhost:8090 1440      # 14개 페이지 가로 넘침·깨진 이미지·JS 오류·푸터·뱃지 일괄 점검
+node doc/tools/snap.mjs <url> <폭> <out.png> [JS식]            # 한 장 캡처 + 값 확인
+# cdplib.mjs : open(width,height) → goto / ev(JS 실행) / shot / errors / requests
+```
+
+CDP 직접 연결 시 `/json` 목록에서 `type === 'page'`를 골라야 함(첫 항목이 `browser_ui`면 innerHeight가 1). 토스 위젯을 부르는 주문서는 캡처가 2분 넘게 걸릴 수 있음.
 
 ## 문서와 git 추적 정책
 
@@ -45,7 +57,7 @@ index.html                              # 메인 : 히어로(한 번 재생 후 
 기본페이지.html                          # 최소 페이지 템플릿 (새 페이지는 이걸 복사)
 NewTrending/new-arrivals.html           # 제품 그리드 + 상세 모달
 NewTrending/limited-edition.html
-NewTrending/Upcoming Collection.html    # 2027 Summer 배너 + 출시 예정 카드 + 안내 문구
+NewTrending/Upcoming Collection.html    # 2027 Summer 배너 + 출시 예정 카드(Graffiti Logo TEE LIMITED, Brush Hoodie) + 상세 모달 + 안내 문구
 look book/Curator.html                  # 큐레이터 사진 그리드 + 확대 모달(착용 제품 링크)
 look book/Model.html                    # "COMING SOON" 안내만
 Shop/Shop.html                          # 스토어 목록 + 상세 모달(옵션·장바구니). ?p=상품id 로 바로 열림
@@ -53,7 +65,7 @@ Shop/checkout.html                      # 주문서 + 토스 결제위젯
 Shop/success.html, fail.html            # 결제 결과
 Shop/return.html                        # 교환·반품 접수 (주문 조회 → 접수 → 완료)
 Shop/terms.html, privacy.html           # 약관·개인정보처리방침
-assets/site.css, site.js                # ★ 공용 스타일·셸 (전 페이지)
+assets/site.css, site.js                # ★ 공용 스타일·셸 (전 페이지). 같은 폴더의 `site 2.css`·`site 2.js`는 옛 사본(미추적) — 참조·수정 금지
 Shop/config.js, products.js, cart.js    # ★ 공용 스크립트 (설정·사업자 정보 / 카탈로그 / 장바구니)
 image/                                  # 루트 공용 이미지 (mainlogo2.png = 메뉴 로고, 슬라이더, 팝업)
 api/                                    # Cloudflare Worker + D1 (결제 승인·주문·반품 API). GitHub Pages가 서빙해도 무해
@@ -118,7 +130,7 @@ api/                                    # Cloudflare Worker + D1 (결제 승인�
 
 - 계획·결정 이력: `doc/Shop_직접구매_토스페이먼츠_연동계획.md`. 결제는 토스페이먼츠 결제위젯 v2, 승인은 Worker(`api/src/index.js`)가 수행.
 - API 라우트 : `POST /orders`, `/payments/confirm`, `/webhooks/toss`, `GET /orders/lookup`, `POST /returns`, `/admin/cancel`(Bearer `ADMIN_TOKEN`), `GET /health`. D1 테이블 `orders`·`returns`·`lookup_attempts`(조회 5회 실패 → 10분 차단). 알림은 `api/src/notify.js`(Resend 메일, 솔라피 알림톡 — 키 없으면 로그만).
-- **가격·품절은 두 곳 동시 수정 후 Worker 재배포**: `Shop/products.js`(표시용) ↔ `api/src/catalog.js`(서버 신뢰 원본, `cd api && npx wrangler deploy`). 서버는 클라이언트가 보낸 금액을 무시하고 카탈로그로 재계산. 메인 `index.html`의 제품 4칸에도 가격이 하드코딩되어 있으니 함께 수정. 품절은 `soldOut[색상]`에 사이즈 배열 — 전 색상 품절이면 카드에 SOLD OUT 덮개, 선택 색상이 전 사이즈 품절이면 모달의 장바구니·바로 구매 비활성(`updateBuyButtons`), 모달은 품절이 아닌 첫 색상을 기본 선택. `limitedUntil: "2026. 12. 25"`가 있으면 카드 이미지 상자 하단 중앙·모달 가격 아래에 한정 판매 종료 알약. `musinsaNo`가 없으면 모달의 무신사 링크 숨김.
+- **가격·품절은 두 곳 동시 수정 후 Worker 재배포**: `Shop/products.js`(표시용) ↔ `api/src/catalog.js`(서버 신뢰 원본, `cd api && npx wrangler deploy`). 서버는 클라이언트가 보낸 금액을 무시하고 카탈로그로 재계산. 메인 `index.html`의 제품 4칸에도 가격이 하드코딩되어 있으니 함께 수정. **새 상품 추가 체크리스트** : `products.js` + `catalog.js` + Worker 재배포 + `index.html` 제품 칸 + `NewTrending/*.html` 3개 페이지에 각각 복사되어 있는 `SHOP_MAP`(제목 → 상품 id, 모달 구매 버튼) + `Shop/image/detail/` 상세 이미지. 품절은 `soldOut[색상]`에 사이즈 배열 — 전 색상 품절이면 카드에 SOLD OUT 덮개, 선택 색상이 전 사이즈 품절이면 모달의 장바구니·바로 구매 비활성(`updateBuyButtons`), 모달은 품절이 아닌 첫 색상을 기본 선택. `limitedUntil: "2026. 12. 25"`가 있으면 카드 이미지 상자 하단 중앙·모달 가격 아래에 한정 판매 종료 알약. `musinsaNo`가 없으면 모달의 무신사 링크 숨김.
 - `Shop/config.js`: `API_BASE`는 localhost면 `http://localhost:8787`(wrangler dev), 아니면 배포된 workers.dev 주소. `TOSS_CLIENT_KEY`만 여기 둔다. **시크릿 키는 `api/.dev.vars`(git 미추적)·`wrangler secret`에만**.
 - 장바구니: `localStorage["gof_cart"]` = `[{id,color,size,qty}]`. 전 페이지가 `Shop/cart.js`를 로드해 상단 메뉴의 `.cart-badge`를 채움.
 - `products.js`의 설명 HTML은 옛 검정 테마용 인라인 색(`#fff`)과 밝은 선 사이즈표 이미지를 쓴다 → 모달 CSS에서 보정 중(`.buy-desc [style*="color"]`, 사이즈표는 어두운 판 위). 설명을 고칠 때 인라인 색을 빼면 보정 규칙도 필요 없어진다.
