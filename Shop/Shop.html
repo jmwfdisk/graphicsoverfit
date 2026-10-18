@@ -8,6 +8,10 @@
   <link rel="stylesheet" href="../assets/site.css" />
   <style>
     /* ===== 스토어 목록 ===== */
+    .title-wrap { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+    .store-notice { margin: 0; font-family: var(--mono); font-size: 11px; letter-spacing: 0.5px; line-height: 1.6; color: var(--orange); word-break: keep-all; }
+    .store-notice > span { display: inline-block; }
+    .store-notice a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
     .filters { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
     .filters button, .filters select { height: 38px; padding: 0 18px; border: 1px solid var(--ink); border-radius: 30px; background: transparent; color: var(--ink); font-family: inherit; font-size: 12px; line-height: 36px; cursor: pointer; -webkit-appearance: none; appearance: none; }
     .filters button:hover { background: rgba(32, 35, 30, 0.08); }
@@ -121,7 +125,10 @@
         <div class="section-head section-head--action">
           <p class="label"><span>Shop</span><span>·</span><span>Brand store · 무료 배송</span></p>
           <div class="section-head-grid">
-            <h1 class="display display--md">BRAND <span class="outline">STORE</span><span class="title-dot">.</span></h1>
+            <div class="title-wrap">
+              <h1 class="display display--md">BRAND <span class="outline">STORE</span><span class="title-dot">.</span></h1>
+              <p class="store-notice"><span>현재 브랜드 스토어는 준비 중입니다.</span> <span>지금은 <a href="https://www.musinsa.com/brand/graphicsoverfit/products?categoryCode=001001&amp;gf=A" target="_blank" rel="noopener">무신사 스토어</a>에서 만나보세요.</span></p>
+            </div>
             <div class="filters">
               <button class="active" data-cat="all">전체</button>
               <button data-cat="basic">BASIC</button>
