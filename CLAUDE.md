@@ -137,8 +137,7 @@ api/                                    # Cloudflare Worker + D1 (결제 승인�
 - `Shop/config.js`: `API_BASE`는 localhost면 `http://localhost:8787`(wrangler dev), 아니면 배포된 `https://gof-shop-api.k-market-pages.workers.dev`. `TOSS_CLIENT_KEY`만 여기 둔다. **시크릿 키는 `api/.dev.vars`(git 미추적)·`wrangler secret`에만**.
 - 장바구니: `localStorage["gof_cart"]` = `[{id,color,size,qty}]`. 전 페이지가 `Shop/cart.js`를 로드해 상단 메뉴의 `.cart-badge`를 채움.
 - `products.js`의 설명 HTML은 옛 검정 테마용 인라인 색(`#fff`)과 밝은 선 사이즈표 이미지를 쓴다 → 모달 CSS에서 보정 중(`.buy-desc [style*="color"]`, 사이즈표는 어두운 판 위). 설명을 고칠 때 인라인 색을 빼면 보정 규칙도 필요 없어진다.
-- 로컬 실행: 터미널1 `python3 -m http.server 8080`, 터미널2 `cd api && npx wrangler dev` (포트 8787). 최초 1회 `npm install` + `npm run db:local`.
-- 배포: `cd api && npx wrangler deploy` 후 `wrangler secret put TOSS_SECRET_KEY` 등 시크릿 등록, 토스 개발자센터에 웹훅 `/webhooks/toss` 등록.
+- 로컬 실행·Worker 배포 명령은 위 "개발 환경" 블록 참고. 배포 후 시크릿은 `npx wrangler secret put TOSS_SECRET_KEY` 등으로 등록하고, 토스 개발자센터에 웹훅 `/webhooks/toss`(PAYMENT_STATUS_CHANGED)를 등록한다.
 - `.com` 사이트가 `Shop/Shop.html`, `Shop/Shop.html?p=essential-logo-tee`로 링크하므로 이 주소 체계를 바꾸지 말 것.
 - `Shop/Shop.html` 제목 아래 `.store-notice`(스토어 준비 중 → 무신사 유도)는 임시 문구. 스토어 정식 오픈 시 마크업·CSS 함께 제거.
 
