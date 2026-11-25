@@ -7,7 +7,7 @@
   <link rel="icon" href="../favicon.ico" />
   <link rel="stylesheet" href="../assets/site.css" />
   <style>
-    /* 2027 Summer 홍보 배너 — 문구는 배너 폭 비례(cqw)라 어느 폭에서나 같은 배치 */
+    /* 2027 Collection 홍보 배너 — 문구는 배너 폭 비례(cqw)라 어느 폭에서나 같은 배치 */
     .upcoming-hero { position: relative; margin-bottom: 56px; border: 1px solid var(--ink); border-radius: 14px; overflow: hidden; background: #c9cdd0; container-type: inline-size; }
     .upcoming-hero img { display: block; width: 100%; height: auto; }
     /* 이미지 왼쪽 아래 빈 회색 영역(스크립트 로고 아래, 모델 왼쪽)에 문구 배치 */
@@ -50,11 +50,11 @@
         </div>
 
         <section class="upcoming-hero">
-          <img src="./image/up/upcoming-2027summer.jpg" alt="Graphics Overfit 2027 Summer Collection">
+          <img src="./image/up/upcoming-2027summer.jpg" alt="Graphics Overfit 2027 Collection">
           <div class="hero-copy">
             <p class="hero-eyebrow">UPCOMING COLLECTION</p>
-            <p class="hero-title">2027 Summer</p>
-            <p class="hero-sub">Graphics, oversized.<br>새로운 시즌이 곧 공개됩니다.</p>
+            <p class="hero-title">2027 Collection</p>
+            <p class="hero-sub">Graphics, oversized.<br>여름부터 겨울까지, 2027 시즌이 곧 공개됩니다.</p>
             <span class="hero-badge">COMING SOON</span>
           </div>
         </section>
@@ -62,23 +62,28 @@
         <div class="product-grid">
           <div class="product" onclick="showModal(
           [
-            './image/up/up-01-f.jpg',
-            './image/up/up-01-b.jpg',
-            './image/up/up-01-promo-01.jpg',
-            './image/up/up-01-promo-02.jpg',
-            './image/up/up-01-promo-03.jpg'
+            './image/up/up-03-f.jpg',
+            './image/up/up-03-b.jpg',
+            './image/up/up-03-f-w.jpg',
+            './image/up/up-03-b-w.jpg',
+            './image/up/up-03-f-g.jpg',
+            './image/up/up-03-b-g.jpg',
+            './image/up/up-03-promo-01.jpg'
           ],
-          '[BASIC] Brush Typography Logo Hoodie',
+          '[BASIC] WEAR YOUR GRAPHICS TEE',
           `
-            <span style='font-weight: bold;'>- Upcoming</span><br>
-            &nbsp;&nbsp;• 겨울 시즌 출시 예정 제품입니다.<br>
+            <span style='font-weight: bold;'>- Upcoming · Summer 2027</span><br>
+            &nbsp;&nbsp;• 2027 여름 시즌 출시 예정 제품입니다.<br>
+            &nbsp;&nbsp;• 앞면 WEAR YOUR GRAPHICS. 레터링 프린트<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;· 뒷면 무지<br>
+            &nbsp;&nbsp;• 오버사이즈 핏 · 3색 (블랙 / 화이트 / 헤더 그레이)<br>
             &nbsp;&nbsp;&nbsp;&nbsp;가격·옵션은 출시 시 공개됩니다.<br>
-          `  
+          `
           )">
-            <img src="./image/up/up-01-f.jpg" class="front" alt="앞면" loading="lazy">
-            <img src="./image/up/up-01-b.jpg" class="back" alt="뒷면" loading="lazy">
+            <img src="./image/up/up-03-f.jpg" class="front" alt="WEAR YOUR GRAPHICS TEE 블랙 앞면" loading="lazy">
+            <img src="./image/up/up-03-b.jpg" class="back" alt="WEAR YOUR GRAPHICS TEE 블랙 뒷면" loading="lazy">
             <div class="product-info">
-              Brush Typography Logo Hoodie<br>겨울 시즌 출시 예정
+              [BASIC] WEAR YOUR GRAPHICS TEE<br>2027 여름 시즌 출시 예정 · 3색
             </div>
           </div>
         
@@ -113,33 +118,75 @@
         
           <div class="product" onclick="showModal(
           [
-            './image/coming soon.png'
+            './image/up/up-04-f.jpg',
+            './image/up/up-04-b.jpg'
           ],
-          '준비중',
+          'Color Sync FRANCE TEE',
           `
-            <span style='font-weight: bold;'>- 준비중</span><br>
-          `  
+            <span style='font-weight: bold;'>- Limited Edition · Summer 2027</span><br>
+            &nbsp;&nbsp;• 2027 여름 시즌 출시 예정 · 한정 수량<br>
+            &nbsp;&nbsp;• 앞면 Graphics Overfit FRANCE 로고<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;+ 뒷면 풀 아트워크 프린트<br>
+            &nbsp;&nbsp;• 오버사이즈 핏 · 베이지<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;가격·옵션은 출시 시 공개됩니다.<br><br>
+            <span style='font-weight: bold;'>- Back Print</span><br>
+            &nbsp;&nbsp;• 에펠탑과 파스텔 컬러 블록,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;파리의 오후를 담은 일러스트<br>
+          `
           )">
-            <img src="./image/coming soon.png" class="front" alt="앞면" loading="lazy">
-            <img src="./image/coming soon.png" class="back" alt="뒷면" loading="lazy">
+            <span class="badge limited">LIMITED</span>
+            <img src="./image/up/up-04-f.jpg" class="front" alt="Color Sync FRANCE TEE 앞면" loading="lazy">
+            <img src="./image/up/up-04-b.jpg" class="back" alt="Color Sync FRANCE TEE 뒷면" loading="lazy">
             <div class="product-info">
-              coming soon<br>준비중
+              [ARTWORK] Color Sync FRANCE TEE<br>2027 여름 시즌 출시 예정 · 한정 수량
             </div>
           </div>
         
           <div class="product" onclick="showModal(
           [
-            './image/coming soon.png'
+            './image/up/up-05-f.jpg',
+            './image/up/up-05-b.jpg'
           ],
-          '준비중',
+          'Seoul Blossom Long Sleeve',
           `
-            <span style='font-weight: bold;'>- 준비중</span><br>
+            <span style='font-weight: bold;'>- Limited Edition · Fall 2027</span><br>
+            &nbsp;&nbsp;• 2027 가을 시즌 출시 예정 · 한정 수량<br>
+            &nbsp;&nbsp;• 앞면 왼쪽 가슴 기본 로고<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;+ 뒷면 하단 아트워크 프린트<br>
+            &nbsp;&nbsp;• 롱슬리브 · 화이트 멜란지<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;가격·옵션은 출시 시 공개됩니다.<br><br>
+            <span style='font-weight: bold;'>- Back Print</span><br>
+            &nbsp;&nbsp;• 벚꽃과 한옥, 남산타워가 어우러진<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;서울의 봄 풍경<br>
+          `
+          )">
+            <span class="badge limited">LIMITED</span>
+            <img src="./image/up/up-05-f.jpg" class="front" alt="Seoul Blossom Long Sleeve 앞면" loading="lazy">
+            <img src="./image/up/up-05-b.jpg" class="back" alt="Seoul Blossom Long Sleeve 뒷면" loading="lazy">
+            <div class="product-info">
+              [ARTWORK] Seoul Blossom Long Sleeve<br>2027 가을 시즌 출시 예정 · 한정 수량
+            </div>
+          </div>
+        
+          <div class="product" onclick="showModal(
+          [
+            './image/up/up-01-f.jpg',
+            './image/up/up-01-b.jpg',
+            './image/up/up-01-promo-01.jpg',
+            './image/up/up-01-promo-02.jpg',
+            './image/up/up-01-promo-03.jpg'
+          ],
+          '[BASIC] Brush Typography Logo Hoodie',
+          `
+            <span style='font-weight: bold;'>- Upcoming · Winter 2027</span><br>
+            &nbsp;&nbsp;• 2027 겨울 시즌 출시 예정 제품입니다.<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;가격·옵션은 출시 시 공개됩니다.<br>
           `  
           )">
-            <img src="./image/coming soon.png" class="front" alt="앞면" loading="lazy">
-            <img src="./image/coming soon.png" class="back" alt="뒷면" loading="lazy">
+            <img src="./image/up/up-01-f.jpg" class="front" alt="Brush Typography Logo Hoodie 앞면" loading="lazy">
+            <img src="./image/up/up-01-b.jpg" class="back" alt="Brush Typography Logo Hoodie 뒷면" loading="lazy">
             <div class="product-info">
-              coming soon<br>준비중
+              [BASIC] Brush Typography Logo Hoodie<br>2027 겨울 시즌 출시 예정
             </div>
           </div>
         </div>

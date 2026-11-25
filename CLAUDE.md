@@ -55,11 +55,11 @@ CDP 직접 연결 시 `/json` 목록에서 `type === 'page'`를 골라야 함(�
 ## 사이트 구조
 
 ```
-index.html                              # 메인 : 히어로(한 번 재생 후 멈추는 GIF) · 제품 4칸 · 컬렉션 스크롤 연동 · 2027 Summer 띠 · 룩북 · FAQ · 프로모 팝업
+index.html                              # 메인 : 히어로(한 번 재생 후 멈추는 GIF) · 제품 4칸 · 컬렉션 스크롤 연동 · 2027 Collection 띠 · 룩북 · FAQ · 프로모 팝업
 기본페이지.html                          # 최소 페이지 템플릿 (새 페이지는 이걸 복사)
 NewTrending/new-arrivals.html           # 제품 그리드 + 상세 모달
 NewTrending/limited-edition.html
-NewTrending/Upcoming Collection.html    # 2027 Summer 배너 + 출시 예정 카드(Graffiti Logo TEE LIMITED, Brush Hoodie) + 상세 모달 + 안내 문구
+NewTrending/Upcoming Collection.html    # 2027 Collection 배너 + 출시 예정 카드 5개(시즌 순 : 여름 → 가을 → 겨울, 한정판은 LIMITED 뱃지) + 상세 모달 + 안내 문구
 look book/Curator.html                  # 큐레이터 사진 그리드 + 확대 모달(착용 제품 링크)
 look book/Model.html                    # "COMING SOON" 안내만
 Shop/Shop.html                          # 스토어 목록 + 상세 모달(옵션·장바구니). ?p=상품id 로 바로 열림
@@ -146,7 +146,7 @@ api/                                    # Cloudflare Worker + D1 (결제 승인�
 **제품 이미지 파일명:** `NewTrending/image/{new|limit|up}/{type}-{num}-{face}[-{variant}].png`
 - `new-01-f.png` (앞면), `new-01-b.png` (뒷면)
 - FACE: `f` / `b`, VARIANT: `w` (화이트), `m1`–`m5` (모바일 크롭)
-- 제품 사진은 흰 배경으로 맞춘다 (`up/up-01-f.jpg`·`-b.jpg`는 투명 PNG 원본을 흰 배경 1000×1000으로 내보낸 것).
+- 제품 사진은 흰 배경으로 맞춘다 (`up/up-0{1,2}-{f,b}.jpg`는 투명 PNG 원본을 흰 배경 1000×1000으로 내보낸 것).
 - 사이즈표: `NewTrending/image/size-sp.png`, `size-youth.png` — 투명 바탕에 밝은 선이라 어두운 판 위에 올려야 보임.
 
 **룩북 이미지:** `look book/image/{모델명}/{n}.jpg` 폴더 단위. 폴더명은 ASCII만 사용 (과거 한글·콜론 포함 폴더명이 GitHub Pages에서 깨져 변경한 이력 있음).
